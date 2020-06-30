@@ -1,0 +1,33 @@
+Kraftausdruck\Models\CookieCategory:
+  OnInit:
+    Notwendig:
+      Required: true
+      Title: Notwendig
+      Content: 'notwendig'
+      Key: 'required'
+      CookieEntries:
+        Title: 'klaro! consent manager'
+        Provider: 'Eigentümer dieser Website'
+        Purpose: 'Speichert Zustimmung, Ablehnung von Cookies.'
+        Policy: '/rechtliches'
+        CookieName: 'klaro'
+        CookieKey: 'klaro'
+        Time: '1 Jahr'
+    Marketing:
+      Required: false
+      Title: Marketing
+      Content: 'marketing'
+      Key: 'marketing'
+      CookieEntries:
+        Title: 'Google Analytics'
+        Provider: 'Google LLC'
+        Purpose: 'Cookie von Google für Website-Analysen. Erzeugt statistische Daten darüber, wie der Besucher die Website nutzt.'
+        Policy: 'https://policies.google.com/privacy?hl=de'
+        CookieName: '_ga,_gat,_gid'
+        CookieKey: 'google-analytics'
+        Time: '2 Jahre'
+    Extern:
+      Required: false
+      Title: extern
+      Content: 'extern'
+      Key: 'extern'

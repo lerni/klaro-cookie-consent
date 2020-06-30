@@ -1,0 +1,39 @@
+{
+	"name": "lerni/klaro-cookie-consent",
+	"type": "silverstripe-vendormodule",
+	"description": "Klaro Silverstripe Integration",
+	"keywords": [
+		"Silverstripe",
+		"cookie",
+		"consent",
+		"Klaro!",
+		"gdpr",
+		"dsgvo",
+		"eprivacy"
+	],
+	"homepage": "https://github.com/lerni/klaro-cookie-consent",
+	"license": "BSD-3-Clause",
+	"authors": [{
+		"name": "Lukas Erni",
+		"homepage": "https://kraftausdruck.ch",
+		"email": "le@kraftausdruck.ch",
+	"role": "Developer"
+	}],
+	"require": {
+		"silverstripe/cms": "^4",
+		"silverstripe/siteconfig": "^4"
+	},
+	"minimum-stability": "dev",
+	"extra": {
+		"installer-name": "klaro-cookie-consent",
+		"expose": [
+			"dist"
+		]
+	},
+	"support": {
+		"issues": "https://github.com/lerni/klaro-cookie-consent/issues"
+	},
+	"suggest": {
+		"lerni/silverstripe-googleanalytics": "Silverstripe Google Analytics & Tag Manager Module"
+	}
+}
