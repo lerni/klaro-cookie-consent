@@ -11,6 +11,6 @@ class KlaroInitExtension extends Extension
     public function onBeforeInit()
     {
         Requirements::javascript('/_klaro-config/');
-        Requirements::javascript(ModuleResourceLoader::resourceURL('klaro-cookie-consent/dist/klaro.js'));
+        Requirements::javascript(ModuleResourceLoader::resourceURL('lerni/klaro-cookie-consent:dist/klaro.js'));
     }
 }
