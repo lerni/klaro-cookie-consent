@@ -21,7 +21,7 @@ Kraftausdruck\Models\CookieCategory:
       CookieEntries:
         Title: 'Google Analytics'
         Provider: 'Google LLC'
-        Purpose: 'Cookie von Google für Website-Analysen. Erzeugt statistische Daten darüber, wie der Besucher die Website nutzt.'
+        Purpose: 'Cookie von Google für Website-Analysen. Statistische Daten, wie Besucher die Website nutzen.'
         Policy: 'https://policies.google.com/privacy?hl=de'
         CookieName: '_ga,_gat,_gid'
         CookieKey: 'google-analytics'

@@ -13,6 +13,7 @@ use SilverStripe\ORM\DataExtension;
 use Kraftausdruck\Models\CookieEntry;
 use Kraftausdruck\Models\CookieCategory;
 use Locale;
+use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\i18n\i18n;
 
 class KlaroSiteConfigExtension extends DataExtension
@@ -61,6 +62,8 @@ class KlaroSiteConfigExtension extends DataExtension
         $fields->addFieldToTab($tab, TextField::create('AcceptAll'));
         $fields->addFieldToTab($tab, TextField::create('AcceptSelected'));
         $fields->addFieldToTab($tab, TextField::create('Decline'));
+
+        $fields->addFieldToTab($tab, TreeDropdownField::create('CookieLinkPrivacyID', 'Link Privacy Policy', SiteTree::class));
 
         $fields->addFieldToTab(
             $tab,
