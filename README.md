@@ -18,7 +18,7 @@ Run `dev/build`
 
 
 ## Getting started
-The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` wich is applied to ContentController. The config is controlled per per `KlaroSiteConfigExtension` and available per `/_klaro-config`. You can link consent settings link `<a onClick="klaro.show();return false;">Cookie consent</a>`
+The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` wich is applied to ContentController. The config is served with `KlaroSiteConfigExtension` and available per `/_klaro-config`. You can link consent settings link `<a onClick="klaro.show();return false;">Cookie consent</a>` or use a ShortCode like `[ConsentLink]` in CMS.  ShortCode takes parameter `beforeText` & `afterText` and is shown conditionally of SiteConfig->CookieIsActive.
 
 
 ## Managing third-party apps/trackers
@@ -33,6 +33,60 @@ To manage third-party scripts and ensure they only run if the user consents with
 Klaro will then take care of executing the scripts if consent was given (you can chose to execute them before getting explicit consent as well).
 
 The same method also works for images, stylesheets and other elements with a `src` or `type` attribute.
+
+# Styling
+Example SCSS customisation
+```scss
+// !klaro
+html .klaro {
+
+	.cookie-modal,
+	.cookie-notice {
+		a {
+			color: $link-color;
+		}
+		.cm-btn {
+			cursor: pointer;
+			font-size: 14px
+		}
+	}
+
+	.cookie-notice {
+		// modal link
+		.cm-link {
+			display: block;
+			margin-top: .6em;
+		}
+		// decline
+		.cm-btn.cn-decline {
+			background-color: $gray;
+		}
+		// accept all
+		.cm-btn.cm-btn-success {
+			background-color: $link-color;
+		}
+	}
+
+	.cookie-modal {
+		// slider-switches
+		.cm-app-input:checked+.cm-app-label .slider {
+			background-color: $link-color;
+		}
+		// accept all
+		.cm-btn.cm-btn-accept-all {
+			background-color: $link-color;
+		}
+		// save selection, decline
+		.cm-btn.cm-btn-accept,
+		.cm-btn.cm-btn-decline {
+			background-color: $gray;
+		}
+		// klaro link
+		.cm-modal .cm-footer .cm-powered-by {
+		}
+	}
+}
+```
 
 # Todo
 - multilingual defaults from klaro and add translations if configured

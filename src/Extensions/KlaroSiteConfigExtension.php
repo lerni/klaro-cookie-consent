@@ -49,6 +49,18 @@ class KlaroSiteConfigExtension extends DataExtension
     ];
 
 
+    private static $translate = [
+		'ConsentNoticeDescription',
+		'ConsentModalTitle',
+		'ConsentModalDescription',
+		'ConsentModalPrivacyPolicyName',
+		'ConsentModalPrivacyPolicyText',
+		'AcceptAll',
+		'AcceptSelected',
+		'Decline'
+	];
+
+
     public function updateCMSFields(FieldList $fields)
     {
 
@@ -91,7 +103,7 @@ class KlaroSiteConfigExtension extends DataExtension
 
 
     public function Lang()
-    {   
+    {
         return Locale::getPrimaryLanguage(i18n::get_locale());
     }
 }
