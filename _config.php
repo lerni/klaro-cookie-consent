@@ -9,8 +9,18 @@ ShortcodeParser::get('default')->register('ConsentLink', function($arguments, $p
 
     $Linkstring = '';
 
-    $beforeText = $arguments['beforeText'];
-    $afterText = $arguments['afterText'];
+
+    if (empty($arguments['beforeText'])) {
+        $beforeText = '';
+    } else {
+        $beforeText = $arguments['beforeText'];
+    }
+
+    if (empty($arguments['afterText'])) {
+        $afterText = '';
+    } else {
+        $afterText = $arguments['afterText'];
+    }
 
     if ($siteConfig->CookieIsActive)
     {

@@ -59,32 +59,18 @@ class CookieCategory extends DataObject
         if (!$entry) {
             $GenerateConfig = Config::inst()->get('Kraftausdruck\Models\CookieCategory', 'OnInit');
             foreach ($GenerateConfig as $key => $category) {
-                if (is_array($category)) {
-                    $CookieCategory = CookieCategory::create();
-                    if (array_key_exists('Title', $category)) {
-                        $CookieCategory->Title = $category['Title'];
-                    }
-                    if (array_key_exists('Required', $category)) {
-                        $CookieCategory->Required = $category['Required'];
-                    }
-                    if (array_key_exists('Content', $category)) {
-                        $CookieCategory->Content = $category['Content'];
-                    }
-                    if (array_key_exists('Key', $category)) {
-                        $CookieCategory->Key = $category['Key'];
-                    }
-                    $CookieCategory->write();
-                    if (array_key_exists('CookieEntries', $category)) {
-                        if(is_array($category['CookieEntries'])) {
+                $CookieCategory = CookieCategory::create();
+                foreach($category as $nestedkey => $nestedvalue) {
+                    if (is_array($nestedvalue)) {
+                        $CookieEntry = CookieEntry::create($nestedvalue);
 
-                            $CookieEntry = CookieEntry::create($category['CookieEntries']);
-
-                            $CookieEntry->CookieCategoryID = $CookieCategory->ID;
-                            $CookieEntry->write();
-
-                        }
+                        $CookieEntry->CookieCategoryID = $CookieCategory->ID;
+                        $CookieEntry->write();
+                    } else {
+                        $CookieCategory->{$nestedkey} = $nestedvalue;
                     }
                 }
+                $CookieCategory->write();
             }
             DB::alteration_message("Added default CookieEntry & CookieCategories", "created");
         }

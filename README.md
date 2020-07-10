@@ -18,11 +18,11 @@ Run `dev/build`
 
 
 ## Getting started
-The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` wich is applied to ContentController. The config is served with `KlaroSiteConfigExtension` and available per `/_klaro-config`. You can link consent settings link `<a onClick="klaro.show();return false;">Cookie consent</a>` or use a ShortCode like `[ConsentLink]` in CMS.  ShortCode takes parameter `beforeText` & `afterText` and is shown conditionally of SiteConfig->CookieIsActive.
+The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` wich is applied to ContentController. The config is served with `KlaroSiteConfigExtension` and available per `/_klaro-config`. You can link consent settings like `<a onClick="klaro.show();return false;">Cookie consent</a>` or use a ShortCode in CMS. ShortCode `[ConsentLink]` takes parameter `beforeText` & `afterText` and is shown conditionally of `SiteConfig->CookieIsActive`.
 
 
 ## Managing third-party apps/trackers
-To manage third-party scripts and ensure they only run if the user consents with their use, you simply replace the `src` attribute with `data-src`, change the `type` attribute to `text/plain` and add a `data-type` attribute with the original type, and add a `data-name` field that matches the name of the app as given in your config file. Example:
+To manage third-party scripts and ensure they only run if the user consents with their use, simply replace the `src` attribute with `data-src`, change the `type` attribute to `text/plain` and add a `data-type` attribute with the original type and add a `data-name` field that matches the name of the app as given in config. Example:
 ```html
 <script type="text/plain"
     data-type="text/javascript"
