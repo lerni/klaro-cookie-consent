@@ -60,10 +60,11 @@ class CookieCategory extends DataObject
             $GenerateConfig = Config::inst()->get('Kraftausdruck\Models\CookieCategory', 'OnInit');
             foreach ($GenerateConfig as $key => $category) {
                 $CookieCategory = CookieCategory::create();
+                // write to have an ID needed to associate CookieEntries()
+                $CookieCategory->write();
                 foreach($category as $nestedkey => $nestedvalue) {
-                    if (is_array($nestedvalue)) {
+                    if (is_array($nestedvalue) && $nestedkey == 'CookieEntries') {
                         $CookieEntry = CookieEntry::create($nestedvalue);
-
                         $CookieEntry->CookieCategoryID = $CookieCategory->ID;
                         $CookieEntry->write();
                     } else {
