@@ -14,18 +14,17 @@ use SilverStripe\SiteConfig\SiteConfig;
 class KlaroConfigController extends Controller
 {
 
-	public function index(HTTPRequest $request)
+    public function index(HTTPRequest $request)
     {
-		$siteConfig = SiteConfig::current_site_config();
-		
-		$this->getResponse()->addHeader("Content-Type", "text/javascript; charset=utf-8");
+        $siteConfig = SiteConfig::current_site_config();
+
+        $this->getResponse()->addHeader("Content-Type", "text/javascript; charset=utf-8");
 
 
-		if ($siteConfig->CookieIsActive) {
-			return $this->owner->customise(['SiteConfig' => $siteConfig])->renderWith('Kraftausdruck/Controller/KlaroConfigController');
+        if ($siteConfig->CookieIsActive) {
+            return $this->owner->customise(['SiteConfig' => $siteConfig])->renderWith('Kraftausdruck/Controller/KlaroConfigController');
         } else {
-			return $this->httpError(404);
-		}
-	}
-
+            return $this->httpError(404);
+        }
+    }
 }

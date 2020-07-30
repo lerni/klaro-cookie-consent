@@ -24,22 +24,22 @@ class CookieCategory extends DataObject
     ];
 
     private static $field_labels = [
-		'Title' => 'Titel',
-		'Key' => 'Javascript Key',
-		'Content' => 'Text',
-		'Required' => 'Required'
-	];
+        'Title' => 'Titel',
+        'Key' => 'Javascript Key',
+        'Content' => 'Text',
+        'Required' => 'Required'
+    ];
 
-	private static $summary_fields = [
-		'Title' => 'Titel',
-		'Key' => 'Javascript Key',
-		'Required' => 'Required'
-	];
+    private static $summary_fields = [
+        'Title' => 'Titel',
+        'Key' => 'Javascript Key',
+        'Required' => 'Required'
+    ];
 
-	private static $searchable_fields = [
-		'Title',
-		'Key'
-	];
+    private static $searchable_fields = [
+        'Title',
+        'Key'
+    ];
 
 
     public function getCMSFields()
@@ -62,7 +62,7 @@ class CookieCategory extends DataObject
                 $CookieCategory = CookieCategory::create();
                 // write to have an ID needed to associate CookieEntries()
                 $CookieCategory->write();
-                foreach($category as $nestedkey => $nestedvalue) {
+                foreach ($category as $nestedkey => $nestedvalue) {
                     if (is_array($nestedvalue) && $nestedkey == 'CookieEntries') {
                         $CookieEntry = CookieEntry::create($nestedvalue);
                         $CookieEntry->CookieCategoryID = $CookieCategory->ID;
