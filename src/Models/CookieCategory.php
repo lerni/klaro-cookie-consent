@@ -3,8 +3,9 @@
 namespace Kraftausdruck\Models;
 
 use SilverStripe\ORM\DB;
-use SilverStripe\Core\Config\Config;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\SiteConfig\SiteConfig;
 
 class CookieCategory extends DataObject
 {
@@ -41,7 +42,6 @@ class CookieCategory extends DataObject
         'Key'
     ];
 
-
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -55,8 +55,9 @@ class CookieCategory extends DataObject
     {
         parent::requireDefaultRecords();
 
-        $entry = CookieCategory::get()->first();
-        if (!$entry) {
+        $hasCookieCategories = CookieCategory::get()->first();
+        $hasCookieEntries = CookieCategory::get()->first();
+        if (!$hasCookieCategories && !$hasCookieEntries) {
             $GenerateConfig = Config::inst()->get('Kraftausdruck\Models\CookieCategory', 'OnInit');
             foreach ($GenerateConfig as $key => $category) {
                 $CookieCategory = CookieCategory::create();
@@ -73,7 +74,34 @@ class CookieCategory extends DataObject
                 }
                 $CookieCategory->write();
             }
-            DB::alteration_message("Added default CookieEntry & CookieCategories", "created");
+            DB::alteration_message('Added default CookieEntry & CookieCategories', 'created');
+
+            // since we just add to SiteConfig, DB/ORM defaults wont get us anywhere
+            // therefor we assume its save to write values to SiteConfig if empty and  also no CookieCategory is present
+            $siteConfig = SiteConfig::current_site_config();
+
+            $defaults = [
+                'ConsentNoticeDescription' => 'Auf dieser Webseite werden Cookies für folgende Zwecke eingesetzt: {purposes}.',
+                'ConsentModalTitle' => 'Verwendete Cookies',
+                'ConsentModalDescription' => 'Datenschutz-Einstellungen für diese Webseite einsehen und anpassen.',
+                'ConsentModalPrivacyPolicyName' => 'Datenschutzerklärung',
+                'ConsentModalPrivacyPolicyText' => 'Details {privacyPolicy}.',
+                'AcceptAll' => 'Allen zustimmen',
+                'AcceptSelected' => 'Auswahl speichern',
+                'Decline' => 'Ablehnen'
+            ];
+            $siteConfigNeedsWrite = 0;
+            foreach($defaults as $key => $value)
+            {
+                if($siteConfig->{$key} == '') {
+                    $siteConfig->{$key} = $value;
+                    $siteConfigNeedsWrite = 1;
+                }
+            }
+            if($siteConfigNeedsWrite) {
+                $siteConfig->write();
+                DB::alteration_message('Added default values for entries per KlaroSiteConfigExtension', 'changed');
+            }
         }
     }
 }

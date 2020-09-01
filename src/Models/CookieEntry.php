@@ -9,7 +9,7 @@ use SilverStripe\ORM\DataObject;
 class CookieEntry extends DataObject
 {
     private static $singular_name = 'CookieEntry';
-    
+
     private static $table_name = 'CookieEntry';
 
     private static $db = [
@@ -27,7 +27,6 @@ class CookieEntry extends DataObject
         'CookieCategory' => CookieCategory::class
     ];
 
-
     public function getCMSValidator()
     {
         return new RequiredFields([
@@ -38,12 +37,10 @@ class CookieEntry extends DataObject
         ]);
     }
 
-
     public function CookieNamesJS()
     {
         return json_encode(explode(',', $this->CookieName));
     }
-
 
     public function getCMSFields()
     {

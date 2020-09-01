@@ -30,24 +30,9 @@ class KlaroSiteConfigExtension extends DataExtension
         'Decline' => 'Varchar'
     ];
 
-
     private static $has_one = [
         'CookieLinkPrivacy' => SiteTree::class
     ];
-
-
-    private static $defaults = [
-        'CookieIsActive' => true,
-        'ConsentNoticeDescription' => 'Auf dieser Webseite werden Cookies für folgende Zwecke eingesetzt: {purposes}.',
-        'ConsentModalTitle' => 'Verwendete Cookies',
-        'ConsentModalDescription' => 'Datenschutz-Einstellungen für diese Webseite einsehen und anpassen.',
-        'ConsentModalPrivacyPolicyName' => 'Datenschutzerklärung',
-        'ConsentModalPrivacyPolicyText' => 'Details {privacyPolicy}.',
-        'AcceptAll' => 'Allen zustimmen',
-        'AcceptSelected' => 'Auswahl speichern',
-        'Decline' => 'Ablehnen'
-    ];
-
 
     private static $translate = [
         'ConsentNoticeDescription',
@@ -60,10 +45,8 @@ class KlaroSiteConfigExtension extends DataExtension
         'Decline'
     ];
 
-
     public function updateCMSFields(FieldList $fields)
     {
-
         $tab = 'Root.CookieConsent';
         $fields->addFieldToTab($tab, CheckboxField::create('CookieIsActive'));
         $fields->addFieldToTab($tab, TextareaField::create('ConsentNoticeDescription'));
@@ -94,13 +77,11 @@ class KlaroSiteConfigExtension extends DataExtension
         return CookieEntry::get();
     }
 
-
     // todo may add a relation
     public function CookieCategories()
     {
         return CookieCategory::get();
     }
-
 
     public function Lang()
     {

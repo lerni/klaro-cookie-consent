@@ -1,5 +1,5 @@
 <% with $SiteConfig %>var klaroConfig = {
-    CookieIsActive: '{$SiteConfig.CookieIsActive}',
+    CookieIsActive: '{$CookieIsActive}',
     elementID: 'klaro',
     cookieName: 'klaro',
     acceptAll: true,
@@ -10,19 +10,19 @@
     noNotice: false,
     translations: {
         {$Lang()}: {
-            acceptAll: '{$SiteConfig.AcceptAll}',
-            acceptSelected: '{$SiteConfig.AcceptSelected}',
-            decline: '{$SiteConfig.Decline}',
+            acceptAll: '{$AcceptAll}',
+            acceptSelected: '{$AcceptSelected}',
+            decline: '{$Decline}',
             consentModal: {
-                title: '{$SiteConfig.ConsentModalTitle}',
-                description: '{$SiteConfig.ConsentModalDescription}',
+                title: '{$ConsentModalTitle}',
+                description: '{$ConsentModalDescription}',
                 privacyPolicy: {
-                    name: '{$SiteConfig.ConsentModalPrivacyPolicyName}',
-                    text: '{$SiteConfig.ConsentModalPrivacyPolicyText}'
+                    name: '{$ConsentModalPrivacyPolicyName}',
+                    text: '{$ConsentModalPrivacyPolicyText}'
                 }
             },
             consentNotice: {
-                description: '{$SiteConfig.ConsentNoticeDescription}'
+                description: '{$ConsentNoticeDescription}'
             },
             purposes: {
             <% loop $CookieCategories %>    {$Key}: '{$Title}'<% if not $Last %>,<% end_if %>
