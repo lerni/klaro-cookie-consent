@@ -1,16 +1,8 @@
 <?php
 
-namespace Kraftausdruck\Models;
-
-use Kraftausdruck\Models\CookieCategory;
-use SilverStripe\Forms\RequiredFields;
-use SilverStripe\ORM\DataObject;
-
 class CookieEntry extends DataObject
 {
     private static $singular_name = 'CookieEntry';
-    
-    private static $table_name = 'CookieEntry';
 
     private static $db = [
         'Title' => 'Varchar',
@@ -22,11 +14,9 @@ class CookieEntry extends DataObject
         'Time' => 'Varchar'
     ];
 
-
     private static $has_one = [
         'CookieCategory' => CookieCategory::class
     ];
-
 
     public function getCMSValidator()
     {
@@ -38,12 +28,10 @@ class CookieEntry extends DataObject
         ]);
     }
 
-
     public function CookieNamesJS()
     {
         return json_encode(explode(',', $this->CookieName));
     }
-
 
     public function getCMSFields()
     {

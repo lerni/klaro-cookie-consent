@@ -1,21 +1,5 @@
 <?php
 
-namespace Kraftausdruck\Extensions;
-
-use SilverStripe\CMS\Model\SiteTree;
-use SilverStripe\Forms\CheckboxField;
-use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\GridField\GridField;
-use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
-use SilverStripe\Forms\TextareaField;
-use SilverStripe\Forms\TextField;
-use SilverStripe\ORM\DataExtension;
-use Kraftausdruck\Models\CookieEntry;
-use Kraftausdruck\Models\CookieCategory;
-use Locale;
-use SilverStripe\Forms\TreeDropdownField;
-use SilverStripe\i18n\i18n;
-
 class KlaroSiteConfigExtension extends DataExtension
 {
     private static $db = [
@@ -30,11 +14,9 @@ class KlaroSiteConfigExtension extends DataExtension
         'Decline' => 'Varchar'
     ];
 
-
     private static $has_one = [
         'CookieLinkPrivacy' => SiteTree::class
     ];
-
 
     private static $defaults = [
         'CookieIsActive' => true,
@@ -48,7 +30,6 @@ class KlaroSiteConfigExtension extends DataExtension
         'Decline' => 'Ablehnen'
     ];
 
-
     private static $translate = [
         'ConsentNoticeDescription',
         'ConsentModalTitle',
@@ -60,10 +41,8 @@ class KlaroSiteConfigExtension extends DataExtension
         'Decline'
     ];
 
-
     public function updateCMSFields(FieldList $fields)
     {
-
         $tab = 'Root.CookieConsent';
         $fields->addFieldToTab($tab, CheckboxField::create('CookieIsActive'));
         $fields->addFieldToTab($tab, TextareaField::create('ConsentNoticeDescription'));
@@ -94,13 +73,11 @@ class KlaroSiteConfigExtension extends DataExtension
         return CookieEntry::get();
     }
 
-
     // todo may add a relation
     public function CookieCategories()
     {
         return CookieCategory::get();
     }
-
 
     public function Lang()
     {

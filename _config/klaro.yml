@@ -1,14 +1,14 @@
 ---
 Name: klaro-cookie-consent
 ---
-SilverStripe\Control\Director:
+Director:
   rules:
-    '_klaro-config/': 'Kraftausdruck\Controller\KlaroConfigController'
+    '/_klaro-config/': 'KlaroConfigController'
 
-SilverStripe\SiteConfig\SiteConfig:
+SiteConfig:
   extensions:
-    - Kraftausdruck\Extensions\KlaroSiteConfigExtension
+    - KlaroSiteConfigExtension
 
-SilverStripe\CMS\Controllers\ContentController:
+Page:
   extensions:
-    - Kraftausdruck\Extensions\KlaroInitExtension
+    - KlaroInitExtension

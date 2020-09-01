@@ -1,4 +1,4 @@
-Kraftausdruck\Models\CookieCategory:
+CookieCategory:
   OnInit:
     Notwendig:
       Required: true

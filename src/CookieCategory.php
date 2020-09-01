@@ -1,16 +1,8 @@
 <?php
 
-namespace Kraftausdruck\Models;
-
-use SilverStripe\ORM\DB;
-use SilverStripe\Core\Config\Config;
-use SilverStripe\ORM\DataObject;
-
 class CookieCategory extends DataObject
 {
     private static $singular_name = 'Cookie Category';
-
-    private static $table_name = 'CookieCategory';
 
     private static $db = [
         'Title' => 'Varchar',
@@ -41,7 +33,6 @@ class CookieCategory extends DataObject
         'Key'
     ];
 
-
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -57,7 +48,7 @@ class CookieCategory extends DataObject
 
         $entry = CookieCategory::get()->first();
         if (!$entry) {
-            $GenerateConfig = Config::inst()->get('Kraftausdruck\Models\CookieCategory', 'OnInit');
+            $GenerateConfig = Config::inst()->get('CookieCategory', 'OnInit');
             foreach ($GenerateConfig as $key => $category) {
                 $CookieCategory = CookieCategory::create();
                 // write to have an ID needed to associate CookieEntries()

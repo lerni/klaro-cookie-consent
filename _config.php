@@ -1,8 +1,5 @@
 <?php
 
-use SilverStripe\SiteConfig\SiteConfig;
-use SilverStripe\View\Parsers\ShortcodeParser;
-
 ShortcodeParser::get('default')->register('ConsentLink', function($arguments, $parser, $shortcode) {
 
     $siteConfig = SiteConfig::current_site_config();
@@ -27,7 +24,7 @@ ShortcodeParser::get('default')->register('ConsentLink', function($arguments, $p
         $Linkstring = sprintf(
             '%s<a onClick="klaro.show();return false;">%s</a>%s',
             $beforeText,
-            _t('Kraftausdruck\KlaroCookie.MODALLINK','none'),
+            _t('KlaroCookie.MODALLINK','none'),
             $afterText
         );
     }

@@ -20,16 +20,10 @@
 	"role": "Developer"
 	}],
 	"require": {
-		"silverstripe/cms": "^4",
-		"silverstripe/siteconfig": "^4"
+		"silverstripe/cms": "^3.7",
+		"silverstripe/siteconfig": "^3"
 	},
 	"minimum-stability": "dev",
-	"extra": {
-		"installer-name": "klaro-cookie-consent",
-		"expose": [
-			"dist"
-		]
-	},
 	"support": {
 		"issues": "https://github.com/lerni/klaro-cookie-consent/issues"
 	},

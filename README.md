@@ -5,6 +5,8 @@ Silverstripe Klaro [klɛro] implements [KIProtect/klaro](https://github.com/KIPr
 ## Requirements
 - silverstripe/cms ^4
 - silverstripe/siteconfig ^4
+### Compatibility Version ^3
+There is a [3.x](https://github.com/lerni/klaro-cookie-consent/tree/3.x) branch with a backport for Silverstripe 3.x
 ### Suggested
 - lerni/erni/silverstripe-googleanalytics
 
@@ -13,9 +15,10 @@ Silverstripe Klaro [klɛro] implements [KIProtect/klaro](https://github.com/KIPr
 [Composer](https://getcomposer.org/) is the recommended way installing Silverstripe modules.
 
 `composer require lerni/klaro-cookie-consent`
+or
+`composer require lerni/klaro-cookie-consent:3.x-dev`
 
 Run `dev/build`
-
 
 ## Getting started
 The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` wich is applied to ContentController. The config is served with `KlaroSiteConfigExtension` and available per `/_klaro-config`. You can link consent settings like `<a onClick="klaro.show();return false;">Cookie consent</a>` or use a ShortCode in CMS. ShortCode `[ConsentLink]` takes parameter `beforeText` & `afterText` and is shown conditionally of `SiteConfig->CookieIsActive`.
@@ -87,9 +90,3 @@ html .klaro {
 	}
 }
 ```
-
-# Todo
-- multilingual defaults from klaro and add translations if configured
-- prepare defaults for google fonts, YouTube, gMaps
-- respect defaults for SiteConfig
-- multiple coockies with regex
