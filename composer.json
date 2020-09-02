@@ -1,6 +1,6 @@
 {
 	"name": "lerni/klaro-cookie-consent",
-	"type": "silverstripe-vendormodule",
+    "type": "silverstripe-module",
 	"description": "Klaro Silverstripe Integration",
 	"keywords": [
 		"Silverstripe",

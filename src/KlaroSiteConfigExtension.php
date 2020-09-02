@@ -18,18 +18,6 @@ class KlaroSiteConfigExtension extends DataExtension
         'CookieLinkPrivacy' => SiteTree::class
     ];
 
-    private static $defaults = [
-        'CookieIsActive' => true,
-        'ConsentNoticeDescription' => 'Auf dieser Webseite werden Cookies für folgende Zwecke eingesetzt: {purposes}.',
-        'ConsentModalTitle' => 'Verwendete Cookies',
-        'ConsentModalDescription' => 'Datenschutz-Einstellungen für diese Webseite einsehen und anpassen.',
-        'ConsentModalPrivacyPolicyName' => 'Datenschutzerklärung',
-        'ConsentModalPrivacyPolicyText' => 'Details {privacyPolicy}.',
-        'AcceptAll' => 'Allen zustimmen',
-        'AcceptSelected' => 'Auswahl speichern',
-        'Decline' => 'Ablehnen'
-    ];
-
     private static $translate = [
         'ConsentNoticeDescription',
         'ConsentModalTitle',

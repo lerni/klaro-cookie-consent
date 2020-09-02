@@ -65,6 +65,33 @@ class CookieCategory extends DataObject
                 $CookieCategory->write();
             }
             DB::alteration_message("Added default CookieEntry & CookieCategories", "created");
+
+            // since we just add to SiteConfig, DB/ORM defaults wont get us anywhere
+            // therefor we assume its save to write values to SiteConfig if empty and  also no CookieCategory is present
+            $siteConfig = SiteConfig::current_site_config();
+
+            $defaults = [
+                'ConsentNoticeDescription' => 'Auf dieser Webseite werden Cookies für folgende Zwecke eingesetzt: {purposes}.',
+                'ConsentModalTitle' => 'Verwendete Cookies',
+                'ConsentModalDescription' => 'Datenschutz-Einstellungen für diese Webseite einsehen und anpassen.',
+                'ConsentModalPrivacyPolicyName' => 'Datenschutzerklärung',
+                'ConsentModalPrivacyPolicyText' => 'Details {privacyPolicy}.',
+                'AcceptAll' => 'Allen zustimmen',
+                'AcceptSelected' => 'Auswahl speichern',
+                'Decline' => 'Ablehnen'
+            ];
+            $siteConfigNeedsWrite = 0;
+            foreach($defaults as $key => $value)
+            {
+                if($siteConfig->{$key} == '') {
+                    $siteConfig->{$key} = $value;
+                    $siteConfigNeedsWrite = 1;
+                }
+            }
+            if($siteConfigNeedsWrite) {
+                $siteConfig->write();
+                DB::alteration_message('Added default values for entries per KlaroSiteConfigExtension', 'changed');
+            }
         }
     }
 }
