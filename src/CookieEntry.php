@@ -11,6 +11,8 @@ class CookieEntry extends DataObject
         'Purpose' => 'Text',
         'Policy' => 'Varchar',
         'CookieName' => 'Varchar',
+        'Default' => 'Enum("false,true", "false")',
+        'OptOut' => 'Enum("false,true", "false")',
         'Time' => 'Varchar'
     ];
 
