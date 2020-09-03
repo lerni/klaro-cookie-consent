@@ -14,7 +14,6 @@ Kraftausdruck\Models\CookieCategory:
         CookieKey: 'klaro'
         Time: '1 Jahr'
     Marketing:
-      Required: false
       Title: Marketing
       Content: 'marketing'
       Key: 'marketing'
@@ -25,9 +24,10 @@ Kraftausdruck\Models\CookieCategory:
         Policy: 'https://policies.google.com/privacy?hl=de'
         CookieName: '_ga,_gat,_gid'
         CookieKey: 'google-analytics'
+        Default: 'false'
+        OptOut: 'false'
         Time: '2 Jahre'
     Extern:
-      Required: false
       Title: extern
       Content: 'extern'
       Key: 'extern'

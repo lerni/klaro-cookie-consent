@@ -16,8 +16,7 @@ class CookieCategory extends DataObject
     private static $db = [
         'Title' => 'Varchar',
         'Key' => 'Varchar',
-        'Content' => 'Text',
-        'Required' => 'Boolean'
+        'Content' => 'Text'
     ];
 
     private static $has_many = [
@@ -27,14 +26,12 @@ class CookieCategory extends DataObject
     private static $field_labels = [
         'Title' => 'Titel',
         'Key' => 'Javascript Key',
-        'Content' => 'Text',
-        'Required' => 'Required'
+        'Content' => 'Text'
     ];
 
     private static $summary_fields = [
         'Title' => 'Titel',
-        'Key' => 'Javascript Key',
-        'Required' => 'Required'
+        'Key' => 'Javascript Key'
     ];
 
     private static $searchable_fields = [
@@ -55,8 +52,8 @@ class CookieCategory extends DataObject
     {
         parent::requireDefaultRecords();
 
-        $hasCookieCategories = CookieCategory::get()->first();
-        $hasCookieEntries = CookieCategory::get()->first();
+        $hasCookieCategories = CookieCategory::get()->count();
+        $hasCookieEntries = CookieCategory::get()->count();
         if (!$hasCookieCategories && !$hasCookieEntries) {
             $GenerateConfig = Config::inst()->get('Kraftausdruck\Models\CookieCategory', 'OnInit');
             foreach ($GenerateConfig as $key => $category) {
@@ -76,8 +73,8 @@ class CookieCategory extends DataObject
             }
             DB::alteration_message('Added default CookieEntry & CookieCategories', 'created');
 
-            // since we just add to SiteConfig, DB/ORM defaults wont get us anywhere
-            // therefor we assume its save to write values to SiteConfig if empty and  also no CookieCategory is present
+            // since we just add fields to SiteConfig per extension, DB/ORM defaults won't get us anywhere
+            // we assume it's save to write values to SiteConfig if a field is empty and also no CookieCategory & CookieEntry is present
             $siteConfig = SiteConfig::current_site_config();
 
             $defaults = [

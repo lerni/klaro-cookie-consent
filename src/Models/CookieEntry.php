@@ -19,21 +19,23 @@ class CookieEntry extends DataObject
         'Purpose' => 'Text',
         'Policy' => 'Varchar',
         'CookieName' => 'Varchar',
+        'Default' => 'Enum("false,true", "false")',
+        'OptOut' => 'Enum("false,true", "false")',
         'Time' => 'Varchar'
     ];
-
 
     private static $has_one = [
         'CookieCategory' => CookieCategory::class
     ];
+
+    private static $field_labels = [];
 
     public function getCMSValidator()
     {
         return new RequiredFields([
             'Title',
             'Provider',
-            'Purpose',
-            'Policy'
+            'Purpose'
         ]);
     }
 
