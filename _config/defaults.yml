@@ -25,6 +25,8 @@ CookieCategory:
         Policy: 'https://policies.google.com/privacy?hl=de'
         CookieName: '_ga,_gat,_gid'
         CookieKey: 'google-analytics'
+        Default: 'false',
+        OptOut: 'false',
         Time: '2 Jahre'
     Extern:
       Required: false
