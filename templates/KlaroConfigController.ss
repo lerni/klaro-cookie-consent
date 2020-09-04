@@ -32,6 +32,7 @@
     apps : [
     <% loop $CookieEntries %> {
             name : '{$CookieKey}',
+            <% if $CookieCategory.Required %>required: {$CookieCategory.Required},<% end_if %>
             default: {$Default},
             optOut: {$OptOut},
             title : '{$Title}',
