@@ -4,10 +4,6 @@ namespace Kraftausdruck\Controller;
 
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
-use SilverStripe\ORM\ArrayList;
-use SilverStripe\ORM\DataObject;
-use SilverStripe\Core\Config\Config;
-use SilverStripe\Control\Director;
 use SilverStripe\SiteConfig\SiteConfig;
 
 

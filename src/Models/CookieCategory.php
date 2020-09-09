@@ -16,7 +16,8 @@ class CookieCategory extends DataObject
     private static $db = [
         'Title' => 'Varchar',
         'Key' => 'Varchar',
-        'Content' => 'Text'
+        'Content' => 'Text',
+        'Required' => 'Boolean'
     ];
 
     private static $has_many = [

@@ -33,7 +33,7 @@ To manage third-party scripts and ensure they only run if the user consents with
     data-src="https://cdn.optimizely.com/js/10196010078.js">
 </script>
 ```
-Klaro will then take care of executing the scripts if consent was given (you can chose to execute them before getting explicit consent as well).
+Klaro will then take care of executing the scripts if consent was given (you can chose to execute them before getting explicit consent with `OptOut`).
 
 The same method also works for images, stylesheets and other elements with a `src` or `type` attribute.
 
