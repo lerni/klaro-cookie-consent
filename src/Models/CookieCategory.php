@@ -17,12 +17,15 @@ class CookieCategory extends DataObject
         'Title' => 'Varchar',
         'Key' => 'Varchar',
         'Content' => 'Text',
-        'Required' => 'Boolean'
+        'Required' => 'Boolean',
+        'SortOrder' => 'Int'
     ];
 
     private static $has_many = [
         'CookieEntries' => CookieEntry::class
     ];
+
+    private static $default_sort = 'SortOrder ASC';
 
     private static $field_labels = [
         'Title' => 'Titel',
@@ -89,14 +92,13 @@ class CookieCategory extends DataObject
                 'Decline' => 'Ablehnen'
             ];
             $siteConfigNeedsWrite = 0;
-            foreach($defaults as $key => $value)
-            {
-                if($siteConfig->{$key} == '') {
+            foreach ($defaults as $key => $value) {
+                if ($siteConfig->{$key} == '') {
                     $siteConfig->{$key} = $value;
                     $siteConfigNeedsWrite = 1;
                 }
             }
-            if($siteConfigNeedsWrite) {
+            if ($siteConfigNeedsWrite) {
                 $siteConfig->write();
                 DB::alteration_message('Added default values for entries per KlaroSiteConfigExtension', 'changed');
             }

@@ -2,19 +2,20 @@
 
 namespace Kraftausdruck\Extensions;
 
-use SilverStripe\CMS\Model\SiteTree;
-use SilverStripe\Forms\CheckboxField;
+use Locale;
+use SilverStripe\i18n\i18n;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\GridField\GridField;
-use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
-use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\DataExtension;
+use SilverStripe\CMS\Model\SiteTree;
 use Kraftausdruck\Models\CookieEntry;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\TextareaField;
 use Kraftausdruck\Models\CookieCategory;
-use Locale;
 use SilverStripe\Forms\TreeDropdownField;
-use SilverStripe\i18n\i18n;
+use SilverStripe\Forms\GridField\GridField;
+use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 
 class KlaroSiteConfigExtension extends DataExtension
 {
@@ -60,14 +61,18 @@ class KlaroSiteConfigExtension extends DataExtension
 
         $fields->addFieldToTab($tab, TreeDropdownField::create('CookieLinkPrivacyID', 'Link Privacy Policy', SiteTree::class));
 
+        $CategoryGridFieldConfig = GridFieldConfig_RecordEditor::create();
+        $CategoryGridFieldConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
         $fields->addFieldToTab(
             $tab,
-            GridField::create('CookieCategory', 'Cookie Kategorien', CookieCategory::get(), GridFieldConfig_RecordEditor::create())
+            GridField::create('CookieCategory', 'Cookie Kategorien', CookieCategory::get(), $CategoryGridFieldConfig)
         );
 
+        $CookieGridFieldConfig = GridFieldConfig_RecordEditor::create();
+        $CookieGridFieldConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
         $fields->addFieldToTab(
             $tab,
-            GridField::create('CookieEntry', 'Cookies', CookieEntry::get(), GridFieldConfig_RecordEditor::create())
+            GridField::create('CookieEntry', 'Cookies', CookieEntry::get(), $CookieGridFieldConfig)
         );
     }
 
