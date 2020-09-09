@@ -44,14 +44,18 @@ class KlaroSiteConfigExtension extends DataExtension
 
         $fields->addFieldToTab($tab, TreeDropdownField::create('CookieLinkPrivacyID', 'Link Privacy Policy', SiteTree::class));
 
+        $CategoryGridFieldConfig = GridFieldConfig_RecordEditor::create();
+        $CategoryGridFieldConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
         $fields->addFieldToTab(
             $tab,
-            GridField::create('CookieCategory', 'Cookie Kategorien', CookieCategory::get(), GridFieldConfig_RecordEditor::create())
+            GridField::create('CookieCategory', 'Cookie Kategorien', CookieCategory::get(), $CategoryGridFieldConfig)
         );
 
+        $CookieGridFieldConfig = GridFieldConfig_RecordEditor::create();
+        $CookieGridFieldConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
         $fields->addFieldToTab(
             $tab,
-            GridField::create('CookieEntry', 'Cookies', CookieEntry::get(), GridFieldConfig_RecordEditor::create())
+            GridField::create('CookieEntry', 'Cookies', CookieEntry::get(), $CookieGridFieldConfig)
         );
     }
 

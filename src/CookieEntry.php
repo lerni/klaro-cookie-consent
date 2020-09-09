@@ -13,12 +13,15 @@ class CookieEntry extends DataObject
         'CookieName' => 'Varchar',
         'Default' => 'Enum("false,true", "false")',
         'OptOut' => 'Enum("false,true", "false")',
-        'Time' => 'Varchar'
+        'Time' => 'Varchar',
+        'SortOrder' => 'Int'
     ];
 
     private static $has_one = [
         'CookieCategory' => CookieCategory::class
     ];
+
+    private static $default_sort = 'SortOrder ASC';
 
     public function getCMSValidator()
     {

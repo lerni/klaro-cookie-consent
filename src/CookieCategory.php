@@ -8,12 +8,15 @@ class CookieCategory extends DataObject
         'Title' => 'Varchar',
         'Key' => 'Varchar',
         'Content' => 'Text',
-        'Required' => 'Boolean'
+        'Required' => 'Boolean',
+        'SortOrder' => 'Int'
     ];
 
     private static $has_many = [
         'CookieEntries' => CookieEntry::class
     ];
+
+    private static $default_sort = 'SortOrder ASC';
 
     private static $field_labels = [
         'Title' => 'Titel',

@@ -71,9 +71,16 @@ html .klaro {
 	}
 
 	.cookie-modal {
+		.cm-app-title {
+			font-size: 14px;
+		}
 		// slider-switches
 		.cm-app-input:checked+.cm-app-label .slider {
 			background-color: $link-color;
+		}
+		// disable/required switch
+		.cm-app-input.required:checked+.cm-app-label .slider {
+			background-color: darken($link-color, 10%);
 		}
 		// accept all
 		.cm-btn.cm-btn-accept-all {

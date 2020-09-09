@@ -21,7 +21,8 @@
 	}],
 	"require": {
 		"silverstripe/cms": "^3.7",
-		"silverstripe/siteconfig": "^3"
+		"silverstripe/siteconfig": "^3",
+		"symbiote/silverstripe-gridfieldextensions": "^2"
 	},
 	"minimum-stability": "dev",
 	"support": {
