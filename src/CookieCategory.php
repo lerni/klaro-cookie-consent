@@ -41,6 +41,7 @@ class CookieCategory extends DataObject
         $fields = parent::getCMSFields();
 
         $fields->removeByName('CookieEntries');
+        $fields->removeByName('SortOrder');
 
         return $fields;
     }
