@@ -51,6 +51,8 @@ class CookieEntry extends DataObject
     {
         $fields = parent::getCMSFields();
 
+        $fields->removeByName('SortOrder');
+
         return $fields;
     }
 }
