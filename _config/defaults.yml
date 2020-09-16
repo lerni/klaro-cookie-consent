@@ -5,6 +5,7 @@ Kraftausdruck\Models\CookieCategory:
       Title: Notwendig
       Content: 'notwendig'
       Key: 'required'
+      ConsentNoticeLearnMore: 'Cookie Einstellungen'
       CookieEntries:
         Title: 'klaro! consent manager'
         Provider: 'Eigentümer dieser Website'

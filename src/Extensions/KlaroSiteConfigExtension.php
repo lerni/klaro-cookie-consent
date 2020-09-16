@@ -22,6 +22,7 @@ class KlaroSiteConfigExtension extends DataExtension
     private static $db = [
         'CookieIsActive' => 'Boolean',
         'ConsentNoticeDescription' => 'Text',
+        'ConsentNoticeLearnMore' => 'Varchar',
         'ConsentModalTitle' => 'Varchar',
         'ConsentModalDescription' => 'Text',
         'ConsentModalPrivacyPolicyName' => 'Varchar',
@@ -37,6 +38,7 @@ class KlaroSiteConfigExtension extends DataExtension
 
     private static $translate = [
         'ConsentNoticeDescription',
+        'ConsentNoticeLearnMore',
         'ConsentModalTitle',
         'ConsentModalDescription',
         'ConsentModalPrivacyPolicyName',
@@ -51,6 +53,7 @@ class KlaroSiteConfigExtension extends DataExtension
         $tab = 'Root.CookieConsent';
         $fields->addFieldToTab($tab, CheckboxField::create('CookieIsActive'));
         $fields->addFieldToTab($tab, TextareaField::create('ConsentNoticeDescription'));
+        $fields->addFieldToTab($tab, TextField::create('ConsentNoticeLearnMore'));
         $fields->addFieldToTab($tab, TextField::create('ConsentModalTitle'));
         $fields->addFieldToTab($tab, TextareaField::create('ConsentModalDescription'));
         $fields->addFieldToTab($tab, TextField::create('ConsentModalPrivacyPolicyName'));
