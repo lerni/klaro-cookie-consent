@@ -22,7 +22,8 @@
                 }
             },
             consentNotice: {
-                description: '{$ConsentNoticeDescription}'
+                description: '{$ConsentNoticeDescription}',
+                learnMore: '{$ConsentNoticeLearnMore}'
             },
             purposes: {
             <% loop $CookieCategories %>    {$Key}: '{$Title}'<% if not $Last %>,<% end_if %>
