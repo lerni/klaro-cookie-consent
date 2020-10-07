@@ -13,8 +13,9 @@ class KlaroInitExtension extends Extension
     {
         $siteConfig = SiteConfig::current_site_config();
         if ($siteConfig->CookieIsActive) {
+            Requirements::css(ModuleResourceLoader::resourceURL('lerni/klaro-cookie-consent:node_modules/klaro/dist/klaro.min.css'));
             Requirements::javascript('/_klaro-config/');
-            Requirements::javascript(ModuleResourceLoader::resourceURL('lerni/klaro-cookie-consent:dist/klaro.js'));
+            Requirements::javascript(ModuleResourceLoader::resourceURL('lerni/klaro-cookie-consent:node_modules/klaro/dist/klaro-no-css.js'));
         }
     }
 }

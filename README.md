@@ -43,58 +43,78 @@ Example SCSS customisation
 // !klaro
 html .klaro {
 
-	.cookie-modal,
-	.cookie-notice {
-		a {
-			color: $link-color;
-		}
-		.cm-btn {
-			cursor: pointer;
-			font-size: 14px
-		}
-	}
+    .cookie-modal,
+    .cookie-notice {
+        a {
+            color: $link-color;
+        }
+        .cm-btn {
+            cursor: pointer;
+            font-size: 14px
+        }
+    }
 
-	.cookie-notice {
-		// modal link
-		.cm-link {
-			display: block;
-			margin-top: .6em;
-		}
-		// decline
-		.cm-btn.cn-decline {
-			background-color: $gray;
-		}
-		// accept all
-		.cm-btn.cm-btn-success {
-			background-color: $link-color;
-		}
-	}
+    .cookie-notice {
+        .cn-ok {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start !important;
+            .cn-buttons {
+                order: 1;
+                // decline
+                .cm-btn.cn-decline {
+                    background-color: $gray;
+                    order: 1;
+                }
+                // accept all
+                .cm-btn.cm-btn-success {
+                    background-color: $link-color;
+                    order: 0;
+                }
+            }
+            // modal link
+            .cn-learn-more {
+                display: block;
+                margin-top: .6em;
+                order: 2;
+                flex: 0 0 100%;
+            }
+        }
+    }
 
-	.cookie-modal {
-		.cm-app-title {
-			font-size: 14px;
-		}
-		// slider-switches
-		.cm-app-input:checked+.cm-app-label .slider {
-			background-color: $link-color;
-		}
-		// disable/required switch
-		.cm-app-input.required:checked+.cm-app-label .slider {
-			background-color: darken($link-color, 10%);
-		}
-		// accept all
-		.cm-btn.cm-btn-accept-all {
-			background-color: $link-color;
-		}
-		// save selection, decline
-		.cm-btn.cm-btn-accept,
-		.cm-btn.cm-btn-decline {
-			background-color: $gray;
-		}
-		// klaro link
-		.cm-modal .cm-footer .cm-powered-by {
-		}
-	}
+    .cookie-modal {
+        .cm-app-title {
+            font-size: 14px;
+        }
+        // switch disabled
+        .cm-list-label .slider {
+            background-color: $gray-light;
+        }
+        // slider-switches
+        .cm-list-input:checked + .cm-list-label .slider {
+            background-color: $link-color;
+        }
+        // required switch enabled
+        .cm-list-input.required:checked + .cm-list-label .slider {
+            background-color: darken($link-color, 10%);
+            &::before {
+                background-color: darken($white, 16%);
+            }
+        }
+
+        // accept all
+        .cm-btn.cm-btn-accept-all {
+            background-color: $link-color;
+        }
+        // save selection, decline
+        .cm-btn.cm-btn-accept,
+        .cm-btn.cm-btn-decline {
+            background-color: $gray;
+        }
+        // klaro link
+        .cm-modal .cm-footer .cm-powered-by {
+        }
+    }
 }
 ```
 
@@ -102,4 +122,3 @@ html .klaro {
 - multilingual defaults from klaro, add translations if configured
 - add template-parser to add data-attributes and ditch suggested modules from composer
 - add defaults for google fonts, YouTube, gMaps etc.
-- fix multiple coockies with regex

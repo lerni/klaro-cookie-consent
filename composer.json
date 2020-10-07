@@ -28,7 +28,7 @@
 	"extra": {
 		"installer-name": "klaro-cookie-consent",
 		"expose": [
-			"dist"
+			"node_modules/klaro/dist"
 		]
 	},
 	"support": {

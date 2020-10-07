@@ -44,7 +44,22 @@ class CookieEntry extends DataObject
 
     public function CookieNamesJS()
     {
-        return json_encode(explode(',', $this->CookieName));
+        $names = explode(',', $this->CookieName);
+        $r = '[';
+        if (count($names)) {
+            $i = 0;
+            $len = count($names);
+            foreach($names as $name) {
+                $r .= '"' . $name . '"';
+                if ($i == $len - 1) {
+                    $r .= ']';
+                } else {
+                    $r .= ', ';
+                }
+                $i++;
+            }
+        }
+        return $r;
     }
 
     public function getCMSFields()
