@@ -30,7 +30,7 @@
             <% end_loop %>},
         }
     },
-    apps : [
+    services : [
     <% loop $CookieEntries %> {
             name : '{$CookieKey}',
             <% if $CookieCategory.Required %>required: {$CookieCategory.Required},<% end_if %>
