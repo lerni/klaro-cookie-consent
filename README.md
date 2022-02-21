@@ -50,10 +50,9 @@ html .klaro {
         }
         .cm-btn {
             cursor: pointer;
-            font-size: 14px
+            font-size: 14px;
         }
     }
-
     .cookie-notice {
         .cn-ok {
             display: flex;
@@ -94,12 +93,20 @@ html .klaro {
         .cm-list-input:checked + .cm-list-label .slider {
             background-color: $link-color;
         }
+        // subitems
+        .cm-list-description {
+            color: $white;
+        }
         // required switch enabled
         .cm-list-input.required:checked + .cm-list-label .slider {
             background-color: darken($link-color, 10%);
             &::before {
                 background-color: darken($white, 16%);
             }
+        }
+        // halve is used on parent if children are on & off
+        .cm-list-input.half-checked:checked + .cm-list-label .slider {
+            background-color: mix($link-color, $white, 71%);
         }
 
         // accept all

@@ -12,3 +12,6 @@ SilverStripe\SiteConfig\SiteConfig:
 SilverStripe\CMS\Controllers\ContentController:
   extensions:
     - Kraftausdruck\Extensions\KlaroInitExtension
+
+Kraftausdruck\Extensions\KlaroInitExtension:
+  preconnect: 'true'
