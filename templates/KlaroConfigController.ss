@@ -1,4 +1,4 @@
-<% cached 'CookieConfig', $SiteConfig.LastEdited, $List('CookieCategory').max('LastEdited'), $List('CookieCategory').count(), $List('CookieEntry').max('LastEdited'), $List('CookieEntry').count() %><% with $SiteConfig %>var klaroConfig = {
+<% cached 'CookieConfig', $Locale, $SiteConfig.LastEdited, $List('CookieCategory').max('LastEdited'), $List('CookieCategory').count(), $List('CookieEntry').max('LastEdited'), $List('CookieEntry').count() %><% with $SiteConfig %>var klaroConfig = {
     CookieIsActive: '{$CookieIsActive}',
     elementID: 'klaro',
     cookieName: 'klaro',
