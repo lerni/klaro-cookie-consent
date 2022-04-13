@@ -1,3 +1,4 @@
+<% cached 'CookieConfig', $Locale, $SiteConfig.LastEdited, $List('Kraftausdruck\Models\CookieCategory').max('LastEdited'), $List('Kraftausdruck\Models\CookieCategory').count(), $List('Kraftausdruck\Models\CookieEntry').max('LastEdited'), $List('Kraftausdruck\Models\CookieEntry').count() %>
 <% with $SiteConfig %>var klaroConfig = {
     CookieIsActive: '{$CookieIsActive}',
     elementID: 'klaro',
@@ -42,4 +43,4 @@
             cookies : {$CookieNamesJS.RAW}
         }<% if not $Last %>,<% end_if %>
     <% end_loop %>]
-}<% end_with %>
+}<% end_with %><% end_cached %>

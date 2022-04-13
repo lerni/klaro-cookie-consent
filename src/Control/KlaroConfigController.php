@@ -14,8 +14,10 @@ class KlaroConfigController extends Controller
     {
         $siteConfig = SiteConfig::current_site_config();
 
-        $this->getResponse()->addHeader("Content-Type", "text/javascript; charset=utf-8");
-
+        // response header
+        $header = $this->getResponse();
+        $header->addHeader('Content-Type', 'text/javascript; charset=utf-8');
+        $header->addHeader('X-Robots-Tag', 'noindex');
 
         if ($siteConfig->CookieIsActive) {
             return $this->owner->customise(['SiteConfig' => $siteConfig])->renderWith('Kraftausdruck/Controller/KlaroConfigController');
