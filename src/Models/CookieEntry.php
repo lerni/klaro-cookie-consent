@@ -49,7 +49,7 @@ class CookieEntry extends DataObject
         if (count($names)) {
             $i = 0;
             $len = count($names);
-            foreach($names as $name) {
+            foreach ($names as $name) {
                 $r .= '"' . $name . '"';
                 if ($i == $len - 1) {
                     $r .= ']';

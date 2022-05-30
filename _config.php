@@ -25,9 +25,9 @@ ShortcodeParser::get('default')->register('ConsentLink', function($arguments, $p
     if ($siteConfig->CookieIsActive)
     {
         $Linkstring = sprintf(
-            '%s<a  href="#klaro" onClick="klaro.show();return false;">%s</a>%s',
+            '%s<a href="#klaro" onClick="klaro.show();return false;">%s</a>%s',
             $beforeText,
-            _t('Kraftausdruck\KlaroCookie.MODALLINK','none'),
+            _t('Kraftausdruck\KlaroCookie.MODALLINK','Cookie settings'),
             $afterText
         );
     }

@@ -36,5 +36,10 @@
 	},
 	"suggest": {
 		"lerni/silverstripe-googleanalytics": "Silverstripe Google Analytics & Tag Manager Module"
-	}
+	},
+    "autoload": {
+        "psr-4": {
+            "Kraftausdruck\\": "src/"
+        }
+    }
 }

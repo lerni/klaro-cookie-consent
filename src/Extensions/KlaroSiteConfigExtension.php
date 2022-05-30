@@ -22,8 +22,9 @@ class KlaroSiteConfigExtension extends DataExtension
     private static $db = [
         'CookieIsActive' => 'Boolean',
         'ConsentNoticeDescription' => 'Text',
-        'ConsentNoticeLearnMore' => 'Varchar',
+        'ConsentNoticeOK' => 'Varchar',
         'ConsentModalTitle' => 'Varchar',
+        'ConsentNoticeLearnMore' => 'Varchar',
         'ConsentModalDescription' => 'Text',
         'ConsentModalPrivacyPolicyName' => 'Varchar',
         'ConsentModalPrivacyPolicyText' => 'Varchar',
@@ -38,6 +39,7 @@ class KlaroSiteConfigExtension extends DataExtension
 
     private static $translate = [
         'ConsentNoticeDescription',
+        'ConsentNoticeOK',
         'ConsentNoticeLearnMore',
         'ConsentModalTitle',
         'ConsentModalDescription',
@@ -50,19 +52,20 @@ class KlaroSiteConfigExtension extends DataExtension
 
     public function updateCMSFields(FieldList $fields)
     {
-        $tab = 'Root.CookieConsent';
-        $fields->addFieldToTab($tab, CheckboxField::create('CookieIsActive'));
-        $fields->addFieldToTab($tab, TextareaField::create('ConsentNoticeDescription'));
-        $fields->addFieldToTab($tab, TextField::create('ConsentNoticeLearnMore'));
-        $fields->addFieldToTab($tab, TextField::create('ConsentModalTitle'));
-        $fields->addFieldToTab($tab, TextareaField::create('ConsentModalDescription'));
-        $fields->addFieldToTab($tab, TextField::create('ConsentModalPrivacyPolicyName'));
-        $fields->addFieldToTab($tab, TextField::create('ConsentModalPrivacyPolicyText'));
-        $fields->addFieldToTab($tab, TextField::create('AcceptAll'));
-        $fields->addFieldToTab($tab, TextField::create('AcceptSelected'));
-        $fields->addFieldToTab($tab, TextField::create('Decline'));
+        $tab = 'Root.' . _t(__CLASS__ . '.COOKIETAB', 'CookieConsent');
+        $fields->addFieldToTab($tab, CheckboxField::create('CookieIsActive', _t(__CLASS__ . '.CookieIsActive', 'Klaro! active')));
+        $fields->addFieldToTab($tab, TextareaField::create('ConsentNoticeDescription', _t(__CLASS__ . '.CONSENTNOTICEDESCRIPTION', 'Notice: Description')));
+        $fields->addFieldToTab($tab, TextField::create('ConsentNoticeLearnMore', _t(__CLASS__ . '.CONSENTNOTICELEARNMORE', 'Notice: Cookie settings')));
+        $fields->addFieldToTab($tab, TextField::create('ConsentNoticeOK', _t(__CLASS__ . '.CONSENTNOTICEOK', 'Notice: OK/accept')));
+        $fields->addFieldToTab($tab, TextField::create('ConsentModalTitle', _t(__CLASS__ . '.CONSENTMODALTITLE', 'Modal: Title')));
+        $fields->addFieldToTab($tab, TextareaField::create('ConsentModalDescription', _t(__CLASS__ . '.CONSENTMODALDESCRIPTION', 'Modal: Description')));
+        $fields->addFieldToTab($tab, TextField::create('ConsentModalPrivacyPolicyName', _t(__CLASS__ . '.CONSENTMODALPRIVACYPOLICYNAME', 'Modal: Privacy Policy link name')));
+        $fields->addFieldToTab($tab, TextField::create('ConsentModalPrivacyPolicyText', _t(__CLASS__ . '.CONSENTMODALPRIVACYPOLICYTEXT', 'Modal: Privacy Policy link text')));
+        $fields->addFieldToTab($tab, TextField::create('AcceptAll', _t(__CLASS__ . '.ACCEPTALL', 'Modal: "Accept all"')));
+        $fields->addFieldToTab($tab, TextField::create('AcceptSelected', _t(__CLASS__ . '.ACCEPTSELECTED', 'Modal: "Accept selected"')));
+        $fields->addFieldToTab($tab, TextField::create('Decline', _t(__CLASS__ . '.DECLINE', 'Modal: "Decline"')));
 
-        $fields->addFieldToTab($tab, TreeDropdownField::create('CookieLinkPrivacyID', 'Link Privacy Policy', SiteTree::class));
+        $fields->addFieldToTab($tab, TreeDropdownField::create('CookieLinkPrivacyID', _t(__CLASS__ . '.COOKIELINKPRIVACY', 'Link Privacy Policy'), SiteTree::class), 'AcceptAll');
 
         $CategoryGridFieldConfig = GridFieldConfig_RecordEditor::create();
         $CategoryGridFieldConfig->addComponent(new GridFieldOrderableRows('SortOrder'));

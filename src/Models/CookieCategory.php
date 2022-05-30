@@ -83,14 +83,16 @@ class CookieCategory extends DataObject
             $siteConfig = SiteConfig::current_site_config();
 
             $defaults = [
-                'ConsentNoticeDescription' => 'Auf dieser Webseite werden Cookies für folgende Zwecke eingesetzt: {purposes}.',
-                'ConsentModalTitle' => 'Verwendete Cookies',
-                'ConsentModalDescription' => 'Datenschutz-Einstellungen für diese Webseite einsehen und anpassen.',
-                'ConsentModalPrivacyPolicyName' => 'Datenschutzerklärung',
+                'ConsentNoticeOK' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeOK', 'Accept'),
+                'ConsentNoticeLearnMore' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeLearnMore', 'Cookie settings'),
+                'ConsentNoticeDescription' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeDescription', 'Auf dieser Webseite werden Cookies für folgende Zwecke eingesetzt: {purposes}.'),
+                'ConsentModalTitle' => _t('Kraftausdruck\KlaroCookie.ConsentModalTitle', 'Verwendete Cookies'),
+                'ConsentModalDescription' => _t('Kraftausdruck\KlaroCookie.ConsentModalDescription', 'Datenschutz-Einstellungen für diese Webseite einsehen und anpassen.'),
+                'ConsentModalPrivacyPolicyName' => _t('Kraftausdruck\KlaroCookie.ConsentModalPrivacyPolicyName', 'Datenschutzerklärung'),
                 'ConsentModalPrivacyPolicyText' => 'Details {privacyPolicy}.',
-                'AcceptAll' => 'Allen zustimmen',
-                'AcceptSelected' => 'Auswahl speichern',
-                'Decline' => 'Ablehnen'
+                'AcceptAll' => _t('Kraftausdruck\KlaroCookie.AcceptAll', 'Allen zustimmen'),
+                'AcceptSelected' => _t('Kraftausdruck\KlaroCookie.AcceptSelected', 'Auswahl speichern'),
+                'Decline' => _t('Kraftausdruck\KlaroCookie.Decline', 'Decline')
             ];
             $siteConfigNeedsWrite = 0;
             foreach ($defaults as $key => $value) {
