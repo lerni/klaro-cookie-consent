@@ -7,7 +7,7 @@ de:
     ConsentNoticeOK: 'OK'
     ConsentNoticeLearnMore: 'Cookie Einstellungen'
     ConsentModalPrivacyPolicyName: 'Datenschutzerklärung'
-    ConsentModalPrivacyPolicyText: 'Details {privacyPolicy}.'
+    ConsentModalPrivacyPolicyText: 'Details siehe {privacyPolicy}.'
     AcceptAll: 'Allen zustimmen'
     AcceptSelected: 'Auswahl speichern'
     Decline: 'Ablehnen'

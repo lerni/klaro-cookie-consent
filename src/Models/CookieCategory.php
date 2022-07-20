@@ -89,7 +89,7 @@ class CookieCategory extends DataObject
                 'ConsentModalTitle' => _t('Kraftausdruck\KlaroCookie.ConsentModalTitle', 'Verwendete Cookies'),
                 'ConsentModalDescription' => _t('Kraftausdruck\KlaroCookie.ConsentModalDescription', 'Datenschutz-Einstellungen für diese Webseite einsehen und anpassen.'),
                 'ConsentModalPrivacyPolicyName' => _t('Kraftausdruck\KlaroCookie.ConsentModalPrivacyPolicyName', 'Datenschutzerklärung'),
-                'ConsentModalPrivacyPolicyText' => 'Details {privacyPolicy}.',
+                'ConsentModalPrivacyPolicyText' => _t('Kraftausdruck\KlaroCookie.ConsentModalPrivacyPolicyText', 'Details siehe {privacyPolicy}.'),
                 'AcceptAll' => _t('Kraftausdruck\KlaroCookie.AcceptAll', 'Allen zustimmen'),
                 'AcceptSelected' => _t('Kraftausdruck\KlaroCookie.AcceptSelected', 'Auswahl speichern'),
                 'Decline' => _t('Kraftausdruck\KlaroCookie.Decline', 'Decline')
