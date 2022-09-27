@@ -23,11 +23,11 @@ class KlaroInitExtension extends Extension
                     '</_klaro-config/?m=' . $hash . '>; rel=preload; as=script',
                     sprintf(
                         '<%s>; rel=preload; as=style',
-                        ModuleResourceLoader::resourceURL('/_resources/vendor/lerni/klaro-cookie-consent/node_modules/klaro/dist/klaro.min.css')
+                        ModuleResourceLoader::resourceURL('lerni/klaro-cookie-consent:node_modules/klaro/dist/klaro.min.css')
                     ),
                     sprintf(
                         '<%s>; rel=preload; as=script',
-                        ModuleResourceLoader::resourceURL('/_resources/vendor/lerni/klaro-cookie-consent/node_modules/klaro/dist/klaro-no-css.js')
+                        ModuleResourceLoader::resourceURL('lerni/klaro-cookie-consent:node_modules/klaro/dist/klaro-no-css.js')
                     )
                 ];
                 $headers = $this->owner->response->getHeaders();
