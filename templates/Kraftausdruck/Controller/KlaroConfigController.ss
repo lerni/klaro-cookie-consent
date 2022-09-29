@@ -16,31 +16,31 @@
 			decline: '{$Decline}',
 			ok: '<% if $ConsentNoticeOK %>{$ConsentNoticeOK}<% else %>{$AcceptAll}<% end_if %>',
 			consentModal: {
-				title: '{$ConsentModalTitle}',
-				description: '{$ConsentModalDescription}',
+				title: '{$ConsentModalTitle.JS}',
+				description: '{$ConsentModalDescription.JS}',
 				privacyPolicy: {
-					name: '{$ConsentModalPrivacyPolicyName}',
-					text: '{$ConsentModalPrivacyPolicyText}'
+					name: '{$ConsentModalPrivacyPolicyName.JS}',
+					text: '{$ConsentModalPrivacyPolicyText.JS}'
 				}
 			},
 			consentNotice: {
-				description: '{$ConsentNoticeDescription}',
-				learnMore: '{$ConsentNoticeLearnMore}'
+				description: '{$ConsentNoticeDescription.JS}',
+				learnMore: '{$ConsentNoticeLearnMore.JS}'
 			},
 			purposes: {
-			<% loop $CookieCategories %>    {$Key}: '{$Title}'<% if not $Last %>,<% end_if %>
+			<% loop $CookieCategories %>    {$Key.JS}: '{$Title.JS}'<% if not $Last %>,<% end_if %>
 			<% end_loop %>},
 		}
 	},
 	services : [
 	<% loop $CookieEntries %> {
-			name : '{$CookieKey}',
+			name : '{$CookieKey.JS}',
 			<% if $CookieCategory.Required %>required: {$CookieCategory.Required},<% end_if %>
 			default: {$Default},
 			optOut: {$OptOut},
-			title : '{$Title}',
-			description : ['{$Purpose}'],
-			purposes : ['{$CookieCategory.Key}'],
+			title : '{$Title.JS}',
+			description : ['{$Purpose.JS}'],
+			purposes : ['{$CookieCategory.Key.JS}'],
 			cookies : {$CookieNamesJS.RAW}
 		}<% if not $Last %>,<% end_if %>
 	<% end_loop %>]

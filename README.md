@@ -5,8 +5,9 @@ Silverstripe Klaro [klɛro] implements [KIProtect/klaro](https://github.com/KIPr
 ## Requirements
 - silverstripe/cms ^4
 - silverstripe/siteconfig ^4
-### Compatibility Version ^3
-There is a [3.x](https://github.com/lerni/klaro-cookie-consent/tree/3.x) branch with a backport for Silverstripe 3.
+### Compatibility Version
+- There is a [3.x](https://github.com/lerni/klaro-cookie-consent/tree/3.x) branch with a backport for Silverstripe 3.
+- For Silverstripe 4.x [v2](https://github.com/lerni/klaro-cookie-consent/tree/v2) is recommended ATM
 ### Suggested
 - lerni/erni/silverstripe-googleanalytics
 
@@ -14,7 +15,7 @@ There is a [3.x](https://github.com/lerni/klaro-cookie-consent/tree/3.x) branch 
 ## Installation
 [Composer](https://getcomposer.org/) is the recommended way installing Silverstripe modules.
 
-`composer require lerni/klaro-cookie-consent`
+`composer require lerni/klaro-cookie-consent:v2.x-dev`
 or
 `composer require lerni/klaro-cookie-consent:3.x-dev`
 
@@ -126,6 +127,6 @@ html .klaro {
 ```
 
 # Todo
-- multilingual defaults from klaro, add translations if configured
+- multilingual defaults from klaro, add translations if configured<br/>ATM cache-block in `KlaroConfigController.ss` causes malfunctioning with fluent
 - add template-parser to add data-attributes and ditch suggested modules from composer
 - add defaults for google fonts, YouTube, gMaps etc.
