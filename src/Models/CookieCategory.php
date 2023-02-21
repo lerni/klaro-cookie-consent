@@ -5,6 +5,7 @@ namespace Kraftausdruck\Models;
 use SilverStripe\ORM\DB;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Core\Config\Config;
+use Kraftausdruck\Models\CookieEntry;
 use SilverStripe\SiteConfig\SiteConfig;
 
 class CookieCategory extends DataObject
