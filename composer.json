@@ -20,9 +20,9 @@
 	"role": "Developer"
 	}],
 	"require": {
-		"silverstripe/cms": "^4",
-		"silverstripe/siteconfig": "^4",
-		"symbiote/silverstripe-gridfieldextensions": "^3"
+		"silverstripe/cms": "^5",
+		"silverstripe/siteconfig": "^5",
+		"symbiote/silverstripe-gridfieldextensions": "^4.0"
 	},
 	"minimum-stability": "dev",
 	"extra": {
