@@ -18,10 +18,6 @@
 			consentModal: {
 				title: '{$ConsentModalTitle.JS}',
 				description: '{$ConsentModalDescription.JS}',
-				privacyPolicy: {
-					name: '{$ConsentModalPrivacyPolicyName.JS}',
-					text: '{$ConsentModalPrivacyPolicyText.JS}'
-				}
 			},
 			consentNotice: {
 				description: '{$ConsentNoticeDescription.JS}',
@@ -30,6 +26,15 @@
 			purposes: {
 			<% loop $CookieCategories %>    {$Key.JS}: '{$Title.JS}'<% if not $Last %>,<% end_if %>
 			<% end_loop %>},
+			contextualConsent: {
+				acceptAlways: '{$ContextualConsentAcceptAlways.JS}',
+				acceptOnce: '{$ContextualConsentAcceptOnce.JS}',
+				description: '{$ContextualConsentDescription.JS}'
+			},
+			privacyPolicy: {
+				name: '{$ConsentModalPrivacyPolicyName.JS}',
+				text: '{$ConsentModalPrivacyPolicyText.JS}'
+			}
 		}
 	},
 	services : [

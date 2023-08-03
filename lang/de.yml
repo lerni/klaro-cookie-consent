@@ -25,3 +25,6 @@ de:
     ACCEPTALL: 'Modal: Text "Allen zustimmen"'
     ACCEPTSELECTED: 'Modal: "Auswahl speichern"'
     DECLINE: 'Modal: Text "Ablehnen"'
+    CONTEXTUALCONSENTACCEPTALWAYS: 'Contextual: "Immer akzeptieren"'
+    CONTEXTUALCONSENTACCEPTONCE: 'Contextual: "Einmal akzeptieren"'
+    CONTEXTUALCONSENTDESCRIPTION: 'Contextual: Beschreibung'
