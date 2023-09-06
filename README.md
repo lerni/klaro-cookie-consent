@@ -1,13 +1,14 @@
 # Silverstripe Klaro! Consent Manager
-Silverstripe Klaro [klɛro] implements [KIProtect/klaro](https://github.com/KIProtect/klaro). A consent manager that helps to be transparent about third-party applications and be compliant with GDPR and ePrivacy. This module is inspred by [nomidi/kw-cookie-consent](https://github.com/nomidi/kw-cookie-consent).
+Silverstripe Klaro [klɛro] implements [KIProtect/klaro](https://github.com/KIProtect/klaro). A consent manager that helps to be transparent about third-party applications and be compliant with GDPR and ePrivacy. This module is inspired by [nomidi/kw-cookie-consent](https://github.com/nomidi/kw-cookie-consent).
 
 
 ## Requirements
-- silverstripe/cms ^4
-- silverstripe/siteconfig ^4
+- silverstripe/cms ^4 | ^5
+- silverstripe/siteconfig ^4 | ^5
+- symbiote/silverstripe-gridfieldextensions ^3 | ^4
 ### Compatibility Version
 - There is a [3.x](https://github.com/lerni/klaro-cookie-consent/tree/3.x) branch with a backport for Silverstripe 3.
-- For Silverstripe 4.x [v2](https://github.com/lerni/klaro-cookie-consent/tree/v2) is recommended ATM
+- For Silverstripe 4.x & 5.x [v2](https://github.com/lerni/klaro-cookie-consent/tree/v2) is recommended ATM
 ### Suggested
 - lerni/erni/silverstripe-googleanalytics
 
@@ -22,7 +23,7 @@ or
 Run `dev/build`
 
 ## Getting started
-The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` wich is applied to ContentController. The config is served with `KlaroConfigController` and available per `/_klaro-config`. You can link consent settings like `<a onClick="klaro.show();return false;">Cookie consent</a>` or use a ShortCode in CMS. ShortCode `[ConsentLink]` takes parameter `beforeText` & `afterText` and is shown conditionally of `SiteConfig->CookieIsActive`.
+The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` wich is applied to ContentController. The config is served with `KlaroConfigController` and available per `/_klaro-config`. You can link consent settings like `<a href="#klaro" onClick="klaro.show();return false;">Cookie consent</a>` or use a ShortCode in CMS. ShortCode `[ConsentLink]` takes parameter `beforeText` & `afterText` and is shown conditionally of `SiteConfig->CookieIsActive`.
 
 
 ## Managing third-party apps/trackers
@@ -43,7 +44,6 @@ Example SCSS customisation
 ```scss
 // !klaro
 html .klaro {
-
     .cookie-modal,
     .cookie-notice {
         a {
@@ -52,6 +52,7 @@ html .klaro {
         .cm-btn {
             cursor: pointer;
             font-size: 14px;
+            border-radius: 0;
         }
     }
     .cookie-notice {
@@ -83,12 +84,15 @@ html .klaro {
     }
 
     .cookie-modal {
+        .cm-header a {
+            @include bold;
+        }
         .cm-app-title {
             font-size: 14px;
         }
         // switch disabled
         .cm-list-label .slider {
-            background-color: $gray-light;
+            background-color: $gray--light;
         }
         // slider-switches
         .cm-list-input:checked + .cm-list-label .slider {
