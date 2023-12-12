@@ -23,7 +23,7 @@ or
 Run `dev/build`
 
 ## Getting started
-The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` wich is applied to ContentController. The config is served with `KlaroConfigController` and available per `/_klaro-config`. You can link consent settings like `<a href="#klaro" onClick="klaro.show();return false;">Cookie consent</a>` or use a ShortCode in CMS. ShortCode `[ConsentLink]` takes parameter `beforeText` & `afterText` and is shown conditionally of `SiteConfig->CookieIsActive`.
+The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` which is applied to ContentController. The config is served with `KlaroConfigController` and available per `/_klaro-config`. You can link consent settings like `<a href="#klaro" onClick="klaro.show();return false;">Cookie consent</a>` or use a ShortCode in CMS. ShortCode `[ConsentLink]` takes parameter `beforeText` & `afterText` and is shown conditionally of `SiteConfig->CookieIsActive`.
 
 
 ## Managing third-party apps/trackers
@@ -35,7 +35,7 @@ To manage third-party scripts and ensure they only run if the user consents with
     data-src="https://cdn.optimizely.com/js/10196010078.js">
 </script>
 ```
-Klaro will then take care of executing the scripts if consent was given (you can chose to execute them before getting explicit consent with `OptOut`).
+Klaro will then take care of executing the scripts if consent was given (you can choose to execute them before getting explicit consent with `OptOut`).
 
 The same method also works for images, stylesheets and other elements with a `src` or `type` attribute.
 

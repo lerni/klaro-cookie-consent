@@ -3,7 +3,7 @@
 use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\View\Parsers\ShortcodeParser;
 
-ShortcodeParser::get('default')->register('ConsentLink', function($arguments, $parser, $shortcode) {
+ShortcodeParser::get('default')->register('ConsentLink', function ($arguments, $parser, $shortcode) {
 
     $siteConfig = SiteConfig::current_site_config();
 
@@ -22,12 +22,11 @@ ShortcodeParser::get('default')->register('ConsentLink', function($arguments, $p
         $afterText = $arguments['afterText'];
     }
 
-    if ($siteConfig->CookieIsActive)
-    {
+    if ($siteConfig->CookieIsActive) {
         $Linkstring = sprintf(
             '%s<a href="#klaro" onClick="klaro.show();return false;">%s</a>%s',
             $beforeText,
-            _t('Kraftausdruck\KlaroCookie.MODALLINK','Cookie settings'),
+            _t('Kraftausdruck\KlaroCookie.MODALLINK', 'Cookie settings'),
             $afterText
         );
     }

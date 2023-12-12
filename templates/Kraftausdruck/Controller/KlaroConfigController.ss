@@ -24,7 +24,7 @@
 				learnMore: '{$ConsentNoticeLearnMore.JS}'
 			},
 			purposes: {
-			<% loop $CookieCategories %>    {$Key.JS}: '{$Title.JS}'<% if not $Last %>,<% end_if %>
+			<% loop $CookieCategories %>    {$Key.JS}: '{$Title.JS}'<% if not $IsLast %>,<% end_if %>
 			<% end_loop %>},
 			contextualConsent: {
 				acceptAlways: '{$ContextualConsentAcceptAlways.JS}',
@@ -47,6 +47,6 @@
 			description : ['{$Purpose.JS}'],
 			purposes : ['{$CookieCategory.Key.JS}'],
 			cookies : {$CookieNamesJS.RAW}
-		}<% if not $Last %>,<% end_if %>
+		}<% if not $IsLast %>,<% end_if %>
 	<% end_loop %>]
 }<% end_with %><% end_cached %>
