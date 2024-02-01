@@ -3,8 +3,8 @@ Silverstripe Klaro [klɛro] implements [KIProtect/klaro](https://github.com/KIPr
 
 
 ## Requirements
-- silverstripe/cms ^4
-- silverstripe/siteconfig ^4
+- silverstripe/cms ^4|^5
+- silverstripe/siteconfig ^4|^5
 ### Compatibility Version
 - There is a [3.x](https://github.com/lerni/klaro-cookie-consent/tree/3.x) branch with a backport for Silverstripe 3.
 - For Silverstripe 4.x [v2](https://github.com/lerni/klaro-cookie-consent/tree/v2) is recommended ATM
