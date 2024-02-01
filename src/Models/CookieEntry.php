@@ -44,6 +44,8 @@ class CookieEntry extends DataObject
 
     public function CookieNamesJS()
     {
+        if($this->CookieName == null) return '[]';
+
         $names = explode(',', $this->CookieName);
         $r = '[';
         if (count($names)) {
