@@ -2,20 +2,35 @@
 // You can change this by specifying the "data-config" attribute on your
 // script take, e.g. like this:
 // <script src="klaro.js" data-config="myConfigVariableName" />
-// You can also disable auto-loading of the consent notice by adding
-// data-no-auto-load=true to the script tag.
 var klaroConfig = {
     // With the 0.7.0 release we introduce a 'version' paramter that will make
-    // if easier for us to keep configuration files backwards-compatible in the future.
+    // it easier for us to keep configuration files backwards-compatible in the future.
     version: 1,
 
     // You can customize the ID of the DIV element that Klaro will create
     // when starting up. If undefined, Klaro will use 'klaro'.
     elementID: 'klaro',
 
+    // You can override CSS style variables here. For IE11, Klaro will
+    // dynamically inject the variables into the CSS. If you still consider
+    // supporting IE9-10 (which you probably shouldn't) you need to use Klaro
+    // with an external stylesheet as the dynamic replacement won't work there.
+    styling: {
+        theme: ['light', 'top', 'wide'],
+    },
+
+    // You can show a description in contextual consent overlays for store 
+    // being empty. In that case the accept always button is omitted. 
+    // The description contains a link for opening the consent manager. 
+    showDescriptionEmptyStore: true,
+
+    // Setting this to true will keep Klaro from automatically loading itself
+    // when the page is being loaded.
+    noAutoLoad: false,
+
     // Setting this to true will render the descriptions of the consent
     // modal and consent notice are HTML. Use with care.
-    htmlTexts: false,
+    htmlTexts: true,
 
     // Setting 'embedded' to true will render the Klaro modal and notice without
     // the modal background, allowing you to e.g. embed them into a specific element
@@ -26,6 +41,12 @@ var klaroConfig = {
     // if you have a large number of services. Users can then enable or disable
     // entire groups of services instead of having to enable or disable every service.
     groupByPurpose: true,
+
+    // You can make the consent notice autofocused by enabling the following option
+    autoFocus: false,
+
+    // You can show a title in the consent notice by enabling the following option
+    showNoticeTitle: false,
 
     // How Klaro should store the user's preferences. It can be either 'cookie'
     // (the default) or 'localStorage'.
@@ -43,6 +64,11 @@ var klaroConfig = {
     // Use this if you want to get consent once for multiple matching domains.
     // If undefined, Klaro will use the current domain.
     //cookieDomain: '.github.com',
+
+    // You can change to cookie path for the consent manager itself.
+    // Use this to restrict the cookie visibility to a specific path.
+    // If undefined, Klaro will use '/' as cookie path.
+    //cookiePath: '/',
 
     // Defines the default state for services (true=enabled by default).
     default: false,
@@ -142,6 +168,7 @@ var klaroConfig = {
         },
         en: {
             consentModal: {
+                title: '<u>test</u>',
                 description:
                     'Here you can see and customize the information that we collect about you. Entries marked as "Example" are just for demonstration purposes and are not really used on this website.',
             },
@@ -188,6 +215,17 @@ var klaroConfig = {
     // This is a list of third-party services that Klaro will manage for you.
     services: [
         {
+            name: 'twitter',
+            default: false,
+            contextualConsentOnly: true,
+            purposes: ['marketing'],
+        },
+        {
+            name: 'youtube',
+            default: true,
+            purposes: ['marketing'],
+        },
+        {
             // Each service should have a unique (and short) name.
             name: 'matomo',
 
@@ -197,7 +235,7 @@ var klaroConfig = {
             // personal information.
             default: true,
 
-            // The title of you service as listed in the consent modal.
+            // The title of your service as listed in the consent modal.
             title: 'Matomo/Piwik',
 
             // The purpose(s) of this service. Will be listed on the consent notice.
