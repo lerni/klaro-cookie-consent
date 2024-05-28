@@ -21,6 +21,7 @@ class KlaroSiteConfigExtension extends DataExtension
 {
     private static $db = [
         'CookieIsActive' => 'Boolean',
+        'ConsentNoticeTitle' => 'Varchar(100)',
         'ConsentNoticeDescription' => 'Text',
         'ConsentNoticeOK' => 'Varchar(100)',
         'ConsentModalTitle' => 'Varchar(100)',
@@ -41,6 +42,7 @@ class KlaroSiteConfigExtension extends DataExtension
     ];
 
     private static $translate = [
+        'ConsentNoticeTitle',
         'ConsentNoticeDescription',
         'ConsentNoticeOK',
         'ConsentNoticeLearnMore',
@@ -60,6 +62,7 @@ class KlaroSiteConfigExtension extends DataExtension
     {
         $tab = 'Root.' . _t(__CLASS__ . '.COOKIETAB', 'CookieConsent');
         $fields->addFieldToTab($tab, CheckboxField::create('CookieIsActive', _t(__CLASS__ . '.CookieIsActive', 'Klaro! active')));
+        $fields->addFieldToTab($tab, TextField::create('ConsentNoticeTitle', _t(__CLASS__ . '.CONSENTNOTICETITLE', 'Notice: Titel')));
         $fields->addFieldToTab($tab, TextareaField::create('ConsentNoticeDescription', _t(__CLASS__ . '.CONSENTNOTICEDESCRIPTION', 'Notice: Description')));
         $fields->addFieldToTab($tab, TextField::create('ConsentNoticeLearnMore', _t(__CLASS__ . '.CONSENTNOTICELEARNMORE', 'Notice: Cookie settings')));
         $fields->addFieldToTab($tab, TextField::create('ConsentNoticeOK', _t(__CLASS__ . '.CONSENTNOTICEOK', 'Notice: OK/accept')));

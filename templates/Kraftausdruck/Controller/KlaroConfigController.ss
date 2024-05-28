@@ -9,6 +9,7 @@
 	privacyPolicy: '{$CookieLinkPrivacy.Link()}',
 	lang: '{$Lang()}',
 	noNotice: false,
+	<% if ConsentNoticeTitle %>showNoticeTitle: true,<% end_if %>
 	translations: {
 		{$Lang()}: {
 			acceptAll: '{$AcceptAll}',
@@ -20,6 +21,7 @@
 				description: '{$ConsentModalDescription.JS}',
 			},
 			consentNotice: {
+				title: '{$ConsentNoticeTitle.JS}',
 				description: '{$ConsentNoticeDescription.JS}',
 				learnMore: '{$ConsentNoticeLearnMore.JS}'
 			},

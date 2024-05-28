@@ -86,6 +86,7 @@ class CookieCategory extends DataObject
             $defaults = [
                 'ConsentNoticeOK' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeOK', 'Accept'),
                 'ConsentNoticeLearnMore' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeLearnMore', 'Cookie settings'),
+                'ConsentNoticeTitle' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeTitle', 'Cookies & Datenschutz'),
                 'ConsentNoticeDescription' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeDescription', 'Auf dieser Webseite werden Cookies für folgende Zwecke eingesetzt: {purposes}.'),
                 'ConsentModalTitle' => _t('Kraftausdruck\KlaroCookie.ConsentModalTitle', 'Verwendete Cookies'),
                 'ConsentModalDescription' => _t('Kraftausdruck\KlaroCookie.ConsentModalDescription', 'Datenschutz-Einstellungen für diese Webseite einsehen und anpassen.'),
