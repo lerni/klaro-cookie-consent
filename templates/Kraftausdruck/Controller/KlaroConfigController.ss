@@ -12,10 +12,10 @@
 	<% if ConsentNoticeTitle %>showNoticeTitle: true,<% end_if %>
 	translations: {
 		{$Lang()}: {
-			acceptAll: '{$AcceptAll}',
-			acceptSelected: '{$AcceptSelected}',
-			decline: '{$Decline}',
-			ok: '<% if $ConsentNoticeOK %>{$ConsentNoticeOK}<% else %>{$AcceptAll}<% end_if %>',
+			acceptAll: '{$AcceptAll.JS}',
+			acceptSelected: '{$AcceptSelected.JS}',
+			decline: '{$Decline.JS}',
+			ok: '<% if $ConsentNoticeOK %>{$ConsentNoticeOK.JS}<% else %>{$AcceptAll.JS}<% end_if %>',
 			consentModal: {
 				title: '{$ConsentModalTitle.JS}',
 				description: '{$ConsentModalDescription.JS}',

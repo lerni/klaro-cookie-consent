@@ -14,8 +14,13 @@ use SilverStripe\Forms\TextareaField;
 use Kraftausdruck\Models\CookieCategory;
 use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldDetailForm;
+use SilverStripe\Forms\GridField\GridFieldEditButton;
+use SilverStripe\Forms\GridField\GridFieldConfig_Base;
+use SilverStripe\Forms\GridField\GridFieldAddNewButton;
+use SilverStripe\Forms\GridField\GridFieldDeleteAction;
+use SilverStripe\Forms\GridField\GridFieldFilterHeader;
 use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
-use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 
 class KlaroSiteConfigExtension extends DataExtension
 {
@@ -79,15 +84,33 @@ class KlaroSiteConfigExtension extends DataExtension
 
         $fields->addFieldToTab($tab, TreeDropdownField::create('CookieLinkPrivacyID', _t(__CLASS__ . '.COOKIELINKPRIVACY', 'Link Privacy Policy'), SiteTree::class), 'AcceptAll');
 
-        $CategoryGridFieldConfig = GridFieldConfig_RecordEditor::create();
-        $CategoryGridFieldConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
+        $CategoryGridFieldConfig = GridFieldConfig_Base::create(20);
+        $CategoryGridFieldConfig->removeComponentsByType([
+            GridFieldFilterHeader::class
+        ]);
+        $CategoryGridFieldConfig->addComponents(
+            new GridFieldEditButton(),
+            new GridFieldDeleteAction(false),
+            new GridFieldDetailForm(),
+            new GridFieldAddNewButton('toolbar-header-left'),
+            new GridFieldOrderableRows('SortOrder')
+        );
         $fields->addFieldToTab(
             $tab,
             GridField::create('CookieCategory', 'Cookie Kategorien', CookieCategory::get(), $CategoryGridFieldConfig)
         );
 
-        $CookieGridFieldConfig = GridFieldConfig_RecordEditor::create();
-        $CookieGridFieldConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
+        $CookieGridFieldConfig = GridFieldConfig_Base::create(20);
+        $CookieGridFieldConfig->removeComponentsByType([
+            GridFieldFilterHeader::class
+        ]);
+        $CookieGridFieldConfig->addComponents(
+            new GridFieldEditButton(),
+            new GridFieldDeleteAction(false),
+            new GridFieldDetailForm(),
+            new GridFieldAddNewButton('toolbar-header-left'),
+            new GridFieldOrderableRows('SortOrder')
+        );
         $fields->addFieldToTab(
             $tab,
             GridField::create('CookieEntry', 'Cookies', CookieEntry::get(), $CookieGridFieldConfig)
