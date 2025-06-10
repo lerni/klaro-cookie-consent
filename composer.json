@@ -22,9 +22,9 @@
 		}
 	],
 	"require": {
-		"silverstripe/cms": "^4 || ^5",
-		"silverstripe/siteconfig": "^4 || ^5",
-		"symbiote/silverstripe-gridfieldextensions": "^3 || ^4"
+		"silverstripe/cms": "^5",
+		"silverstripe/siteconfig": "^5",
+		"symbiote/silverstripe-gridfieldextensions": "^4"
 	},
 	"minimum-stability": "dev",
 	"extra": {

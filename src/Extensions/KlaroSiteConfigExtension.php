@@ -4,9 +4,9 @@ namespace Kraftausdruck\Extensions;
 
 use Locale;
 use SilverStripe\i18n\i18n;
+use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
-use SilverStripe\ORM\DataExtension;
 use SilverStripe\CMS\Model\SiteTree;
 use Kraftausdruck\Models\CookieEntry;
 use SilverStripe\Forms\CheckboxField;
@@ -22,7 +22,7 @@ use SilverStripe\Forms\GridField\GridFieldDeleteAction;
 use SilverStripe\Forms\GridField\GridFieldFilterHeader;
 use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 
-class KlaroSiteConfigExtension extends DataExtension
+class KlaroSiteConfigExtension extends Extension
 {
     private static $db = [
         'CookieIsActive' => 'Boolean',

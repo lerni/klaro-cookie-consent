@@ -27,7 +27,7 @@ class KlaroInitExtension extends Extension
                     ),
                     sprintf(
                         '<%s>; rel=preload; as=script',
-                        ModuleResourceLoader::resourceURL('lerni/klaro-cookie-consent:client/dist/klaro.js')
+                        ModuleResourceLoader::resourceURL('lerni/klaro-cookie-consent:client/dist/klaro-no-css.js')
                     )
                 ];
                 $headers = $this->owner->response->getHeaders();
@@ -41,7 +41,7 @@ class KlaroInitExtension extends Extension
             }
             Requirements::css(ModuleResourceLoader::resourceURL('lerni/klaro-cookie-consent:client/dist/klaro.min.css'));
             Requirements::javascript('/_klaro-config/?m=' . $hash);
-            Requirements::javascript(ModuleResourceLoader::resourceURL('lerni/klaro-cookie-consent:client/dist/klaro.js'));
+            Requirements::javascript(ModuleResourceLoader::resourceURL('lerni/klaro-cookie-consent:client/dist/klaro-no-css.js'));
         }
     }
 }
