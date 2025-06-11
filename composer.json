@@ -9,7 +9,8 @@
 		"Klaro",
 		"gdpr",
 		"dsgvo",
-		"eprivacy"
+		"eprivacy",
+		"consent mode v2"
 	],
 	"homepage": "https://github.com/lerni/klaro-cookie-consent",
 	"license": "BSD-3-Clause",
@@ -30,7 +31,7 @@
 	"extra": {
 		"installer-name": "klaro-cookie-consent",
 		"expose": [
-			"client/dist"
+			"client/node_modules/klaro/dist"
 		]
 	},
 	"support": {

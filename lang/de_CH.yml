@@ -1,10 +1,9 @@
-de:
+de_CH:
   Kraftausdruck\KlaroCookie:
-    MODALLINK: 'Cookie Einstellungen'
     ConsentNoticeDescription: 'Auf dieser Webseite werden Cookies für folgende Zwecke eingesetzt: {purposes}.'
     ConsentModalTitle: 'Verwendete Cookies'
     ConsentModalDescription: 'Datenschutz-Einstellungen für diese Webseite einsehen und anpassen.'
-    ConsentNoticeOK: 'OK'
+    ConsentNoticeOK: 'Alle zustimmen'
     ConsentNoticeLearnMore: 'Cookie Einstellungen'
     ConsentModalPrivacyPolicyName: 'Datenschutzerklärung'
     ConsentModalPrivacyPolicyText: 'Details siehe {privacyPolicy}.'

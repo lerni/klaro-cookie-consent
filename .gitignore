@@ -6,4 +6,6 @@
 **/.vscode
 /todo**
 /client/*
-!/client/dist/
+!/client/package.json
+!/client/package-lock.json
+!/client/node_modules/klaro/dist/

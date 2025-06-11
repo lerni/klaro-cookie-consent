@@ -1,34 +1,60 @@
+---
+Only:
+  environment: 'dev'
+  # locale: 'de_CH'
+---
 Kraftausdruck\Models\CookieCategory:
-  OnInit:
-    Notwendig:
-      Required: true
-      Title: Notwendig
+  default_records:
+    notwendig:
+      ID: 1
+      Title: 'Notwendig'
       Content: 'notwendig'
-      Key: 'required'
-      ConsentNoticeLearnMore: 'Cookie Einstellungen'
-      CookieEntries:
-        Title: 'klaro! consent manager'
-        Provider: 'Eigentümer dieser Website'
-        Purpose: 'Speichert Zustimmung, Ablehnung von Cookies.'
-        Policy: '/rechtliches'
-        CookieName: 'klaro'
-        CookieKey: 'klaro'
-        Time: '1 Jahr'
-    Marketing:
-      Title: Marketing
+      Key: 'notwendig'
+      Required: true
+      SortOrder: 1
+    marketing:
+      ID: 2
+      Title: 'Marketing'
       Content: 'marketing'
       Key: 'marketing'
-      CookieEntries:
-        Title: 'Google Analytics'
-        Provider: 'Google LLC'
-        Purpose: 'Cookie von Google für Website-Analysen. Statistische Daten, wie Besucher die Website nutzen.'
-        Policy: 'https://policies.google.com/privacy?hl=de'
-        CookieName: '_ga,_gat,_gid'
-        CookieKey: 'google-analytics'
-        Default: 'false'
-        OptOut: 'false'
-        Time: '2 Jahre'
-    Extern:
-      Title: extern
+      SortOrder: 2
+    extern:
+      ID: 3
+      Title: 'Extern'
       Content: 'extern'
       Key: 'extern'
+      SortOrder: 3
+Kraftausdruck\Models\CookieEntry:
+  default_records:
+    Klaro:
+      Title: 'klaro! consent manager'
+      Purpose: 'Speichert Zustimmung, Ablehnung von Cookies.'
+      CookieName: 'klaro'
+      CookieKey: 'klaro'
+      Default: 'false'
+      OptOut: 'false'
+      CookieCategoryID: 1
+    PHPSESSID:
+      Title: 'PHP Session'
+      Purpose: 'Speichert die PHP Session-ID für eine eindeutige Benutzerkennung. Cookie wird gelöscht, wenn der Browser geschlossen wird.'
+      CookieName: 'PHPSESSID'
+      CookieKey: 'PHPSESSID'
+      Default: 'true'
+      OptOut: 'false'
+      CookieCategoryID: 1
+    Analytics:
+      Title: 'Google Analytics'
+      Purpose: 'Cookie von Google für Website-Analysen. Statistische Daten, wie Besucher die Website nutzen.'
+      CookieName: '_ga,_gat,_gid'
+      CookieKey: 'google-analytics'
+      Default: 'false'
+      OptOut: 'false'
+      CookieCategoryID: 2
+    Clarity:
+      Title: 'Microsoft Clarity'
+      Purpose: 'Cookie von Microsoft für Website-Analysen. Statistische Daten, wie Besucher die Website nutzen.'
+      CookieName: /^_clck.*$/
+      CookieKey: 'clarity'
+      Default: 'false'
+      OptOut: 'false'
+      CookieCategoryID: 2
