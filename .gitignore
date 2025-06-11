@@ -8,4 +8,11 @@
 /client/*
 !/client/package.json
 !/client/package-lock.json
+!/client/node_modules/
+/client/node_modules/*
+!/client/node_modules/klaro/
+/client/node_modules/klaro/*
 !/client/node_modules/klaro/dist/
+!/client/node_modules/klaro/dist/*
+/client/node_modules/klaro/dist/assets/*
+/client/node_modules/klaro/dist/examples/*
