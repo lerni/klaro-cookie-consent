@@ -6,22 +6,24 @@ use SilverStripe\ORM\DB;
 use SilverStripe\i18n\i18n;
 use SilverStripe\Dev\BuildTask;
 use Symfony\Component\Yaml\Yaml;
-use Kraftausdruck\Models\CookieCategory;
 use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\PolyExecution\PolyOutput;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
 
 class KlaroDefaults extends BuildTask
 {
-    protected $title = 'Manage Klaro! Records';
-    protected $description = 'Creates defaults and export entries';
+    protected string $title = 'Manage Klaro! Records';
+    protected static string $description = 'Creates defaults and export entries';
 
     private static $segment = 'klaro-defaults-export';
 
-    public function run($request)
+    protected function execute(InputInterface $input, PolyOutput $output): int
     {
 
         $modulePath = dirname(dirname(dirname(__FILE__)));
 
-        $locale = $request->getVar('locale') ?: i18n::config()->get('default_locale');
+        $locale = $input->getOption('locale') ?: i18n::config()->get('default_locale');
         $language = i18n::getData()->langFromLocale($locale);
 
         DB::alteration_message('just locale: ' . $locale, "info");
@@ -121,5 +123,7 @@ class KlaroDefaults extends BuildTask
                 DB::alteration_message('No SiteConfig updates needed - all fields already have values', 'info');
             }
         }
+
+        return Command::SUCCESS;
     }
 }

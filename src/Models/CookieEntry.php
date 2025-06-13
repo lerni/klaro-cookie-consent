@@ -2,8 +2,8 @@
 
 namespace Kraftausdruck\Models;
 
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\Forms\RequiredFields;
 use Kraftausdruck\Models\CookieCategory;
 
 class CookieEntry extends DataObject
@@ -35,7 +35,7 @@ class CookieEntry extends DataObject
 
     public function getCMSValidator()
     {
-        return new RequiredFields([
+        return new RequiredFieldsValidator([
             'Title',
             'CookieName',
             'Provider',
