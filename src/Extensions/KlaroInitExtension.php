@@ -2,11 +2,12 @@
 
 namespace  Kraftausdruck\Extensions;
 
-use SilverStripe\i18n\i18n;
 use SilverStripe\Core\Extension;
 use SilverStripe\View\Requirements;
 use SilverStripe\Core\Config\Config;
+use Kraftausdruck\Models\CookieEntry;
 use SilverStripe\SiteConfig\SiteConfig;
+use Kraftausdruck\Models\CookieCategory;
 use SilverStripe\Core\Manifest\ModuleResourceLoader;
 
 class KlaroInitExtension extends Extension
@@ -17,7 +18,16 @@ class KlaroInitExtension extends Extension
         $preconnect = Config::inst()->get('Kraftausdruck\Extensions\KlaroInitExtension', 'preconnect');
 
         if ($siteConfig->CookieIsActive && $this->owner->response) {
-            $hash = substr(md5($siteConfig->LastEdited . i18n::get_locale()), 0, 12);
+            // cachebooster similar to template caching
+            $hashComponents = [
+                $siteConfig->LastEdited,
+                CookieCategory::get()->max('LastEdited'),
+                CookieCategory::get()->count(),
+                CookieEntry::get()->max('LastEdited'),
+                CookieEntry::get()->count()
+            ];
+
+            $hash = substr(md5(implode('|', $hashComponents)), 0, 12);
             if ($preconnect === 'true') {
                 $additionalLinkHeaders = [
                     '</_klaro-config/?m=' . $hash . '>; rel=preload; as=script',
