@@ -19,6 +19,11 @@ class CookieCategory extends DataObject
         'SortOrder' => 'Int'
     ];
 
+    // do not translate with fluent
+    private static $field_exclude = [
+        'Key'
+    ];
+
     private static $has_many = [
         'CookieEntries' => CookieEntry::class
     ];

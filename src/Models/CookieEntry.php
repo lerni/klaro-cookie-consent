@@ -14,15 +14,20 @@ class CookieEntry extends DataObject
 
     private static $db = [
         'Title' => 'Varchar',
-        'CookieKey' => 'Varchar',
-        'Provider' => 'Varchar',
+        'CookieKey' => 'Varchar', // never translate
+        // 'Provider' => 'Varchar',
         'Purpose' => 'Text',
-        'Policy' => 'Varchar',
+        // 'Policy' => 'Varchar',
         'CookieName' => 'Varchar',
         'Default' => 'Enum("false,true", "false")',
         'OptOut' => 'Enum("false,true", "false")',
-        'Time' => 'Varchar',
+        // 'Time' => 'Varchar',
         'SortOrder' => 'Int'
+    ];
+
+    // do not translate with fluent
+    private static $field_exclude = [
+        'CookieKey'
     ];
 
     private static $has_one = [

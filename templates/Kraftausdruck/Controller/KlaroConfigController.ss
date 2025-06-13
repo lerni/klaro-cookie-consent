@@ -1,4 +1,4 @@
-<% cached 'CookieConfig', $Locale, $SiteConfig.LastEdited, $List('Kraftausdruck\Models\CookieCategory').max('LastEdited'), $List('Kraftausdruck\Models\CookieCategory').count(), $List('Kraftausdruck\Models\CookieEntry').max('LastEdited'), $List('Kraftausdruck\Models\CookieEntry').count() %>
+<% cached 'CookieConfig', $SiteConfig.LastEdited, $List('Kraftausdruck\Models\CookieCategory').max('LastEdited'), $List('Kraftausdruck\Models\CookieCategory').count(), $List('Kraftausdruck\Models\CookieEntry').max('LastEdited'), $List('Kraftausdruck\Models\CookieEntry').count() %>
 <% with $SiteConfig %>var klaroConfig = {
 	CookieIsActive: '{$CookieIsActive}',
 	elementID: 'klaro',
@@ -6,12 +6,11 @@
 	acceptAll: true,
 	default: false,
 	cookieExpiresAfterDays: 365,
-	privacyPolicy: '{$CookieLinkPrivacy.Link()}',
-	lang: '{$Lang()}',
 	noNotice: false,
 	<% if ConsentNoticeTitle %>showNoticeTitle: true,<% end_if %>
-	translations: {
-		{$Lang()}: {
+	translations: {<% loop $Up.LocalisedSiteConfigs %>
+		{$KLang()}: {
+			privacyPolicy: '{$CookieLinkPrivacy.Link()}',
 			acceptAll: '{$AcceptAll.JS}',
 			acceptSelected: '{$AcceptSelected.JS}',
 			decline: '{$Decline.JS}',
@@ -26,7 +25,7 @@
 				learnMore: '{$ConsentNoticeLearnMore.JS}'
 			},
 			purposes: {
-			<% loop $CookieCategories %>    {$Key.JS}: '{$Title.JS}'<% if not $IsLast %>,<% end_if %>
+			<% loop $LocalizedCookieCategories %>    {$Key.JS}: '{$Title.JS}'<% if not $IsLast %>,<% end_if %>
 			<% end_loop %>},
 			contextualConsent: {
 				acceptAlways: '{$ContextualConsentAcceptAlways.JS}',
@@ -37,18 +36,23 @@
 				name: '{$ConsentModalPrivacyPolicyName.JS}',
 				text: '{$ConsentModalPrivacyPolicyText.JS}'
 			}
-		}
+		}<% if not $IsLast %>,<% end_if %>
+		<% end_loop %>
 	},
-	services : [
-	<% loop $CookieEntries %> {
+	services: [
+		<% loop $Up.GlobalServices %> {
 			name : '{$CookieKey.JS}',
 			<% if $CookieCategory.Required %>required: {$CookieCategory.Required},<% end_if %>
 			default: {$Default},
 			optOut: {$OptOut},
-			title : '{$Title.JS}',
-			description : ['{$Purpose.JS}'],
 			purposes : ['{$CookieCategory.Key.JS}'],
-			cookies : {$CookieNamesJS.RAW}
+			cookies : {$CookieNamesJS.RAW},
+			translations: {<% loop $ServiceTranslations %>
+				{$KLang}: {
+					title: '{$Title.JS}',
+					description: '{$Description.JS}'
+				}<% if not $IsLast %>,<% end_if %>
+			<% end_loop %>}
 		}<% if not $IsLast %>,<% end_if %>
-	<% end_loop %>]
+		<% end_loop %>]
 }<% end_with %><% end_cached %>
