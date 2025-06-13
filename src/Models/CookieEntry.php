@@ -14,14 +14,11 @@ class CookieEntry extends DataObject
 
     private static $db = [
         'Title' => 'Varchar',
-        'CookieKey' => 'Varchar', // never translate
-        // 'Provider' => 'Varchar',
+        'CookieKey' => 'Varchar',
         'Purpose' => 'Text',
-        // 'Policy' => 'Varchar',
         'CookieName' => 'Varchar',
         'Default' => 'Enum("false,true", "false")',
         'OptOut' => 'Enum("false,true", "false")',
-        // 'Time' => 'Varchar',
         'SortOrder' => 'Int'
     ];
 
@@ -43,32 +40,22 @@ class CookieEntry extends DataObject
         return new RequiredFields([
             'Title',
             'CookieName',
-            'Provider',
             'Purpose'
         ]);
     }
 
     public function CookieNamesJS()
     {
-        // getCMSValidator should prevent empty value?
-        if($this->CookieName == null) return '[]';
+        $names = array_map('trim', explode(',', (string)$this->CookieName));
+        $names = array_filter($names); // Remove empty values
 
-        $names = explode(',', $this->CookieName);
-        $r = '[';
-        if (count($names)) {
-            $i = 0;
-            $len = count($names);
-            foreach ($names as $name) {
-                $r .= '"' . $name . '"';
-                if ($i == $len - 1) {
-                    $r .= ']';
-                } else {
-                    $r .= ', ';
-                }
-                $i++;
-            }
+        if (empty($names)) {
+            return '[]';
         }
-        return $r;
+
+        return '[' . implode(', ', array_map(function($name) {
+            return json_encode($name, JSON_UNESCAPED_UNICODE);
+        }, $names)) . ']';
     }
 
     public function getCMSFields()

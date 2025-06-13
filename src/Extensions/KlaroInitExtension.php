@@ -1,6 +1,6 @@
 <?php
 
-namespace  Kraftausdruck\Extensions;
+namespace Kraftausdruck\Extensions;
 
 use SilverStripe\Core\Extension;
 use SilverStripe\View\Requirements;

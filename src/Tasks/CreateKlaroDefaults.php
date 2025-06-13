@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tasks;
+namespace Kraftausdruck\Tasks;
 
 use SilverStripe\ORM\DB;
 use SilverStripe\i18n\i18n;

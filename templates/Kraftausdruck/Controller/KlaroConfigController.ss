@@ -1,6 +1,6 @@
 <% cached 'CookieConfig', $SiteConfig.LastEdited, $List('Kraftausdruck\Models\CookieCategory').max('LastEdited'), $List('Kraftausdruck\Models\CookieCategory').count(), $List('Kraftausdruck\Models\CookieEntry').max('LastEdited'), $List('Kraftausdruck\Models\CookieEntry').count() %>
 <% with $SiteConfig %>var klaroConfig = {
-	CookieIsActive: '{$CookieIsActive}',
+	CookieIsActive: <% if $CookieIsActive %>true<% else %>false<% end_if %>,
 	elementID: 'klaro',
 	cookieName: 'klaro',
 	acceptAll: true,
@@ -40,19 +40,19 @@
 		<% end_loop %>
 	},
 	services: [
-		<% loop $Up.GlobalServices %> {
-			name : '{$CookieKey.JS}',
-			<% if $CookieCategory.Required %>required: {$CookieCategory.Required},<% end_if %>
-			default: {$Default},
-			optOut: {$OptOut},
-			purposes : ['{$CookieCategory.Key.JS}'],
-			cookies : {$CookieNamesJS.RAW},
-			translations: {<% loop $ServiceTranslations %>
-				{$KLang}: {
-					title: '{$Title.JS}',
-					description: '{$Description.JS}'
-				}<% if not $IsLast %>,<% end_if %>
-			<% end_loop %>}
-		}<% if not $IsLast %>,<% end_if %>
-		<% end_loop %>]
+	<% loop $Up.GlobalServices %> {
+		name : '{$CookieKey.JS}',
+		<% if $CookieCategory.Required %>required: {$CookieCategory.Required},<% end_if %>
+		default: {$Default},
+		optOut: {$OptOut},
+		purposes : ['{$CookieCategory.Key.JS}'],
+		cookies : {$CookieNamesJS.RAW},
+		translations: {<% loop $ServiceTranslations %>
+			{$KLang}: {
+				title: '{$Title.JS}',
+				description: '{$Description.JS}'
+			}<% if not $IsLast %>,<% end_if %>
+		<% end_loop %>}
+	}<% if not $IsLast %>,<% end_if %>
+	<% end_loop %>]
 }<% end_with %><% end_cached %>

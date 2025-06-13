@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dev\Tasks;
+namespace Kraftausdruck\Tasks;
 
 use SilverStripe\ORM\DB;
 use SilverStripe\Dev\BuildTask;
