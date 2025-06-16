@@ -9,7 +9,7 @@ Silverstripe Klaro [klɛro] implements [KIProtect/klaro](https://github.com/KIPr
 ### Compatibility Version
 - There is a [3.x](https://github.com/lerni/klaro-cookie-consent/tree/3.x) branch with a backport for Silverstripe 3.
 - For Silverstripe 4.x & 5.x [v2](https://github.com/lerni/klaro-cookie-consent/tree/v2) is recommended ATM
-- For Silverstripe 5.x [main](https://github.com/lerni/klaro-cookie-consent/tree/main) supports consent-mode-v2 & resolves some long standing issues (default values, better fluent support, Consent Mode V2)
+- For Silverstripe 5.x [5.x](https://github.com/lerni/klaro-cookie-consent/tree/5.x) supports consent-mode-v2 & resolves some long standing issues (default values, better fluent support, Consent Mode V2)
 ### Suggested
 - lerni/silverstripe-tracking
 
@@ -50,7 +50,7 @@ On Accept: gtag('consent', 'update', {'analytics_storage': 'granted'});
 
 `composer require lerni/klaro-cookie-consent:dev-v2`,
 `composer require lerni/klaro-cookie-consent:dev-3.x`,
-`composer require lerni/klaro-cookie-consent:dev-main`
+`composer require lerni/klaro-cookie-consent:dev-5.x`
 
 Run `dev/build`
 
