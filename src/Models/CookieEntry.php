@@ -3,10 +3,10 @@
 namespace Kraftausdruck\Models;
 
 use SilverStripe\ORM\DataObject;
-use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\TextareaField;
 use Kraftausdruck\Models\CookieCategory;
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 
 class CookieEntry extends DataObject
 {
@@ -63,7 +63,7 @@ class CookieEntry extends DataObject
 
     public function getCMSValidator()
     {
-        return new RequiredFields([
+        return new RequiredFieldsValidator([
             'Title',
             'CookieName',
             'Purpose'

@@ -6,46 +6,52 @@ use SilverStripe\ORM\DB;
 use SilverStripe\i18n\i18n;
 use SilverStripe\Dev\BuildTask;
 use Symfony\Component\Yaml\Yaml;
-use Kraftausdruck\Models\CookieCategory;
 use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\PolyExecution\PolyOutput;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
 
 class KlaroDefaults extends BuildTask
 {
-    protected $title = 'Manage Klaro! Records';
-    protected $description = 'Creates defaults and export entries';
+    protected string $title = 'Manage Klaro! Records';
+    protected static string $description = 'Creates defaults and export entries';
 
     private static $segment = 'klaro-defaults-export';
 
-    public function run($request)
+    protected function execute(InputInterface $input, PolyOutput $output): int
     {
+        try {
+            $modulePath = dirname(dirname(dirname(__FILE__)));
 
-        $modulePath = dirname(dirname(dirname(__FILE__)));
+            // In SS6 BuildTask, we can't easily add custom options
+            // Use current i18n locale or default locale
+            $locale = i18n::get_locale() ?: i18n::config()->get('default_locale');
 
-        $locale = $request->getVar('locale') ?: i18n::config()->get('default_locale');
-        $language = i18n::getData()->langFromLocale($locale);
+            $language = i18n::getData()->langFromLocale($locale);
 
-        DB::alteration_message('just locale: ' . $locale, "info");
-        DB::alteration_message('language only: ' . $language, "info");
-        DB::alteration_message('rfc1766: ' . i18n::convert_rfc1766($locale), "info");
+            $output->writeln("Using locale: {$locale}");
+            $output->writeln("Language: {$language}");
+            $output->writeln("RFC1766: " . i18n::convert_rfc1766($locale));
 
-        // Check for translations from Klaro
-        $translationsFile = $modulePath . '/all-translations-from-klaro.yml';
-        $defaults_from_klaro = [];
+            // Check for translations from Klaro
+            $translationsFile = $modulePath . '/all-translations-from-klaro.yml';
+            $defaults_from_klaro = [];
 
-        if (file_exists($translationsFile)) {
+            if (!file_exists($translationsFile)) {
+                $output->writeln("<error>Translation file not found: {$translationsFile}</error>");
+                return Command::FAILURE;
+            }
+
             $allTranslations = Yaml::parseFile($translationsFile);
 
-            if (isset($allTranslations[$language])) {
-                $defaults_from_klaro = $allTranslations[$language];
-                DB::alteration_message('Found ' . count($defaults_from_klaro) . ' translation entries for language: ' . $language, "info");
-            } else {
-                DB::alteration_message('No translation entries found for language: ' . $language, "info");
+            if (!isset($allTranslations[$language])) {
+                $output->writeln("<warning>No translation entries found for language: {$language}</warning>");
+                return Command::SUCCESS; // Not an error, just no translations available
             }
-        } else {
-            DB::alteration_message('Translation file not found: ' . $translationsFile, "error");
-        }
 
-        if (count($defaults_from_klaro)) {
+            $defaults_from_klaro = $allTranslations[$language];
+            $output->writeln("Found " . count($defaults_from_klaro) . " translation entries for language: {$language}");
+
             // Create mapping between Klaro translations and SiteConfig fields
             $klaroToSiteConfigMapping = [
                 'acceptAll' => 'AcceptAll',
@@ -85,23 +91,23 @@ class KlaroDefaults extends BuildTask
                 if ($klaroValue && empty($siteConfig->{$siteConfigField})) {
                     $siteConfig->{$siteConfigField} = $klaroValue;
                     $siteConfigNeedsWrite = true;
-                    DB::alteration_message("Set {$siteConfigField} from Klaro: {$klaroValue}", "info");
+                    $output->writeln("Set {$siteConfigField} from Klaro: {$klaroValue}");
                 }
             }
 
             // Override with custom SilverStripe translations if available
             $customDefaults = [
-                'ConsentNoticeOK' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeOK', ''),
-                'ConsentNoticeLearnMore' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeLearnMore', ''),
-                'ConsentNoticeTitle' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeTitle', ''),
-                'ConsentNoticeDescription' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeDescription', ''),
-                'ConsentModalTitle' => _t('Kraftausdruck\KlaroCookie.ConsentModalTitle', ''),
-                'ConsentModalDescription' => _t('Kraftausdruck\KlaroCookie.ConsentModalDescription', ''),
-                'ConsentModalPrivacyPolicyName' => _t('Kraftausdruck\KlaroCookie.ConsentModalPrivacyPolicyName', ''),
-                'ConsentModalPrivacyPolicyText' => _t('Kraftausdruck\KlaroCookie.ConsentModalPrivacyPolicyText', ''),
-                'AcceptAll' => _t('Kraftausdruck\KlaroCookie.AcceptAll', ''),
-                'AcceptSelected' => _t('Kraftausdruck\KlaroCookie.AcceptSelected', ''),
-                'Decline' => _t('Kraftausdruck\KlaroCookie.Decline', '')
+                'ConsentNoticeOK' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeOK', "That's ok"),
+                'ConsentNoticeLearnMore' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeLearnMore', 'Let me choose'),
+                'ConsentNoticeTitle' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeTitle', 'Cookie Consent'),
+                'ConsentNoticeDescription' => _t('Kraftausdruck\KlaroCookie.ConsentNoticeDescription', 'Hi! Could we please enable some additional services for {purposes}? You can always change or withdraw your consent later.'),
+                'ConsentModalTitle' => _t('Kraftausdruck\KlaroCookie.ConsentModalTitle', 'Services we would like to use'),
+                'ConsentModalDescription' => _t('Kraftausdruck\KlaroCookie.ConsentModalDescription', "Here you can assess and customize the services that we'd like to use on this website. You're in charge! Enable or disable services as you see fit."),
+                'ConsentModalPrivacyPolicyName' => _t('Kraftausdruck\KlaroCookie.ConsentModalPrivacyPolicyName', 'privacy policy'),
+                'ConsentModalPrivacyPolicyText' => _t('Kraftausdruck\KlaroCookie.ConsentModalPrivacyPolicyText', 'To learn more, please read our {privacyPolicy}.'),
+                'AcceptAll' => _t('Kraftausdruck\KlaroCookie.AcceptAll', 'Accept all'),
+                'AcceptSelected' => _t('Kraftausdruck\KlaroCookie.AcceptSelected', 'Accept selected'),
+                'Decline' => _t('Kraftausdruck\KlaroCookie.Decline', 'I decline')
             ];
 
             // Override Klaro values with custom translations if they exist
@@ -109,17 +115,23 @@ class KlaroDefaults extends BuildTask
                 if (!empty($customValue) && $customValue !== $field) {
                     $siteConfig->{$field} = $customValue;
                     $siteConfigNeedsWrite = true;
-                    DB::alteration_message("Overrode {$field} with custom translation: {$customValue}", "info");
+                    $output->writeln("Overrode {$field} with custom translation: {$customValue}");
                 }
             }
 
             // Write SiteConfig if any changes were made
             if ($siteConfigNeedsWrite) {
                 $siteConfig->write();
-                DB::alteration_message('Updated SiteConfig with Klaro defaults and custom translations', 'changed');
+                $output->writeln('<info>Updated SiteConfig with Klaro defaults and custom translations</info>');
             } else {
-                DB::alteration_message('No SiteConfig updates needed - all fields already have values', 'info');
+                $output->writeln('<comment>No SiteConfig updates needed - all fields already have values</comment>');
             }
+
+            return Command::SUCCESS;
+
+        } catch (\Exception $e) {
+            $output->writeln("<error>Error executing KlaroDefaults task: " . $e->getMessage() . "</error>");
+            return Command::FAILURE;
         }
     }
 }

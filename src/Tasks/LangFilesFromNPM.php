@@ -5,17 +5,21 @@ namespace Kraftausdruck\Tasks;
 use SilverStripe\ORM\DB;
 use SilverStripe\Dev\BuildTask;
 use Symfony\Component\Yaml\Yaml;
+use SilverStripe\PolyExecution\PolyOutput;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
 
 // this task imports translations from NPM package
 // it's meant to be run on dev-env only
 class LangFilesFromNPM extends BuildTask
 {
-    protected $description = 'generates language files based on klaro yml files';
+    protected static string $description = 'generates language files based on klaro yml files';
     private static $segment = 'gen-lang-files';
 
-	public function run($request)
+	protected function execute(InputInterface $input, PolyOutput $output): int
     {
         $this->generateLangFiles();
+        return Command::SUCCESS;
     }
 
     function generateLangFiles()
