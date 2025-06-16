@@ -107,7 +107,7 @@ class CookieEntry extends DataObject
         $consentModeTypes = singleton(CookieEntry::class)->dbObject('ConsentModeType')->enumValues();
         $consentModeDefaults = singleton(CookieEntry::class)->dbObject('ConsentModeDefault')->enumValues();
 
-        $fields->addFieldsToTab('Root.ConsentMode', [
+        $fields->addFieldsToTab('Root.Main', [
             DropdownField::create('ConsentModeType', _t(__CLASS__ . '.CONSENTMODETYPE', 'Google Consent Mode Type'))
                 ->setSource($consentModeTypes)
                 ->setEmptyString(_t(__CLASS__ . '.CONSENTMODETYPEEMPTY', '-- Select Type --'))
