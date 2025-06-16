@@ -38,7 +38,7 @@
 		"issues": "https://github.com/lerni/klaro-cookie-consent/issues"
 	},
 	"suggest": {
-		"lerni/silverstripe-googleanalytics": "Silverstripe Google Analytics & Tag Manager Module"
+		"lerni/silverstripe-tracking": "Google Analytics, Tag Manager & Microsoft Clarity Tracking Module for Silverstripe"
 	},
 	"autoload": {
 		"psr-4": {
