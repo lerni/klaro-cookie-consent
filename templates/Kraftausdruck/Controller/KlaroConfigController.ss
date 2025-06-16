@@ -1,5 +1,21 @@
 <% cached 'CookieConfig', $SiteConfig.LastEdited, $List('Kraftausdruck\Models\CookieCategory').max('LastEdited'), $List('Kraftausdruck\Models\CookieCategory').count(), $List('Kraftausdruck\Models\CookieEntry').max('LastEdited'), $List('Kraftausdruck\Models\CookieEntry').count() %>
-<% with $SiteConfig %>var klaroConfig = {
+<% with $SiteConfig %>
+// Consent Mode v2 defaults
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+
+// default consent state (before Klaro loads)
+gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'functionality_storage': 'granted',
+    'personalization_storage': 'denied',
+    'security_storage': 'granted'
+});
+
+var klaroConfig = {
 	CookieIsActive: <% if $CookieIsActive %>true<% else %>false<% end_if %>,
 	elementID: 'klaro',
 	cookieName: 'klaro',
@@ -42,11 +58,32 @@
 	services: [
 	<% loop $Up.GlobalServices %> {
 		name : '{$CookieKey.JS}',
-		<% if $CookieCategory.Required %>required: {$CookieCategory.Required},<% end_if %>
+		required: <% if $RequiredWithInherence == 'true' %>true<% else %>false<% end_if %>,
 		default: {$Default},
 		optOut: {$OptOut},
 		purposes : ['{$CookieCategory.Key.JS}'],
 		cookies : {$CookieNamesJS.RAW},
+		<% if $ConsentModeType %>
+		onAccept: `
+			// Google Consent Mode update
+			gtag('consent', 'update', {'$ConsentModeType': 'granted'});
+			<% if $OnAcceptCallback %>
+			// Custom callback
+			$OnAcceptCallback.RAW
+			<% end_if %>
+		`,
+		onDecline: `
+			// Google Consent Mode update
+			gtag('consent', 'update', {'$ConsentModeType': 'denied'});
+			<% if $OnDeclineCallback %>
+			// Custom callback
+			$OnDeclineCallback.RAW
+			<% end_if %>
+		`,
+		<% else %>
+		<% if $OnAcceptCallback %>onAccept: `$OnAcceptCallback.RAW`,<% end_if %>
+		<% if $OnDeclineCallback %>onDecline: `$OnDeclineCallback.RAW`,<% end_if %>
+		<% end_if %>
 		translations: {<% loop $ServiceTranslations %>
 			{$KLang}: {
 				title: '{$Title.JS}',

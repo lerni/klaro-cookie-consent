@@ -11,7 +11,38 @@ Silverstripe Klaro [klɛro] implements [KIProtect/klaro](https://github.com/KIPr
 - For Silverstripe 4.x & 5.x [v2](https://github.com/lerni/klaro-cookie-consent/tree/v2) is recommended ATM
 - For Silverstripe 5.x [main](https://github.com/lerni/klaro-cookie-consent/tree/main) supports consent-mode-v2 & resolves some long standing issues (default values, better fluent support, Consent Mode V2)
 ### Suggested
-- lerni/erni/silverstripe-googleanalytics
+- lerni/silverstripe-googleanalytics
+
+## Google Consent Mode v2 Integration
+
+This module includes support for Google Consent Mode v2, providing privacy-compliant tracking and enhanced conversion modeling capabilities.
+
+### Key Features
+- **Automatic Consent Updates**: When users accept or decline services, Google's consent state is automatically updated
+- **Enhanced Conversion Modeling**: Supports advanced consent mode for better data insights while respecting privacy
+- **All Consent Types**: Supports both original and v2 consent parameters:
+  - `analytics_storage` - For Google Analytics
+  - `ad_storage` - For advertising cookies  
+  - `ad_user_data` - For user data in advertising (v2)
+  - `ad_personalization` - For personalized advertising (v2)
+  - `functionality_storage` - For functional cookies
+  - `personalization_storage` - For personalization
+  - `security_storage` - For security purposes
+
+### Setup
+1. Install the module and run `dev/build`
+2. Go to **Settings > Cookie Consent** in the CMS
+3. Enable "Cookie Is Active"
+4. Configure your services with appropriate **Google Consent Types**
+5. Add custom JavaScript callbacks if needed
+
+### Example Configuration
+```
+Service: Google Analytics
+Consent Type: analytics_storage
+Default State: denied
+On Accept: gtag('consent', 'update', {'analytics_storage': 'granted'});
+```
 
 
 ## Installation
@@ -39,6 +70,38 @@ To manage third-party scripts and ensure they only run if the user consents with
 Klaro will then take care of executing the scripts if consent was given (you can choose to execute them before getting explicit consent with `OptOut`).
 
 The same method also works for images, stylesheets and other elements with a `src` or `type` attribute.
+
+## Advanced Configuration
+
+### Custom Consent Callbacks
+For advanced use cases, you can add custom JavaScript that runs when users accept or decline services:
+
+```javascript
+// Example: Custom Google Analytics setup
+onAccept: `
+    gtag('consent', 'update', {'analytics_storage': 'granted'});
+    gtag('config', 'GA_MEASUREMENT_ID', {
+        custom_map: {'custom_parameter': 'value'}
+    });
+`
+
+// Example: Microsoft Clarity integration  
+onAccept: `
+    if (typeof clarity !== 'undefined') {
+        clarity('consent');
+    }
+`
+```
+
+### Integration with Google Tag Manager
+When using Google Tag Manager, the consent mode updates are automatically handled:
+
+```html
+<!-- Your GTM script will automatically respect consent signals -->
+<script data-type="application/javascript" data-name="google-analytics">
+    gtag('config', 'GTM-XXXXXXX');
+</script>
+```
 
 # Styling
 Example SCSS customisation
@@ -200,4 +263,7 @@ html .klaro {
 ```
 
 # Todo
-- add template-parser to add data-attributes and ditch suggested modules from composer
+- add template-parser to add data-attributes
+
+## Resources
+- [Klaro! Documentation](https://klaro.kiprotect.com/docs)
