@@ -30,6 +30,8 @@ de_CH:
     CONSENTMODEDEFAULTDESCRIPTION: 'Standard-Status bevor Benutzer Einverständnis gibt'
     ONACCEPTCALLBACKDESCRIPTION: 'JavaScript-Code der ausgeführt wird wenn Benutzer den Service akzeptiert (optional)'
     ONDECLINECALLBACKDESCRIPTION: 'JavaScript-Code der ausgeführt wird wenn Benutzer den Service ablehnt (optional)'
+  Kraftausdruck\Models\CookieCategory:
+    RequiredCheckboxDescription: 'Wird an CookieEntries vererbt falls aktiviert und dort nicht explizit anders eingestellt.'
   Kraftausdruck\Extensions\KlaroSiteConfigExtension:
     COOKIETAB: 'CookieConsent'
     CookieIsActive: 'Klaro! aktiv'

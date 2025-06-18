@@ -55,6 +55,10 @@ class CookieCategory extends DataObject
             'SortOrder'
         ]);
 
+        if ($RequiredCheckbox = $fields->dataFieldByName('Required')) {
+            $RequiredCheckbox->setDescription(_t( __CLASS__ . '.RequiredCheckboxDescription', 'If set, inherited to CookieEntries if not explicitly set otherwise there.'));
+        }
+
         return $fields;
     }
 }
