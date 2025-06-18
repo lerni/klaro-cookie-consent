@@ -56,9 +56,15 @@ On Accept: gtag('consent', 'update', {'analytics_storage': 'granted'});
 
 Run `dev/build`
 
+### KlaroDefaults Task
+Populates SiteConfig with default translations from Klaro and applies custom translations from your language file.
+
+```bash
+php ./vendor/bin/sake tasks:gen-lang-files
+```
+
 ## Getting started
 The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` which is applied to ContentController. The config is served with `KlaroConfigController` and available per `/_klaro-config`. You can link consent settings like `<a href="#klaro" onClick="klaro.show();return false;">Cookie consent</a>` or use a ShortCode in CMS. ShortCode `[ConsentLink]` takes parameter `beforeText` & `afterText` and is shown conditionally of `SiteConfig->CookieIsActive`.
-
 
 ## Managing third-party apps/trackers
 To manage third-party scripts and ensure they only run if the user consents with their use, simply replace the `src` attribute with `data-src`, change the `type` attribute to `text/plain` and add a `data-type` attribute with the original type and add a `data-name` field that matches the name of the app as given in config. Example:
