@@ -14,7 +14,7 @@ class KlaroDefaults extends BuildTask
     protected $title = 'Manage Klaro! Records';
     protected $description = 'Creates defaults and export entries';
 
-    private static $segment = 'klaro-defaults-export';
+    private static $segment = 'klaro-defaults';
 
     public function run($request)
     {

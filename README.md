@@ -54,6 +54,12 @@ On Accept: gtag('consent', 'update', {'analytics_storage': 'granted'});
 
 Run `dev/build`
 
+### KlaroDefaults Task
+Populates SiteConfig with default translations from Klaro and applies custom translations from your language file.
+```bash
+php ./vendor/silverstripe/framework/cli-script.php dev/tasks/klaro-defaults
+```
+
 ## Getting started
 The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` which is applied to ContentController. The config is served with `KlaroConfigController` and available per `/_klaro-config`. You can link consent settings like `<a href="#klaro" onClick="klaro.show();return false;">Cookie consent</a>` or use a ShortCode in CMS. ShortCode `[ConsentLink]` takes parameter `beforeText` & `afterText` and is shown conditionally of `SiteConfig->CookieIsActive`.
 

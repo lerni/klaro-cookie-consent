@@ -10,7 +10,7 @@ use Symfony\Component\Yaml\Yaml;
 // it's meant to be run on dev-env only
 class LangFilesFromNPM extends BuildTask
 {
-    protected $description = 'generates language files based on klaro yml files';
+    protected $description = 'generates language files based on klaro yml files (requires npm packages to be installed)';
     private static $segment = 'gen-lang-files';
 
 	public function run($request)
