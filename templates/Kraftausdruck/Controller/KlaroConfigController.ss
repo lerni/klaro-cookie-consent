@@ -63,27 +63,8 @@ var klaroConfig = {
 		optOut: {$OptOut},
 		purposes : ['{$CookieCategory.Key.JS}'],
 		cookies : {$CookieNamesJS.RAW},
-		<% if $ConsentModeType %>
-		onAccept: `
-			// Google Consent Mode update
-			gtag('consent', 'update', {'$ConsentModeType': 'granted'});
-			<% if $OnAcceptCallback %>
-			// Custom callback
-			$OnAcceptCallback.RAW
-			<% end_if %>
-		`,
-		onDecline: `
-			// Google Consent Mode update
-			gtag('consent', 'update', {'$ConsentModeType': 'denied'});
-			<% if $OnDeclineCallback %>
-			// Custom callback
-			$OnDeclineCallback.RAW
-			<% end_if %>
-		`,
-		<% else %>
 		<% if $OnAcceptCallback %>onAccept: `$OnAcceptCallback.RAW`,<% end_if %>
 		<% if $OnDeclineCallback %>onDecline: `$OnDeclineCallback.RAW`,<% end_if %>
-		<% end_if %>
 		translations: {<% loop $ServiceTranslations %>
 			{$KLang}: {
 				title: '{$Title.JS}',

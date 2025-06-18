@@ -118,11 +118,11 @@ class CookieEntry extends DataObject
                 ->setDescription(_t(__CLASS__ . '.CONSENTMODEDEFAULTDESCRIPTION', 'Default state before user gives consent')),
 
             TextareaField::create('OnAcceptCallback', _t(__CLASS__ . '.ONACCEPTCALLBACK', 'On Accept Callback'))
-                ->setDescription(_t(__CLASS__ . '.ONACCEPTCALLBACKDESCRIPTION', 'JavaScript code to run when user accepts this service (optional)'))
+                ->setDescription(_t(__CLASS__ . '.ONACCEPTCALLBACKDESCRIPTION', 'JavaScript code to run when user accepts this service. Include Consent Mode calls here if needed for this service.'))
                 ->setRows(3),
 
             TextareaField::create('OnDeclineCallback', _t(__CLASS__ . '.ONDECLINECALLBACK', 'On Decline Callback'))
-                ->setDescription(_t(__CLASS__ . '.ONDECLINECALLBACKDESCRIPTION', 'JavaScript code to run when user declines this service (optional)'))
+                ->setDescription(_t(__CLASS__ . '.ONDECLINECALLBACKDESCRIPTION', 'JavaScript code to run when user declines this service. Include Consent Mode calls here if needed for this service.'))
                 ->setRows(3)
         ]);
 
