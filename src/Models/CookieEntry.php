@@ -131,14 +131,14 @@ class CookieEntry extends DataObject
 
     public function RequiredWithInherence() {
         // Service-level Required takes precedence
-        if ($this->Required && $this->Required !== '0') {
+        if ($this->Required !== null) {
             return $this->Required;
         }
 
         // Fall back to category-level Required
         $category = $this->CookieCategory();
         if ($category && $category->Required) {
-            return $category->Required;
+            return 'true';
         }
         // Default to false
         return 'false';

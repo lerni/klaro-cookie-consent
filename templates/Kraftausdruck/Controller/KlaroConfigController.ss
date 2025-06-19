@@ -58,7 +58,7 @@ var klaroConfig = {
 	services: [
 	<% loop $Up.GlobalServices %> {
 		name : '{$CookieKey.JS}',
-		required: <% if $RequiredWithInherence == 'true' %>true<% else %>false<% end_if %>,
+		required: $RequiredWithInherence,
 		default: {$Default},
 		optOut: {$OptOut},
 		purposes : ['{$CookieCategory.Key.JS}'],
