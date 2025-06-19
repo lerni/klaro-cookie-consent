@@ -58,13 +58,12 @@ Run `dev/build`
 
 ### KlaroDefaults Task
 Populates SiteConfig with default translations from Klaro and applies custom translations from your language file.
-
 ```bash
 php ./vendor/bin/sake tasks:gen-lang-files
 ```
 
 ## Getting started
-The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` which is applied to ContentController. The config is served with `KlaroConfigController` and available per `/_klaro-config`. You can link consent settings like `<a href="#klaro" onClick="klaro.show();return false;">Cookie consent</a>` or use a ShortCode in CMS. ShortCode `[ConsentLink]` takes parameter `beforeText` & `afterText` and is shown conditionally of `SiteConfig->CookieIsActive`.
+The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` which is applied to ContentController. The config is served with `KlaroConfigController` and available per `/_klaro-config`. Consent settings can be linked using `<a href="#klaro" onClick="klaro.show();return false;">Cookie consent</a>` or by using a ShortCode in CMS. ShortCode `[ConsentLink]` takes parameter `beforeText` & `afterText` and is shown conditionally of `SiteConfig->CookieIsActive`.
 
 ## Managing third-party apps/trackers
 To manage third-party scripts and ensure they only run if the user consents with their use, simply replace the `src` attribute with `data-src`, change the `type` attribute to `text/plain` and add a `data-type` attribute with the original type and add a `data-name` field that matches the name of the app as given in config. Example:
@@ -75,37 +74,46 @@ To manage third-party scripts and ensure they only run if the user consents with
     data-src="https://cdn.optimizely.com/js/10196010078.js">
 </script>
 ```
-Klaro will then take care of executing the scripts if consent was given (you can choose to execute them before getting explicit consent with `OptOut`).
+Klaro will then manage script execution based on each service's consent settings and whether consent is required or if opt-out is the default behavior.
 
-The same method also works for images, stylesheets and other elements with a `src` or `type` attribute.
+The same method also works for iframes, images, stylesheets and other elements with a `src` or `type` attribute.
 
 ## Advanced Configuration
 
 ### Custom Consent Callbacks
-For advanced use cases, you can add custom JavaScript that runs when users accept or decline services:
+Custom JavaScript can be added that runs when users accept or decline services. This is where service-specific logic and Consent Mode updates are handled.
 
 ```javascript
-// Example: Custom Google Analytics setup
+// Example: Analytics with Consent Mode v2
 onAccept: `
-    gtag('consent', 'update', {'analytics_storage': 'granted'});
-    gtag('config', 'GA_MEASUREMENT_ID', {
-        custom_map: {'custom_parameter': 'value'}
-    });
+    if(typeof gtag === "function") { 
+        gtag("consent", "update", { analytics_storage: "granted" }); 
+    }
+    console.log("Google Analytics accepted");
 `
 
-// Example: Microsoft Clarity integration  
+// Example: Microsoft Clarity (no gtag needed)
 onAccept: `
     if (typeof clarity !== 'undefined') {
         clarity('consent');
     }
+    console.log("Microsoft Clarity accepted");
+`
+
+// Example: Custom tracking service
+onAccept: `
+    if(typeof customTracker !== 'undefined') {
+        customTracker.enable();
+    }
 `
 ```
+Each service can have its own specific callback logic. Google services typically use `gtag('consent', 'update', ...)` while other services may have their own APIs.
 
 ### Integration with Google Tag Manager
 When using Google Tag Manager, the consent mode updates are automatically handled:
 
 ```html
-<!-- Your GTM script will automatically respect consent signals -->
+<!-- GTM script will automatically respect consent signals -->
 <script data-type="application/javascript" data-name="google-analytics">
     gtag('config', 'GTM-XXXXXXX');
 </script>
