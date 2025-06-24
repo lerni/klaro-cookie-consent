@@ -23,7 +23,6 @@ class CookieEntry extends DataObject
         'OptOut' => 'Enum("false,true", "false")',
         'Required' => 'Enum("false,true", "0")',
         'SortOrder' => 'Int',
-        'ConsentModeType' => 'Enum("analytics_storage,ad_storage,ad_user_data,ad_personalization,functionality_storage,personalization_storage,security_storage", "")',
         'ConsentModeDefault' => 'Enum("granted,denied", "denied")',
         'OnAcceptCallback' => 'Text',
         'OnDeclineCallback' => 'Text'
@@ -52,7 +51,6 @@ class CookieEntry extends DataObject
         $labels['Default'] = _t(__CLASS__ . '.DEFAULT', 'Default');
         $labels['OptOut'] = _t(__CLASS__ . '.OPTOUT', 'Opt Out');
         $labels['Required'] = _t(__CLASS__ . '.REQUIRED', 'Service Required');
-        $labels['ConsentModeType'] = _t(__CLASS__ . '.CONSENTMODETYPE', 'Google Consent Mode Type');
         $labels['ConsentModeDefault'] = _t(__CLASS__ . '.CONSENTMODEDEFAULT', 'Default Consent State');
         $labels['OnAcceptCallback'] = _t(__CLASS__ . '.ONACCEPTCALLBACK', 'On Accept Callback');
         $labels['OnDeclineCallback'] = _t(__CLASS__ . '.ONDECLINECALLBACK', 'On Decline Callback');
@@ -104,14 +102,9 @@ class CookieEntry extends DataObject
         );
 
         // Add Consent Mode v2 fields
-        $consentModeTypes = singleton(CookieEntry::class)->dbObject('ConsentModeType')->enumValues();
         $consentModeDefaults = singleton(CookieEntry::class)->dbObject('ConsentModeDefault')->enumValues();
 
         $fields->addFieldsToTab('Root.Main', [
-            DropdownField::create('ConsentModeType', _t(__CLASS__ . '.CONSENTMODETYPE', 'Google Consent Mode Type'))
-                ->setSource($consentModeTypes)
-                ->setEmptyString(_t(__CLASS__ . '.CONSENTMODETYPEEMPTY', '-- Select Type --'))
-                ->setDescription(_t(__CLASS__ . '.CONSENTMODETYPEDESCRIPTION', 'Select the Google Consent Mode type this service relates to')),
 
             DropdownField::create('ConsentModeDefault', _t(__CLASS__ . '.CONSENTMODEDEFAULT', 'Default Consent State'))
                 ->setSource($consentModeDefaults)
@@ -149,27 +142,9 @@ class CookieEntry extends DataObject
      */
     public function getConsentModeJS()
     {
-        if (!$this->ConsentModeType) {
-            return [
-                'onAccept' => $this->OnAcceptCallback ?: '',
-                'onDecline' => $this->OnDeclineCallback ?: ''
-            ];
-        }
-
-        $onAccept = sprintf("gtag('consent', 'update', {'%s': 'granted'});", $this->ConsentModeType);
-        $onDecline = sprintf("gtag('consent', 'update', {'%s': 'denied'});", $this->ConsentModeType);
-
-        // Add custom callbacks if provided
-        if ($this->OnAcceptCallback) {
-            $onAccept .= "\n" . $this->OnAcceptCallback;
-        }
-        if ($this->OnDeclineCallback) {
-            $onDecline .= "\n" . $this->OnDeclineCallback;
-        }
-
         return [
-            'onAccept' => $onAccept,
-            'onDecline' => $onDecline
+            'onAccept' => $this->OnAcceptCallback ?: '',
+            'onDecline' => $this->OnDeclineCallback ?: ''
         ];
     }
 }

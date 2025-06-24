@@ -1,4 +1,5 @@
 ---
+Name: klaro_defaults
 Only:
   environment: 'dev'
   # locale: 'de_CH'
@@ -34,7 +35,6 @@ Kraftausdruck\Models\CookieEntry:
       Default: 'false'
       OptOut: 'false'
       CookieCategoryID: 1
-      ConsentModeType: 'functionality_storage'
       ConsentModeDefault: 'granted'
       OnAcceptCallback: 'console.log("Klaro consent manager accepted");'
       OnDeclineCallback: 'console.log("Klaro consent manager declined");'
@@ -46,7 +46,6 @@ Kraftausdruck\Models\CookieEntry:
       Default: 'true'
       OptOut: 'false'
       CookieCategoryID: 1
-      ConsentModeType: 'security_storage'
       ConsentModeDefault: 'granted'
       OnAcceptCallback: 'console.log("PHP Session accepted");'
       OnDeclineCallback: 'console.log("PHP Session declined");'
@@ -58,7 +57,6 @@ Kraftausdruck\Models\CookieEntry:
       Default: 'false'
       OptOut: 'false'
       CookieCategoryID: 2
-      ConsentModeType: 'analytics_storage'
       ConsentModeDefault: 'denied'
       OnAcceptCallback: 'if(typeof gtag === "function") { gtag("consent", "update", { analytics_storage: "granted" }); } console.log("Google Analytics accepted");'
       OnDeclineCallback: 'if(typeof gtag === "function") { gtag("consent", "update", { analytics_storage: "denied" }); } console.log("Google Analytics declined");'
@@ -70,7 +68,6 @@ Kraftausdruck\Models\CookieEntry:
       Default: 'false'
       OptOut: 'false'
       CookieCategoryID: 2
-      ConsentModeType: 'analytics_storage'
       ConsentModeDefault: 'denied'
       OnAcceptCallback: 'if(typeof clarity === "function") { clarity("consent"); } console.log("Microsoft Clarity accepted");'
       OnDeclineCallback: 'console.log("Microsoft Clarity declined");'

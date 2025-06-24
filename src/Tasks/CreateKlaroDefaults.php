@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 class KlaroDefaults extends BuildTask
 {
     protected string $title = 'Manage Klaro! Records';
-    protected static string $description = 'Creates defaults and export entries';
+    protected static string $description = 'Creates defaults';
 
     protected static string $commandName = 'klaro-defaults';
 

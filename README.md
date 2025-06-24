@@ -1,5 +1,5 @@
 # Silverstripe Klaro! Consent Manager
-Silverstripe Klaro [klɛro] implements [KIProtect/klaro](https://github.com/KIProtect/klaro). A consent manager that helps to be transparent about third-party applications and be compliant with GDPR and ePrivacy. This module is inspired by [nomidi/kw-cookie-consent](https://github.com/nomidi/kw-cookie-consent).
+Silverstripe Klaro! implements [KIProtect/klaro](https://github.com/KIProtect/klaro). A consent manager that helps to be transparent about third-party applications and be compliant with GDPR and ePrivacy. This module is inspired by [nomidi/kw-cookie-consent](https://github.com/nomidi/kw-cookie-consent).
 
 
 ## Requirements
@@ -8,9 +8,9 @@ Silverstripe Klaro [klɛro] implements [KIProtect/klaro](https://github.com/KIPr
 - symbiote/silverstripe-gridfieldextensions ^5
 ### Compatibility Version
 - There is a [3.x](https://github.com/lerni/klaro-cookie-consent/tree/3.x) branch with a backport for Silverstripe 3.
-- For Silverstripe 4.x & 5.x [v2](https://github.com/lerni/klaro-cookie-consent/tree/v2) is recommended ATM
-- For Silverstripe 5.x [5.x](https://github.com/lerni/klaro-cookie-consent/tree/5.x) supports consent-mode-v2 & resolves some long standing issues (default values, better fluent support, Consent Mode V2)
-- For Silverstripe 6.x [6.x](https://github.com/lerni/klaro-cookie-consent/tree/6.x) provides compatibility with the latest Silverstripe version
+- For Silverstripe 4.x & 5.x [v2](https://github.com/lerni/klaro-cookie-consent/tree/v2)
+- For Silverstripe [5.x](https://github.com/lerni/klaro-cookie-consent/tree/5.x) supports consent-mode-v2 & resolves some long standing issues like default values, better fluent support, Consent Mode V2
+- For Silverstripe [6.x](https://github.com/lerni/klaro-cookie-consent/tree/6.x) provides compatibility with version 6.x
 ### Suggested
 - lerni/silverstripe-tracking
 
@@ -21,21 +21,14 @@ This module includes support for Google Consent Mode v2, providing privacy-compl
 ### Key Features
 - **Automatic Consent Updates**: When users accept or decline services, Google's consent state is automatically updated
 - **Enhanced Conversion Modeling**: Supports advanced consent mode for better data insights while respecting privacy
-- **All Consent Types**: Supports both original and v2 consent parameters:
-  - `analytics_storage` - For Google Analytics
-  - `ad_storage` - For advertising cookies  
-  - `ad_user_data` - For user data in advertising (v2)
-  - `ad_personalization` - For personalized advertising (v2)
-  - `functionality_storage` - For functional cookies
-  - `personalization_storage` - For personalization
-  - `security_storage` - For security purposes
+- **All Consent Types**: "Callback-functions" are maintained in CMS. Original, v2 consent parameters and also for other venders like Microsoft-Clarity are possible.
 
 ### Setup
 1. Install the module and run `dev/build`
 2. Go to **Settings > Cookie Consent** in the CMS
 3. Enable "Cookie Is Active"
 4. Configure your services with appropriate **Google Consent Types**
-5. Add custom JavaScript callbacks if needed
+5. Add custom JavaScript callbacks
 
 ### Example Configuration
 ```
@@ -49,10 +42,12 @@ On Accept: gtag('consent', 'update', {'analytics_storage': 'granted'});
 ## Installation
 [Composer](https://getcomposer.org/) is the recommended way installing Silverstripe modules.
 
-`composer require lerni/klaro-cookie-consent:dev-v2`,
-`composer require lerni/klaro-cookie-consent:dev-3.x`,
-`composer require lerni/klaro-cookie-consent:dev-5.x`,
-`composer require lerni/klaro-cookie-consent:dev-6.x`
+```bash
+composer require lerni/klaro-cookie-consent:dev-v2
+composer require lerni/klaro-cookie-consent:dev-3.x
+composer require lerni/klaro-cookie-consent:dev-5.x
+composer require lerni/klaro-cookie-consent:dev-6.x
+```
 
 Run `dev/build`
 
@@ -61,6 +56,7 @@ Populates SiteConfig with default translations from Klaro and applies custom tra
 ```bash
 php ./vendor/bin/sake tasks:gen-lang-files
 ```
+`_config/klaro_defaults.yml` contains default-records for `CookieCategory` & `CookieEntry` in german. Those can can be [nulled](https://docs.silverstripe.org/en/6/developer_guides/configuration/configuration/#configuration-values) and overriden.
 
 ## Getting started
 The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` which is applied to ContentController. The config is served with `KlaroConfigController` and available per `/_klaro-config`. Consent settings can be linked using `<a href="#klaro" onClick="klaro.show();return false;">Cookie consent</a>` or by using a ShortCode in CMS. ShortCode `[ConsentLink]` takes parameter `beforeText` & `afterText` and is shown conditionally of `SiteConfig->CookieIsActive`.
