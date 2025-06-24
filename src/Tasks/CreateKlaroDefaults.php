@@ -12,7 +12,7 @@ use SilverStripe\SiteConfig\SiteConfig;
 class KlaroDefaults extends BuildTask
 {
     protected $title = 'Manage Klaro! Records';
-    protected $description = 'Creates defaults and export entries';
+    protected $description = 'Creates defaults';
 
     private static $segment = 'klaro-defaults';
 
