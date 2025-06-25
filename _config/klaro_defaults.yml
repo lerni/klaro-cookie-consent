@@ -48,7 +48,7 @@ Kraftausdruck\Models\CookieEntry:
     Analytics:
       Title: 'Google Analytics'
       Purpose: 'Cookie von Google für Website-Analysen. Statistische Daten, wie Besucher die Website nutzen.'
-      CookieName: '_ga,_gat,_gid'
+      CookieName: '/^_g.*$/'
       CookieKey: 'google-analytics'
       Default: 'false'
       OptOut: 'false'
@@ -59,7 +59,7 @@ Kraftausdruck\Models\CookieEntry:
     Clarity:
       Title: 'Microsoft Clarity'
       Purpose: 'Cookie von Microsoft für Website-Analysen. Statistische Daten, wie Besucher die Website nutzen.'
-      CookieName: '^_cl(ck|sk).*$'
+      CookieName: '/^_cl(ck|sk).*$/'
       CookieKey: 'clarity'
       Default: 'false'
       OptOut: 'false'
