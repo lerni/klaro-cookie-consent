@@ -78,7 +78,20 @@ class CookieEntry extends DataObject
         }
 
         return '[' . implode(', ', array_map(function($name) {
-            return json_encode($name, JSON_UNESCAPED_UNICODE);
+            // Check if the name is a regex pattern (starts and ends with /)
+            if (preg_match('/^\/(.+)\/([gimsuxy]*)$/', $name, $matches)) {
+                // It's a regex pattern - return as JavaScript regex
+                $pattern = $matches[1];
+                $flags = $matches[2] ?? '';
+
+                // Escape backslashes for JavaScript
+                $pattern = addcslashes($pattern, '\\');
+
+                return '/' . $pattern . '/' . $flags;
+            } else {
+                // It's a regular string - return as JSON string
+                return json_encode($name, JSON_UNESCAPED_UNICODE);
+            }
         }, $names)) . ']';
     }
 
@@ -100,6 +113,10 @@ class CookieEntry extends DataObject
                 ->setEmptyString('--')
                 ->setDescription(_t(__CLASS__ . '.REQUIREDDESCRIPTION', 'Overrides category setting: <strong>{CategoryRequired}</strong> - i.g. Tag Manager', ['CategoryRequired' => $CategoryRequired]))
         );
+
+        if ($CookieNameField = $fields->dataFieldByName('CookieName')) {
+            $CookieNameField->setDescription(_t(__CLASS__ . '.NameFieldDescription', '"cookieName" for exact match, "_ga,_gat,_gid" for multiple cookies (comma-separated), "/^_ga.*$/" for regex patterns.'));
+        }
 
         // Add Consent Mode v2 fields
         $consentModeDefaults = singleton(CookieEntry::class)->dbObject('ConsentModeDefault')->enumValues();
