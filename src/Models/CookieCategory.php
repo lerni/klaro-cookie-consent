@@ -30,11 +30,15 @@ class CookieCategory extends DataObject
 
     private static $default_sort = 'SortOrder ASC';
 
-    private static $field_labels = [
-        'Title' => 'Titel',
-        'Key' => 'Javascript Key',
-        'Content' => 'Text'
-    ];
+    public function fieldLabels($includerelations = true)
+    {
+        $labels = parent::fieldLabels($includerelations);
+        $labels['Title'] = _t(__CLASS__ . '.TITLE', 'Title');
+        $labels['Key'] = _t(__CLASS__ . '.KEY', 'Javascript Key');
+        $labels['Content'] = _t(__CLASS__ . '.CONTENT', 'Text');
+
+        return $labels;
+    }
 
     private static $summary_fields = [
         'Title' => 'Titel',

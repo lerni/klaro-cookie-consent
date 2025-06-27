@@ -23,7 +23,6 @@ class CookieEntry extends DataObject
         'OptOut' => 'Enum("false,true", "false")',
         'Required' => 'Enum("false,true", "0")',
         'SortOrder' => 'Int',
-        'ConsentModeDefault' => 'Enum("granted,denied", "denied")',
         'OnAcceptCallback' => 'Text',
         'OnDeclineCallback' => 'Text'
     ];
@@ -35,6 +34,11 @@ class CookieEntry extends DataObject
 
     private static $has_one = [
         'CookieCategory' => CookieCategory::class
+    ];
+
+    private static $summary_fields = [
+        'Title' => 'Name',
+        'CookieCategory.Title' => 'Category'
     ];
 
     private static $default_sort = 'SortOrder ASC';
@@ -51,7 +55,6 @@ class CookieEntry extends DataObject
         $labels['Default'] = _t(__CLASS__ . '.DEFAULT', 'Default');
         $labels['OptOut'] = _t(__CLASS__ . '.OPTOUT', 'Opt Out');
         $labels['Required'] = _t(__CLASS__ . '.REQUIRED', 'Service Required');
-        $labels['ConsentModeDefault'] = _t(__CLASS__ . '.CONSENTMODEDEFAULT', 'Default Consent State');
         $labels['OnAcceptCallback'] = _t(__CLASS__ . '.ONACCEPTCALLBACK', 'On Accept Callback');
         $labels['OnDeclineCallback'] = _t(__CLASS__ . '.ONDECLINECALLBACK', 'On Decline Callback');
         $labels['CookieCategory'] = _t(__CLASS__ . '.COOKIECATEGORY', 'Cookie Category');
@@ -101,32 +104,21 @@ class CookieEntry extends DataObject
 
         $fields->removeByName('SortOrder');
 
-        // Add Required field to Main tab
-        $requiredOptions = singleton(CookieEntry::class)->dbObject('Required')->enumValues();
         $CategoryRequired = _t(__CLASS__ . '.NOTSET', 'not set');
         if ($this->CookieCategory() && $this->CookieCategory()->exists()) {
             $CategoryRequired = $this->CookieCategory()->Required ? 'true' : 'false';
         }
-        $fields->addFieldToTab('Root.Main',
-            DropdownField::create('Required', _t(__CLASS__ . '.REQUIRED', 'Service Required'))
-                ->setSource($requiredOptions)
-                ->setEmptyString('--')
-                ->setDescription(_t(__CLASS__ . '.REQUIREDDESCRIPTION', 'Overrides category setting: <strong>{CategoryRequired}</strong> - i.g. Tag Manager', ['CategoryRequired' => $CategoryRequired]))
-        );
+
+        if ($requiredField = $fields->dataFieldByName('Required')) {
+            $requiredField->setEmptyString('--');
+            $requiredField->setDescription(_t(__CLASS__ . '.REQUIREDDESCRIPTION', 'Overrides category setting: <strong>{CategoryRequired}</strong> - i.g. Tag Manager', ['CategoryRequired' => $CategoryRequired]));
+        }
 
         if ($CookieNameField = $fields->dataFieldByName('CookieName')) {
             $CookieNameField->setDescription(_t(__CLASS__ . '.NameFieldDescription', '"cookieName" for exact match, "_ga,_gat,_gid" for multiple cookies (comma-separated), "/^_ga.*$/" for regex patterns.'));
         }
 
-        // Add Consent Mode v2 fields
-        $consentModeDefaults = singleton(CookieEntry::class)->dbObject('ConsentModeDefault')->enumValues();
-
         $fields->addFieldsToTab('Root.Main', [
-
-            DropdownField::create('ConsentModeDefault', _t(__CLASS__ . '.CONSENTMODEDEFAULT', 'Default Consent State'))
-                ->setSource($consentModeDefaults)
-                ->setDescription(_t(__CLASS__ . '.CONSENTMODEDEFAULTDESCRIPTION', 'Default state before user gives consent')),
-
             TextareaField::create('OnAcceptCallback', _t(__CLASS__ . '.ONACCEPTCALLBACK', 'On Accept Callback'))
                 ->setDescription(_t(__CLASS__ . '.ONACCEPTCALLBACKDESCRIPTION', 'JavaScript code to run when user accepts this service. Include Consent Mode calls here if needed for this service.'))
                 ->setRows(3),
@@ -154,14 +146,4 @@ class CookieEntry extends DataObject
         return 'false';
     }
 
-    /**
-     * Get consent mode JavaScript for this service
-     */
-    public function getConsentModeJS()
-    {
-        return [
-            'onAccept' => $this->OnAcceptCallback ?: '',
-            'onDecline' => $this->OnDeclineCallback ?: ''
-        ];
-    }
 }
