@@ -1,161 +1,117 @@
 # Silverstripe Klaro! Consent Manager
-Silverstripe Klaro! implements [KIProtect/klaro](https://github.com/KIProtect/klaro). A consent manager that helps to be transparent about third-party applications and be compliant with GDPR and ePrivacy. This module is inspired by [nomidi/kw-cookie-consent](https://github.com/nomidi/kw-cookie-consent).
+Silverstripe Klaro! implements [KIProtect/klaro](https://github.com/KIProtect/klaro) for GDPR-compliant cookie consent management with Google Consent Mode v2 support.
 
+## Quick Start
+1. `composer require lerni/klaro-cookie-consent`
+2. Run `dev/build`
+3. Run `php ./vendor/silverstripe/framework/cli-script.php dev/tasks/klaro-defaults` (default values for SiteConfig)
+4. Go to **Settings > Cookie Consent** and enable "Cookie Is Active"
+5. Configure your services and you're ready!
 
 ## Requirements
-- silverstripe/cms ^5
-- silverstripe/siteconfig ^5
-- symbiote/silverstripe-gridfieldextensions ^4
-### Compatibility Version
-- There is a [3.x](https://github.com/lerni/klaro-cookie-consent/tree/3.x) branch with a backport for Silverstripe 3.
-- For Silverstripe 4.x & 5.x [v2](https://github.com/lerni/klaro-cookie-consent/tree/v2)
-- For Silverstripe [5.x](https://github.com/lerni/klaro-cookie-consent/tree/5.x) supports consent-mode-v2 & resolves some long standing issues like default values, better fluent support, Consent Mode V2
-- For Silverstripe [6.x](https://github.com/lerni/klaro-cookie-consent/tree/6.x) provides compatibility with version 6.x
-### Suggested
-- lerni/silverstripe-tracking
+- SilverStripe CMS ^5 or ^6
+- PHP ^8.1
 
-## Google Consent Mode v2 Integration
-
-This module includes support for Google Consent Mode v2, providing privacy-compliant tracking and enhanced conversion modeling capabilities.
-
-### Key Features
-- **Automatic Consent Updates**: When users accept or decline services, Google's consent state is automatically updated
-- **Enhanced Conversion Modeling**: Supports advanced consent mode for better data insights while respecting privacy
-- **All Consent Types**: "Callback-functions" are maintained in CMS. Original, v2 consent parameters and also for other venders like Microsoft-Clarity are possible.
-
-### Setup
-1. Install the module and run `dev/build`
-2. Go to **Settings > Cookie Consent** in the CMS
-3. Enable "Cookie Is Active"
-4. Configure your services with appropriate **Google Consent Types**
-5. Add custom JavaScript callbacks
-
-### Example Configuration
-```
-Service: Google Analytics
-Consent Type: analytics_storage
-Default State: denied
-On Accept: gtag('consent', 'update', {'analytics_storage': 'granted'});
-```
-
+### Suggested Modules
+- `lerni/silverstripe-tracking` - for Google Analytics, GTM, and Clarity integration
 
 ## Installation
-[Composer](https://getcomposer.org/) is the recommended way installing Silverstripe modules.
-
 ```bash
-composer require lerni/klaro-cookie-consent:dev-v2
-composer require lerni/klaro-cookie-consent:dev-3.x
-composer require lerni/klaro-cookie-consent:dev-5.x
-composer require lerni/klaro-cookie-consent:dev-6.x
+# For SilverStripe 5.x/6.x (current)
+composer require lerni/klaro-cookie-consent
+
+# Legacy versions
+composer require lerni/klaro-cookie-consent:dev-v2  # SS 4.x/5.x
+composer require lerni/klaro-cookie-consent:dev-3.x # SS 3.x
 ```
 
-Run `dev/build`
-
-### KlaroDefaults Task
-Populates SiteConfig with default translations from Klaro and applies custom translations from your language file.
+Run `dev/build`. CookieEntries & CookieCategories are automatically populated. To add values to SiteConfig use the task below, it populates SiteConfig with default translations from Klaro and applies custom translations from your language file.
 ```bash
 php ./vendor/silverstripe/framework/cli-script.php dev/tasks/klaro-defaults
 ```
-`_config/klaro_defaults.yml` contains default-records for `CookieCategory` & `CookieEntry` in german. Those can can be [nulled](https://docs.silverstripe.org/en/6/developer_guides/configuration/configuration/#configuration-values) and overriden.
+## Basic Usage
 
-## Getting started
-The module loads [klaro.js](https://klaro.kiprotect.com/klaro.js) per `KlaroInitExtension` which is applied to ContentController. The config is served with `KlaroConfigController` and available per `/_klaro-config`. Consent settings can be linked using `<a href="#klaro" onClick="klaro.show();return false;">Cookie consent</a>` or by using a ShortCode in CMS. ShortCode `[ConsentLink]` takes parameter `beforeText` & `afterText` and is shown conditionally of `SiteConfig->CookieIsActive`.
+### CMS Configuration
+1. **Settings > Cookie Consent**
+2. Enable "Cookie Is Active"
+3. Configure services (Google Analytics, GTM, etc.)
+4. Customize consent modal text and appearance
 
-
-## Managing third-party apps/trackers
-To manage third-party scripts and ensure they only run if the user consents with their use, simply replace the `src` attribute with `data-src`, change the `type` attribute to `text/plain` and add a `data-type` attribute with the original type and add a `data-name` field that matches the name of the app as given in config. Example:
+### Adding Consent Links
 ```html
+<!-- Manual link -->
+<a href="#klaro" onClick="klaro.show();return false;">Cookie Settings</a>
+
+<!-- Or use ShortCode in CMS -->
+[ConsentLink beforeText="Manage your " afterText=" preferences"]
+```
+
+### Managing Third-Party Scripts
+Replace `src` with `data-src` and add consent attributes:
+```html
+<!-- Before: Regular script -->
+<script src="https://example.com/tracking.js"></script>
+
+<!-- After: Consent-managed script -->
 <script type="text/plain"
     data-type="text/javascript"
-    data-name="optimizely"
-    data-src="https://cdn.optimizely.com/js/10196010078.js">
+    data-name="analytics"
+    data-src="https://example.com/tracking.js">
 </script>
 ```
-Klaro will manage script execution based on each service's consent settings and whether consent is required or if opt-out is the default behavior.
 
-The same method also works for iframes, images, stylesheets and other elements with a `src` or `type` attribute.
+## Google Consent Mode v2 Support
+Full support for Google's privacy-compliant tracking with automatic consent updates.
+
+### Default Services Included
+- **Google Tag Manager**
+- **Google Analytics**
+- **Google Ads**
+- **Microsoft Clarity**
 
 ## Advanced Configuration
 
 ### Custom Consent Callbacks
-Custom JavaScript can be added that runs when users accept or decline services. This is where service-specific logic and Consent Mode updates are handled.
+Configure custom JavaScript for each service in **Settings > Cookie Consent**:
 
 ```javascript
-// Example: Analytics with Consent Mode v2
-onAccept: `
-    if(typeof gtag === "function") { 
-        gtag("consent", "update", { analytics_storage: "granted" }); 
-    }
-    console.log("Google Analytics accepted");
-`
+// Google Analytics example
+OnAccept: if(typeof gtag === "function") { gtag("consent", "update", { analytics_storage: "granted" }); }
+OnDecline: if(typeof gtag === "function") { gtag("consent", "update", { analytics_storage: "denied" }); }
 
-// Example: Microsoft Clarity (no gtag needed)
-onAccept: `
-    if (typeof clarity !== 'undefined') {
-        clarity('consent');
-    }
-    console.log("Microsoft Clarity accepted");
-`
-
-// Example: Custom tracking service
-onAccept: `
-    if(typeof customTracker !== 'undefined') {
-        customTracker.enable();
-    }
-`
-```
-Each service can have its own specific callback logic. Google services typically use `gtag('consent', 'update', ...)` while other services may have their own APIs.
-
-### Integration with Google Tag Manager
-When using Google Tag Manager, the consent mode updates are automatically handled:
-
-```html
-<!-- GTM script will automatically respect consent signals -->
-<script data-type="application/javascript" data-name="google-analytics">
-    gtag('config', 'GTM-XXXXXXX');
-</script>
+// Microsoft Clarity example  
+OnAccept: if(typeof clarity === "function") { clarity("consent"); }
+OnDecline: if(typeof clarity === "function") { clarity("consent", false); }
 ```
 
-#### GTM Event Triggers
-The module can fire custom events to Google Tag Manager's dataLayer based on the configured callback functions in the CMS. The default configuration includes event triggers, but you can customize these in **Settings > Cookie Consent** for each service.
+### Google Tag Manager Integration
+When using with `lerni/silverstripe-tracking`, GTM events are automatically fired based on your callback configuration:
 
-**Default Event Configuration:**
-The default `klaro_defaults.yml` includes these event triggers:
-
-**Accept Events** (fired when user accepts a service):
-- `klaro-google-tag-manager-accepted`
-- `klaro-google-analytics-accepted`
-- `klaro-google-ads-accepted`
-- `klaro-clarity-accepted`
-
-**Decline Events** (fired when user declines a service):
-- `klaro-google-tag-manager-declined`
-- `klaro-google-analytics-declined`
-- `klaro-google-ads-declined`
-- `klaro-clarity-declined`
-
-**Customizing Events:**
-You can modify these events or add new ones by editing the callback fields in the CMS:
-- **OnInitCallback**: Runs once when the service is initialized
-- **OnAcceptCallback**: Runs when user accepts the service
-- **OnDeclineCallback**: Runs when user declines the service
+**Default Events:**
+- `klaro-google-analytics-accepted/declined`
+- `klaro-google-ads-accepted/declined`
+- `klaro-google-tag-manager-accepted/declined`
 
 **Setting up GTM Triggers:**
-1. In Google Tag Manager, go to **Triggers** > **New**
-2. Choose **Custom Event** as trigger type
-3. Set **Event name** to match your configured event (e.g., `klaro-google-analytics-accepted`)
-4. Use this trigger to fire your Google Analytics, Ads, or other tracking tags
+1. Create **Custom Event** trigger in GTM
+2. Use event name (e.g., `klaro-google-analytics-accepted`)
+3. Fire your tracking tags based on consent
 
-**Important Notes:**
-- Events are only fired if configured in the respective callback fields in the CMS
-- The Google Tag Manager service includes `ads_data_redaction: true` for GDPR compliance
-- The consent mode initialization happens in `TrackingTop.ss` template before any Google scripts load
-- You can customize all callback functions per service in **Settings > Cookie Consent**
+### Configuration Override
+Override defaults in your `app/_config/klaro.yml`:
+```yaml
+Kraftausdruck\Models\CookieEntry:
+  default_records:
+    Analytics:
+      Title: 'Custom Analytics Title'
+      # Override any default settings
+```
 
-# Styling
-Example SCSS customisation
+<details>
+<summary>Styling Customization</summary>
+
 ```scss
-// !klaro
+// Example SCSS customization
 html .klaro {
 	--notice-max-width: 440px;
 	.cookie-modal,
@@ -311,8 +267,9 @@ html .klaro {
 }
 ```
 
-# Todo
-- add template-parser to add data-attributes
+</details>
 
 ## Resources
 - [Klaro! Documentation](https://klaro.kiprotect.com/docs)
+- [Google Consent Mode v2 Guide](https://developers.google.com/tag-platform/security/guides/consent)
+- [SilverStripe Configuration Documentation](https://docs.silverstripe.org/en/developer_guides/configuration/)
