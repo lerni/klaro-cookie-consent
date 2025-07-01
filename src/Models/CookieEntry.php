@@ -3,8 +3,8 @@
 namespace Kraftausdruck\Models;
 
 use SilverStripe\ORM\DataObject;
-use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\TextareaField;
+use SilverStripe\Forms\RequiredFields;
 use Kraftausdruck\Models\CookieCategory;
 
 class CookieEntry extends DataObject
@@ -67,7 +67,6 @@ class CookieEntry extends DataObject
     {
         return new RequiredFields([
             'Title',
-            'CookieName',
             'Purpose'
         ]);
     }
@@ -150,5 +149,4 @@ class CookieEntry extends DataObject
         // Default to false
         return 'false';
     }
-
 }

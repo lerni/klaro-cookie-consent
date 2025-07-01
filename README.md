@@ -199,6 +199,7 @@ html .klaro {
 			}
 		}
 		// halve is used on parent if children are on & off
+		.cm-list-input.only-required + .cm-list-label .slider,
 		.cm-list-input.half-checked:checked + .cm-list-label .slider {
 			background-color: mix($link-color, $white, 71%);
 		}
