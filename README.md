@@ -116,6 +116,42 @@ When using Google Tag Manager, the consent mode updates are automatically handle
 </script>
 ```
 
+#### GTM Event Triggers
+The module can fire custom events to Google Tag Manager's dataLayer based on the configured callback functions in the CMS. The default configuration includes event triggers, but you can customize these in **Settings > Cookie Consent** for each service.
+
+**Default Event Configuration:**
+The default `klaro_defaults.yml` includes these event triggers:
+
+**Accept Events** (fired when user accepts a service):
+- `klaro-google-tag-manager-accepted`
+- `klaro-google-analytics-accepted`
+- `klaro-google-ads-accepted`
+- `klaro-clarity-accepted`
+
+**Decline Events** (fired when user declines a service):
+- `klaro-google-tag-manager-declined`
+- `klaro-google-analytics-declined`
+- `klaro-google-ads-declined`
+- `klaro-clarity-declined`
+
+**Customizing Events:**
+You can modify these events or add new ones by editing the callback fields in the CMS:
+- **OnInitCallback**: Runs once when the service is initialized
+- **OnAcceptCallback**: Runs when user accepts the service
+- **OnDeclineCallback**: Runs when user declines the service
+
+**Setting up GTM Triggers:**
+1. In Google Tag Manager, go to **Triggers** > **New**
+2. Choose **Custom Event** as trigger type
+3. Set **Event name** to match your configured event (e.g., `klaro-google-analytics-accepted`)
+4. Use this trigger to fire your Google Analytics, Ads, or other tracking tags
+
+**Important Notes:**
+- Events are only fired if configured in the respective callback fields in the CMS
+- The Google Tag Manager service includes `ads_data_redaction: true` for GDPR compliance
+- The consent mode initialization happens in `TrackingTop.ss` template before any Google scripts load
+- You can customize all callback functions per service in **Settings > Cookie Consent**
+
 # Styling
 Example SCSS customisation
 ```scss
