@@ -23,6 +23,7 @@ class CookieEntry extends DataObject
         'OptOut' => 'Enum("false,true", "false")',
         'Required' => 'Enum("false,true", "0")',
         'SortOrder' => 'Int',
+        'onInitCallback' => 'Text',
         'OnAcceptCallback' => 'Text',
         'OnDeclineCallback' => 'Text'
     ];
@@ -55,6 +56,7 @@ class CookieEntry extends DataObject
         $labels['Default'] = _t(__CLASS__ . '.DEFAULT', 'Default');
         $labels['OptOut'] = _t(__CLASS__ . '.OPTOUT', 'Opt Out');
         $labels['Required'] = _t(__CLASS__ . '.REQUIRED', 'Service Required');
+        $labels['onInitCallback'] = _t(__CLASS__ . '.ONINITCALLBACK', 'On Init Callback');
         $labels['OnAcceptCallback'] = _t(__CLASS__ . '.ONACCEPTCALLBACK', 'On Accept Callback');
         $labels['OnDeclineCallback'] = _t(__CLASS__ . '.ONDECLINECALLBACK', 'On Decline Callback');
         $labels['CookieCategory'] = _t(__CLASS__ . '.COOKIECATEGORY', 'Cookie Category');
@@ -119,6 +121,10 @@ class CookieEntry extends DataObject
         }
 
         $fields->addFieldsToTab('Root.Main', [
+            TextareaField::create('onInitCallback', _t(__CLASS__ . '.ONINITCALLBACK', 'On Init Callback'))
+                ->setDescription(_t(__CLASS__ . '.ONINITCALLBACKDESCRIPTION', 'JavaScript code to run when the service is initialized. This is called before the user makes any consent decision.'))
+                ->setRows(3),
+
             TextareaField::create('OnAcceptCallback', _t(__CLASS__ . '.ONACCEPTCALLBACK', 'On Accept Callback'))
                 ->setDescription(_t(__CLASS__ . '.ONACCEPTCALLBACKDESCRIPTION', 'JavaScript code to run when user accepts this service. Include Consent Mode calls here if needed for this service.'))
                 ->setRows(3),

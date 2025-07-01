@@ -1,21 +1,4 @@
-<% cached 'CookieConfig', $SiteConfig.LastEdited, $List('Kraftausdruck\Models\CookieCategory').max('LastEdited'), $List('Kraftausdruck\Models\CookieCategory').count(), $List('Kraftausdruck\Models\CookieEntry').max('LastEdited'), $List('Kraftausdruck\Models\CookieEntry').count() %>
-<% with $SiteConfig %>
-// Consent Mode v2 defaults
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-
-// default consent state (before Klaro loads)
-gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'analytics_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'functionality_storage': 'granted',
-    'personalization_storage': 'denied',
-    'security_storage': 'granted'
-});
-
-var klaroConfig = {
+<% cached 'CookieConfig', $SiteConfig.LastEdited, $List('Kraftausdruck\Models\CookieCategory').max('LastEdited'), $List('Kraftausdruck\Models\CookieCategory').count(), $List('Kraftausdruck\Models\CookieEntry').max('LastEdited'), $List('Kraftausdruck\Models\CookieEntry').count() %><% with $SiteConfig %>var klaroConfig = {
 	CookieIsActive: <% if $CookieIsActive %>true<% else %>false<% end_if %>,
 	elementID: 'klaro',
 	cookieName: 'klaro',
@@ -63,6 +46,7 @@ var klaroConfig = {
 		optOut: {$OptOut},
 		purposes : ['{$CookieCategory.Key.JS}'],
 		cookies : {$CookieNamesJS.RAW},
+		<% if $onInitCallback %>onInit: `$onInitCallback.RAW`,<% end_if %>
 		<% if $OnAcceptCallback %>onAccept: `$OnAcceptCallback.RAW`,<% end_if %>
 		<% if $OnDeclineCallback %>onDecline: `$OnDeclineCallback.RAW`,<% end_if %>
 		translations: {<% loop $ServiceTranslations %>
