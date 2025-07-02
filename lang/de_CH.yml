@@ -32,6 +32,7 @@ de_CH:
   Kraftausdruck\Extensions\KlaroSiteConfigExtension:
     COOKIETAB: 'CookieConsent'
     CookieIsActive: 'Klaro! aktiv'
+    MUSTCONSENT: 'Zustimmung erzwingen - Modal wird direkt angezeigt'
     CONSENTNOTICETITLE: 'Notice: Titel'
     CONSENTNOTICEDESCRIPTION: 'Notice: Beschreibung'
     CONSENTNOTICELEARNMORE: 'Notice: Mehr erfahren'
@@ -44,6 +45,7 @@ de_CH:
     ACCEPTALL: 'Modal: Text "Allen zustimmen"'
     ACCEPTSELECTED: 'Modal: "Auswahl speichern"'
     DECLINE: 'Modal: Text "Ablehnen"'
+    HIDEDECLINEALL: '"Ablehnen" ausblenden'
     CONTEXTUALCONSENTACCEPTALWAYS: 'Contextual: "Immer akzeptieren"'
     CONTEXTUALCONSENTACCEPTONCE: 'Contextual: "Einmal akzeptieren"'
     CONTEXTUALCONSENTDESCRIPTION: 'Contextual: Beschreibung'

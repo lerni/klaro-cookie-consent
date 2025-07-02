@@ -3,10 +3,9 @@ Silverstripe Klaro! implements [KIProtect/klaro](https://github.com/KIProtect/kl
 
 ## Quick Start
 1. `composer require lerni/klaro-cookie-consent`
-2. Run `dev/build`
-3. Run `php ./vendor/silverstripe/framework/cli-script.php dev/tasks/klaro-defaults` (default values for SiteConfig)
-4. Go to **Settings > Cookie Consent** and enable "Cookie Is Active"
-5. Configure your services and you're ready!
+2. `dev/build`
+3. `dev/tasks/klaro-defaults` (default values for SiteConfig)
+4. Go to **/admin/settings#Root_CookieConsent** and enable "Cookie Is Active" & configureyour needs
 
 ## Requirements
 - SilverStripe CMS ^5 or ^6
@@ -25,7 +24,7 @@ composer require lerni/klaro-cookie-consent:dev-v2  # SS 4.x/5.x
 composer require lerni/klaro-cookie-consent:dev-3.x # SS 3.x
 ```
 
-Run `dev/build`. CookieEntries & CookieCategories are automatically populated. To add values to SiteConfig use the task below, it populates SiteConfig with default translations from Klaro and applies custom translations from your language file.
+CookieEntries & CookieCategories are automatically populated. To add values to SiteConfig use the task below, it populates SiteConfig with default translations from Klaro and applies custom translations from your language file.
 ```bash
 php ./vendor/silverstripe/framework/cli-script.php dev/tasks/klaro-defaults
 ```
@@ -60,8 +59,8 @@ Replace `src` with `data-src` and add consent attributes:
 </script>
 ```
 
-## Google Consent Mode v2 Support
-Full support for Google's privacy-compliant tracking with automatic consent updates.
+## Consent Mode v2 Support
+Support for Google's privacy-compliant tracking with consent updates.
 
 ### Default Services Included
 - **Google Tag Manager**
@@ -85,7 +84,7 @@ OnDecline: if(typeof clarity === "function") { clarity("consent", false); }
 ```
 
 ### Google Tag Manager Integration
-When using with `lerni/silverstripe-tracking`, GTM events are automatically fired based on your callback configuration:
+When using with `lerni/silverstripe-tracking`, GTM events are automatically fired based on your callback:
 
 **Default Events:**
 - `klaro-google-analytics-accepted/declined`
@@ -271,6 +270,6 @@ html .klaro {
 </details>
 
 ## Resources
-- [Klaro! Documentation](https://klaro.kiprotect.com/docs)
+- [Klaro! Documentation](https://klaro.kiprotect.com/docs), [Annotated Config](https://klaro.org/docs/integration/annotated-configuration)
 - [Google Consent Mode v2 Guide](https://developers.google.com/tag-platform/security/guides/consent)
 - [SilverStripe Configuration Documentation](https://docs.silverstripe.org/en/developer_guides/configuration/)
