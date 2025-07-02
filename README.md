@@ -84,7 +84,7 @@ OnDecline: if(typeof clarity === "function") { clarity("consent", false); }
 ```
 
 ### Google Tag Manager Integration
-When using with `lerni/silverstripe-tracking`, GTM events are automatically fired based on your callback:
+When using with `lerni/silverstripe-tracking`, GTM events are automatically fired based on the callbacks set in CMS:
 
 **Default Events:**
 - `klaro-google-analytics-accepted/declined`

@@ -71,8 +71,8 @@ Kraftausdruck\Models\CookieEntry:
       Default: 'false'
       OptOut: 'false'
       CookieCategoryID: 2
-      OnAcceptCallback: 'if(typeof gtag === "function") { gtag("consent", "update", { ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted" }); }'
-      OnDeclineCallback: 'if(typeof gtag === "function") { gtag("consent", "update", { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" }); }'
+      OnAcceptCallback: 'if(typeof gtag === "function") { gtag("consent", "update", { ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted", personalization_storage: "granted" }); }'
+      OnDeclineCallback: 'if(typeof gtag === "function") { gtag("consent", "update", { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", personalization_storage: "denied" }); }'
     Clarity:
       Title: 'Microsoft Clarity'
       Purpose: 'Cookie von Microsoft für Website-Analysen. Statistische Daten, wie Besucher die Website nutzen.'
