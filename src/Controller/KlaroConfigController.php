@@ -4,7 +4,7 @@ namespace Kraftausdruck\Controller;
 
 use SilverStripe\i18n\i18n;
 use SilverStripe\Model\List\ArrayList;
-use SilverStripe\View\ArrayData;
+use SilverStripe\Model\ArrayData;
 use TractorCow\Fluent\Model\Locale;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
