@@ -4,7 +4,7 @@ de_CH:
     ConsentModalTitle: 'Verwendete Cookies'
     ConsentModalDescription: 'Datenschutz-Einstellungen für diese Webseite einsehen und anpassen.'
     ConsentNoticeOK: 'Alle zustimmen'
-    ConsentNoticeLearnMore: 'Cookie Einstellungen'
+    ConsentNoticeLearnMore: 'Einstellungen'
     ConsentModalPrivacyPolicyName: 'Datenschutzerklärung'
     ConsentModalPrivacyPolicyText: 'Details siehe {privacyPolicy}.'
     AcceptAll: 'Allen zustimmen'
@@ -13,6 +13,7 @@ de_CH:
   Kraftausdruck\Models\CookieEntry:
     TITLE: 'Titel'
     COOKIEKEY: 'Cookie-Schlüssel'
+    CookieKeyDescription: 'HTML-Parameter "data-name"'
     PURPOSE: 'Zweck'
     COOKIENAME: 'Cookie-Name'
     DEFAULT: 'Standard'
@@ -32,7 +33,7 @@ de_CH:
   Kraftausdruck\Extensions\KlaroSiteConfigExtension:
     COOKIETAB: 'CookieConsent'
     CookieIsActive: 'Klaro! aktiv'
-    MUSTCONSENT: 'Zustimmung erzwingen - Modal wird direkt angezeigt'
+    MUSTCONSENT: 'Consent Entscheidung erzwingen - Modal wird direkt angezeigt'
     CONSENTNOTICETITLE: 'Notice: Titel'
     CONSENTNOTICEDESCRIPTION: 'Notice: Beschreibung'
     CONSENTNOTICELEARNMORE: 'Notice: Mehr erfahren'

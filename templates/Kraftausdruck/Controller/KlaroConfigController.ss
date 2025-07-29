@@ -48,7 +48,7 @@
 		optOut: {$OptOut},
 		purposes : ['{$CookieCategory.Key.JS}'],
 		cookies : {$CookieNamesJS.RAW},
-		<% if $onInitCallback %>onInit: `$onInitCallback.RAW`,<% end_if %>
+		<% if $OnInitCallback %>onInit: `$OnInitCallback.RAW`,<% end_if %>
 		<% if $OnAcceptCallback %>onAccept: `$OnAcceptCallback.RAW`,<% end_if %>
 		<% if $OnDeclineCallback %>onDecline: `$OnDeclineCallback.RAW`,<% end_if %>
 		translations: {<% loop $ServiceTranslations %>

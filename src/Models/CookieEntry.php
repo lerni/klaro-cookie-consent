@@ -22,7 +22,7 @@ class CookieEntry extends DataObject
         'OptOut' => 'Enum("false,true", "false")',
         'Required' => 'Enum("false,true", "0")',
         'SortOrder' => 'Int',
-        'onInitCallback' => 'Text',
+        'OnInitCallback' => 'Text',
         'OnAcceptCallback' => 'Text',
         'OnDeclineCallback' => 'Text'
     ];
@@ -55,7 +55,7 @@ class CookieEntry extends DataObject
         $labels['Default'] = _t(__CLASS__ . '.DEFAULT', 'Default');
         $labels['OptOut'] = _t(__CLASS__ . '.OPTOUT', 'Opt Out');
         $labels['Required'] = _t(__CLASS__ . '.REQUIRED', 'Service Required');
-        $labels['onInitCallback'] = _t(__CLASS__ . '.ONINITCALLBACK', 'On Init Callback');
+        $labels['OnInitCallback'] = _t(__CLASS__ . '.ONINITCALLBACK', 'On Init Callback');
         $labels['OnAcceptCallback'] = _t(__CLASS__ . '.ONACCEPTCALLBACK', 'On Accept Callback');
         $labels['OnDeclineCallback'] = _t(__CLASS__ . '.ONDECLINECALLBACK', 'On Decline Callback');
         $labels['CookieCategory'] = _t(__CLASS__ . '.COOKIECATEGORY', 'Cookie Category');
@@ -109,6 +109,10 @@ class CookieEntry extends DataObject
             $CategoryRequired = $this->CookieCategory()->Required ? 'true' : 'false';
         }
 
+        if ($CookieKeyField = $fields->dataFieldByName('CookieKey')) {
+            $CookieKeyField->setDescription(_t(__CLASS__ . '.CookieKeyDescription', 'match HTML "data-name"-parameter'));
+        }
+
         if ($requiredField = $fields->dataFieldByName('Required')) {
             $requiredField->setEmptyString('--');
             $requiredField->setDescription(_t(__CLASS__ . '.REQUIREDDESCRIPTION', 'Overrides category setting: <strong>{CategoryRequired}</strong> - i.g. Tag Manager', ['CategoryRequired' => $CategoryRequired]));
@@ -119,7 +123,7 @@ class CookieEntry extends DataObject
         }
 
         $fields->addFieldsToTab('Root.Main', [
-            TextareaField::create('onInitCallback', _t(__CLASS__ . '.ONINITCALLBACK', 'On Init Callback'))
+            TextareaField::create('OnInitCallback', _t(__CLASS__ . '.ONINITCALLBACK', 'On Init Callback'))
                 ->setDescription(_t(__CLASS__ . '.ONINITCALLBACKDESCRIPTION', 'JavaScript code to run when the service is initialized. This is called before the user makes any consent decision.'))
                 ->setRows(3),
 
