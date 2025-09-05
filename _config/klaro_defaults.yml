@@ -35,7 +35,6 @@ Kraftausdruck\Models\CookieEntry:
       Default: 'false'
       OptOut: 'false'
       CookieCategoryID: 1
-      ConsentModeDefault: 'granted'
     PHPSESSID:
       Title: 'PHP Session'
       Purpose: 'Speichert die PHP Session-ID für eine eindeutige Benutzerkennung. Cookie wird gelöscht, wenn der Browser geschlossen wird.'
@@ -44,7 +43,6 @@ Kraftausdruck\Models\CookieEntry:
       Default: 'true'
       OptOut: 'false'
       CookieCategoryID: 1
-      ConsentModeDefault: 'granted'
     Analytics:
       Title: 'Google Analytics'
       Purpose: 'Cookie von Google für Website-Analysen. Statistische Daten, wie Besucher die Website nutzen.'
@@ -53,7 +51,6 @@ Kraftausdruck\Models\CookieEntry:
       Default: 'false'
       OptOut: 'false'
       CookieCategoryID: 2
-      ConsentModeDefault: 'denied'
       OnAcceptCallback: 'if(typeof gtag === "function") { gtag("consent", "update", { analytics_storage: "granted" }); }'
       OnDeclineCallback: 'if(typeof gtag === "function") { gtag("consent", "update", { analytics_storage: "denied" }); }'
     Clarity:
@@ -64,6 +61,5 @@ Kraftausdruck\Models\CookieEntry:
       Default: 'false'
       OptOut: 'false'
       CookieCategoryID: 2
-      ConsentModeDefault: 'denied'
       OnAcceptCallback: 'if(typeof clarity === "function") { clarity("consent"); }'
       OnDeclineCallback: 'if(typeof clarity === "function") { clarity("consent", false); }'
