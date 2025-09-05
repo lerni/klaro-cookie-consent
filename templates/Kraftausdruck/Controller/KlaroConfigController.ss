@@ -4,6 +4,8 @@
 	cookieName: 'klaro',
 	acceptAll: true,
 	default: false,
+<% if $MustConsent %>	mustConsent: true,<% end_if %>
+<% if $HideDeclineAll %>	hideDeclineAll: true,<% end_if %>
 	cookieExpiresAfterDays: 365,
 	noNotice: false,
 	<% if ConsentNoticeTitle %>showNoticeTitle: true,<% end_if %>

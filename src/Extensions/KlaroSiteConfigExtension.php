@@ -26,6 +26,7 @@ class KlaroSiteConfigExtension extends Extension
 {
     private static $db = [
         'CookieIsActive' => 'Boolean',
+        'MustConsent' => 'Boolean',
         'ConsentNoticeTitle' => 'Varchar(100)',
         'ConsentNoticeDescription' => 'Text',
         'ConsentNoticeOK' => 'Varchar(100)',
@@ -37,6 +38,7 @@ class KlaroSiteConfigExtension extends Extension
         'AcceptAll' => 'Varchar(100)',
         'AcceptSelected' => 'Varchar(100)',
         'Decline' => 'Varchar(100)',
+        'HideDeclineAll' => 'Boolean',
         'ContextualConsentAcceptAlways' => 'Varchar(100)',
         'ContextualConsentAcceptOnce' => 'Varchar(100)',
         'ContextualConsentDescription' => 'Text'
@@ -67,6 +69,7 @@ class KlaroSiteConfigExtension extends Extension
     {
         $tab = 'Root.' . _t(__CLASS__ . '.COOKIETAB', 'CookieConsent');
         $fields->addFieldToTab($tab, CheckboxField::create('CookieIsActive', _t(__CLASS__ . '.CookieIsActive', 'Klaro! active')));
+        $fields->addFieldToTab($tab, CheckboxField::create('MustConsent', _t(__CLASS__ . '.MUSTCONSENT', 'Enforce consent - modal directly shown')));
         $fields->addFieldToTab($tab, TextField::create('ConsentNoticeTitle', _t(__CLASS__ . '.CONSENTNOTICETITLE', 'Notice: Titel')));
         $fields->addFieldToTab($tab, TextareaField::create('ConsentNoticeDescription', _t(__CLASS__ . '.CONSENTNOTICEDESCRIPTION', 'Notice: Description')));
         $fields->addFieldToTab($tab, TextField::create('ConsentNoticeLearnMore', _t(__CLASS__ . '.CONSENTNOTICELEARNMORE', 'Notice: Cookie settings')));
@@ -78,6 +81,7 @@ class KlaroSiteConfigExtension extends Extension
         $fields->addFieldToTab($tab, TextField::create('AcceptAll', _t(__CLASS__ . '.ACCEPTALL', 'Modal: "Accept all"')));
         $fields->addFieldToTab($tab, TextField::create('AcceptSelected', _t(__CLASS__ . '.ACCEPTSELECTED', 'Modal: "Accept selected"')));
         $fields->addFieldToTab($tab, TextField::create('Decline', _t(__CLASS__ . '.DECLINE', 'Modal: "Decline"')));
+        $fields->addFieldToTab($tab, CheckboxField::create('HideDeclineAll', _t(__CLASS__ . '.HIDEDECLINEALL', 'Hide "Decline"')));
         $fields->addFieldToTab($tab, TextField::create('ContextualConsentAcceptAlways', _t(__CLASS__ . '.CONTEXTUALCONSENTACCEPTALWAYS', 'Contextual: "Accept always"')));
         $fields->addFieldToTab($tab, TextField::create('ContextualConsentAcceptOnce', _t(__CLASS__ . '.CONTEXTUALCONSENTACCEPTONCE', 'Contextual: "Accept once"')));
         $fields->addFieldToTab($tab, TextareaField::create('ContextualConsentDescription', _t(__CLASS__ . '.CONTEXTUALCONSENTDESCRIPTION', 'Contextual: Description')));
