@@ -43,6 +43,18 @@ Kraftausdruck\Models\CookieEntry:
       Default: 'true'
       OptOut: 'false'
       CookieCategoryID: 1
+    GoogleTagManager:
+      Title: 'Google Tag Manager'
+      Purpose: 'Google Tag Manager verwaltet verschiedene Tracking-Dienste und ermöglicht die Aktivierung/Deaktivierung von Marketing-Tools basierend auf Ihrer Zustimmung.'
+      CookieName: '/^_g.*$/'
+      CookieKey: 'google-tag-manager'
+      Default: 'false'
+      OptOut: 'false'
+      Required: 'true'
+      CookieCategoryID: 2
+      OnInitCallback: 'if(typeof gtag === "function") { gtag("set", "ads_data_redaction", true); }'
+      OnAcceptCallback: 'if(typeof dataLayer !== "undefined" && typeof gtag === "function") { for(let k of Object.keys(arguments[0].consents || {})) { if (arguments[0].consents[k]) { let eventName = "klaro-" + k + "-accepted"; dataLayer.push({"event": eventName}); } } }'
+      OnDeclineCallback: 'if(typeof dataLayer !== "undefined" && typeof gtag === "function") { for(let k of Object.keys(arguments[0].consents || {})) { if (!arguments[0].consents[k]) { let eventName = "klaro-" + k + "-declined"; dataLayer.push({"event": eventName}); } } }'
     Analytics:
       Title: 'Google Analytics'
       Purpose: 'Cookie von Google für Website-Analysen. Statistische Daten, wie Besucher die Website nutzen.'
@@ -53,6 +65,16 @@ Kraftausdruck\Models\CookieEntry:
       CookieCategoryID: 2
       OnAcceptCallback: 'if(typeof gtag === "function") { gtag("consent", "update", { analytics_storage: "granted" }); }'
       OnDeclineCallback: 'if(typeof gtag === "function") { gtag("consent", "update", { analytics_storage: "denied" }); }'
+    GoogleAds:
+      Title: 'Google Ads'
+      Purpose: 'Ermöglicht personalisierte Werbung und Conversion-Tracking durch Google Ads. Sammelt Daten über Ihre Interaktionen mit Anzeigen.'
+      CookieName: '/^_g.*$/'
+      CookieKey: 'google-ads'
+      Default: 'false'
+      OptOut: 'false'
+      CookieCategoryID: 2
+      OnAcceptCallback: 'if(typeof gtag === "function") { gtag("consent", "update", { ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted" }); }'
+      OnDeclineCallback: 'if(typeof gtag === "function") { gtag("consent", "update", { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" }); }'
     Clarity:
       Title: 'Microsoft Clarity'
       Purpose: 'Cookie von Microsoft für Website-Analysen. Statistische Daten, wie Besucher die Website nutzen.'
