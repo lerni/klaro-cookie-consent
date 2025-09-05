@@ -67,7 +67,6 @@ class CookieEntry extends DataObject
     {
         return new RequiredFieldsValidator([
             'Title',
-            'CookieName',
             'Purpose'
         ]);
     }

@@ -46,7 +46,6 @@ Kraftausdruck\Models\CookieEntry:
     GoogleTagManager:
       Title: 'Google Tag Manager'
       Purpose: 'Google Tag Manager verwaltet verschiedene Tracking-Dienste und ermöglicht die Aktivierung/Deaktivierung von Marketing-Tools basierend auf Ihrer Zustimmung.'
-      CookieName: '/^_g.*$/'
       CookieKey: 'google-tag-manager'
       Default: 'false'
       OptOut: 'false'
@@ -68,7 +67,6 @@ Kraftausdruck\Models\CookieEntry:
     GoogleAds:
       Title: 'Google Ads'
       Purpose: 'Ermöglicht personalisierte Werbung und Conversion-Tracking durch Google Ads. Sammelt Daten über Ihre Interaktionen mit Anzeigen.'
-      CookieName: '/^_g.*$/'
       CookieKey: 'google-ads'
       Default: 'false'
       OptOut: 'false'
