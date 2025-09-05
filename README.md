@@ -1,42 +1,231 @@
 # Silverstripe Klaro! Consent Manager
-Silverstripe Klaro! implements [KIProtect/klaro](https://github.com/KIProtect/klaro). A consent manager that helps to be transparent about third-party applications and be compliant with GDPR and ePrivacy. This module is inspired by [nomidi/kw-cookie-consent](https://github.com/nomidi/kw-cookie-consent).
+Silverstripe Klaro! implements [KIProtect/klaro](https://github.com/KIProtect/klaro) for GDPR-compliant cookie consent management with Google Consent Mode v2 support.
 
+## Quick Start
+1. `composer require lerni/klaro-cookie-consent`
+2. Run `dev/build`
+3. Run `php ./vendor/silverstripe/framework/cli-script.php dev/tasks/klaro-defaults` (default values for SiteConfig)
+4. Go to **Settings > Cookie Consent** and enable "Cookie Is Active"
+5. Configure your services and you're ready!
 
 ## Requirements
-- silverstripe/cms ^6
-- silverstripe/siteconfig ^6
-- symbiote/silverstripe-gridfieldextensions ^5
-### Compatibility Version
-- There is a [3.x](https://github.com/lerni/klaro-cookie-consent/tree/3.x) branch with a backport for Silverstripe 3.
-- For Silverstripe 4.x & 5.x [v2](https://github.com/lerni/klaro-cookie-consent/tree/v2)
-- For Silverstripe [5.x](https://github.com/lerni/klaro-cookie-consent/tree/5.x) supports consent-mode-v2 & resolves some long standing issues like default values, better fluent support, Consent Mode V2
-- For Silverstripe [6.x](https://github.com/lerni/klaro-cookie-consent/tree/6.x) provides compatibility with version 6.x
-### Suggested
-- lerni/silverstripe-tracking
+- SilverStripe CMS ^5 or ^6
+- PHP ^8.1
 
-## Google Consent Mode v2 Integration
+### Suggested Modules
+- `lerni/silverstripe-tracking` - for Google Analytics, GTM, and Clarity integration
 
-This module includes support for Google Consent Mode v2, providing privacy-compliant tracking and enhanced conversion modeling capabilities.
+## Installation
+```bash
+# For SilverStripe 5.x/6.x (current)
+composer require lerni/klaro-cookie-consent
 
-### Key Features
-- **Automatic Consent Updates**: When users accept or decline services, Google's consent state is automatically updated
-- **Enhanced Conversion Modeling**: Supports advanced consent mode for better data insights while respecting privacy
-- **All Consent Types**: "Callback-functions" are maintained in CMS. Original, v2 consent parameters and also for other venders like Microsoft-Clarity are possible.
-
-### Setup
-1. Install the module and run `dev/build`
-2. Go to **Settings > Cookie Consent** in the CMS
-3. Enable "Cookie Is Active"
-4. Configure your services with appropriate **Google Consent Types**
-5. Add custom JavaScript callbacks
-
-### Example Configuration
+# Legacy versions
+composer require lerni/klaro-cookie-consent:dev-v2  # SS 4.x/5.x
+composer require lerni/klaro-cookie-consent:dev-3.x # SS 3.x
 ```
-Service: Google Analytics
-Consent Type: analytics_storage
-Default State: denied
-On Accept: gtag('consent', 'update', {'analytics_storage': 'granted'});
+
+Run `dev/build`. CookieEntries & CookieCategories are automatically populated. To add values to SiteConfig use the task below, it populates SiteConfig with default translations from Klaro and applies custom translations from your language file.
+```bash
+php ./vendor/silverstripe/framework/cli-script.php dev/tasks/klaro-defaults
 ```
+
+## Basic Usage
+
+### CMS Configuration
+1. **Settings > Cookie Consent**
+2. Enable "Cookie Is Active"
+3. Configure services (Google Analytics, GTM, etc.)
+4. Customize consent modal text and appearance
+
+### Adding Consent Links
+```html
+<!-- Manual link -->
+<a href="#klaro" onClick="klaro.show();return false;">Cookie Settings</a>
+
+<!-- Or use ShortCode in CMS -->
+[ConsentLink beforeText="Manage your " afterText=" preferences"]
+```
+
+### Managing Third-Party Scripts
+Replace `src` with `data-src` and add consent attributes:
+```html
+<!-- Before: Regular script -->
+<script src="https://example.com/tracking.js"></script>
+
+<!-- After: Consent-managed script -->
+<script type="text/plain"
+    data-type="text/javascript"
+    data-name="analytics"
+    data-src="https://example.com/tracking.js">
+</script>
+```
+
+## Google Consent Mode v2 Support
+Full support for Google's privacy-compliant tracking with automatic consent updates.
+
+### Default Services Included
+- **Google Tag Manager**
+- **Google Analytics**
+- **Google Ads**
+- **Microsoft Clarity**
+
+## Advanced Configuration
+
+### Custom Consent Callbacks
+Configure custom JavaScript for each service in **Settings > Cookie Consent**:
+
+```javascript
+// Google Analytics example
+OnAccept: if(typeof gtag === "function") { gtag("consent", "update", { analytics_storage: "granted" }); }
+OnDecline: if(typeof gtag === "function") { gtag("consent", "update", { analytics_storage: "denied" }); }
+
+// Microsoft Clarity example  
+OnAccept: if(typeof clarity === "function") { clarity("consent"); }
+OnDecline: if(typeof clarity === "function") { clarity("consent", false); }
+```
+
+### Google Tag Manager Integration
+When using with `lerni/silverstripe-tracking`, GTM events are automatically fired based on your callback configuration:
+
+**Default Events:**
+- `klaro-google-analytics-accepted/declined`
+- `klaro-google-ads-accepted/declined`
+- `klaro-google-tag-manager-accepted/declined`
+
+**Setting up GTM Triggers:**
+1. Create **Custom Event** trigger in GTM
+2. Use event name (e.g., `klaro-google-analytics-accepted`)
+3. Fire your tracking tags based on consent
+
+### Configuration Override
+Override defaults in your `app/_config/klaro.yml`:
+```yaml
+Kraftausdruck\Models\CookieEntry:
+  default_records:
+    Analytics:
+      Title: 'Custom Analytics Title'
+      # Override any default settings
+```
+
+<details>
+<summary>Styling Customization</summary>
+
+```scss
+// Example SCSS customization
+html .klaro {
+	--notice-max-width: 440px;
+	.cookie-modal,
+	.cookie-notice {
+		z-index: 9100;
+		a {
+			color: lighten($link-color, 70%);
+		}
+		.cm-btn {
+			border-radius: 2px;
+			margin: 5px;
+			color: white;
+			background-color: $button-color;
+			border: 1px solid transparent;
+			outline: none;
+			text-decoration: none;
+			cursor: pointer;
+			line-height: 1;
+			font-weight: 400;
+			transition: background-color 0.3s ease, color 0.3s ease;
+		}
+		.cm-btn:not(.cm-btn-manager):hover {
+			background-color: darken($button-color, 10%);
+		}
+		.cm-btn.cm-btn-manager {
+			background-color: transparent;
+			color: lighten($text-color, 70%);
+			border: 1px solid $button-color;
+		}
+		.cm-btn.cm-btn-manager:hover {
+			background-color: rgba($button-color, 0.1);
+		}
+		.cm-btn.cm-btn-close {
+			color: $button-color;
+			font-size: 2em;
+			line-height: 1;
+			padding: 0 5px;
+			border: 0;
+			background-color: transparent;
+		}
+		.cm-btn.cm-btn-close:hover {
+			color: darken($button-color, 30%);
+		}
+		.cookie-notice {
+			.cm-buttons {
+				display: flex;
+				justify-content: space-between;
+				flex-direction: row;
+				margin-bottom: 0;
+				.cm-btn {
+					margin: 5px;
+					flex: 1 1 auto;
+					padding: 10px;
+					max-width: 200px;
+					&.cm-btn-manager {
+						padding: 9px;
+						flex-shrink: 2;
+						font-size: 0.9em;
+					}
+				}
+			}
+		}
+		.cookie-modal {
+			.cm-modal {
+				margin: 2rem auto;
+				.cm-header {
+					// border: 0;
+					.title {
+						margin-top: 0;
+					}
+				}
+				.cm-body {
+					.cm-app {
+						border: 0;
+						margin-bottom: 1rem;
+						.cm-app-title {
+							font-weight: 700;
+						}
+						.cm-app-required {
+							color: orange;
+						}
+						.cm-app-title,
+						p.cm-app-description {
+							margin: 0 0 0 20px;
+						}
+						.cm-app-input {
+							margin: 0 5px 0 0;
+						}
+					}
+				}
+				.cm-footer {
+					border: 0;
+					padding: 1rem 0 0 0;
+					.cm-buttons {
+						margin: 0;
+						.cm-btn {
+							padding: 0.5rem 1rem;
+							font-size: 1rem;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+```
+
+</details>
+
+## Resources
+- [Klaro! Documentation](https://klaro.kiprotect.com/docs)
+- [Google Consent Mode v2 Guide](https://developers.google.com/tag-platform/security/guides/consent)
+- [SilverStripe Configuration Documentation](https://docs.silverstripe.org/en/developer_guides/configuration/)
 
 
 ## Installation

@@ -3,7 +3,6 @@
 namespace Kraftausdruck\Models;
 
 use SilverStripe\ORM\DataObject;
-use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\TextareaField;
 use Kraftausdruck\Models\CookieCategory;
 use SilverStripe\Forms\Validation\RequiredFieldsValidator;
