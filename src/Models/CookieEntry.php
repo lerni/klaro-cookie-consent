@@ -109,6 +109,10 @@ class CookieEntry extends DataObject
             $CategoryRequired = $this->CookieCategory()->Required ? 'true' : 'false';
         }
 
+        if ($CookieKeyField = $fields->dataFieldByName('CookieKey')) {
+            $CookieKeyField->setDescription(_t(__CLASS__ . '.CookieKeyDescription', 'match HTML "data-name"-parameter'));
+        }
+
         if ($requiredField = $fields->dataFieldByName('Required')) {
             $requiredField->setEmptyString('--');
             $requiredField->setDescription(_t(__CLASS__ . '.REQUIREDDESCRIPTION', 'Overrides category setting: <strong>{CategoryRequired}</strong> - i.g. Tag Manager', ['CategoryRequired' => $CategoryRequired]));
