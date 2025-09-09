@@ -81,5 +81,5 @@ Kraftausdruck\Models\CookieEntry:
       Default: 'false'
       OptOut: 'false'
       CookieCategoryID: 2
-      OnAcceptCallback: 'if(typeof clarity === "function") { clarity("consent"); }'
-      OnDeclineCallback: 'if(typeof clarity === "function") { clarity("consent", false); }'
+      OnAcceptCallback: 'if(typeof clarity === "function") { clarity("consentv2", { ad_Storage: "granted", analytics_Storage: "granted" }); }'
+      OnDeclineCallback: 'if(typeof clarity === "function") { clarity("consentv2", { ad_Storage: "denied", analytics_Storage: "denied" }); }'
