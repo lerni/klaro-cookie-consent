@@ -101,7 +101,7 @@ class KlaroConfigController extends Controller
             FluentState::singleton()->setLocale($originalLocale);
         } else {
             // Single locale setup
-            $locale = i18n::config()->get('default_locale');
+            $locale = i18n::get_locale();
             $lang = i18n::getData()->langFromLocale($locale);
             $siteConfig = SiteConfig::current_site_config();
             $siteConfig->KLang = $lang;

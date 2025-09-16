@@ -16,17 +16,52 @@ Silverstripe Klaro! implements [KIProtect/klaro](https://github.com/KIProtect/kl
 
 ## Installation
 ```bash
-# For SilverStripe 5.x/6.x (current)
+# For SilverStripe 5.x (current)
 composer require lerni/klaro-cookie-consent
+# For SilverStripe 6.x
+composer require lerni/klaro-cookie-consent:6.x-dev
 
 # Legacy versions
-composer require lerni/klaro-cookie-consent:dev-v2  # SS 4.x/5.x
-composer require lerni/klaro-cookie-consent:dev-3.x # SS 3.x
+composer require lerni/klaro-cookie-consent:v2-dev  # SS 4.x/5.x
+composer require lerni/klaro-cookie-consent:3.x-dev # SS 3.x
 ```
 
 CookieEntries & CookieCategories are automatically populated. To add values to SiteConfig use the task below, it populates SiteConfig with default translations from Klaro and applies custom translations from your language file.
 ```bash
 php ./vendor/silverstripe/framework/cli-script.php dev/tasks/klaro-defaults
+```
+
+### Overriding Defaults
+Defaults can always be overridden, for example to start with only essential cookies (PHPSESSID, klaro), create `app/_config/klaro_defaults.yml` before DB is populated with `dev/build`.
+```yml
+---
+Name: empty_klaro_defaults
+After: klaro_defaults
+---
+Kraftausdruck\Models\CookieEntry:
+  default_records: null
+---
+Name: my_klaro_defaults
+After: empty_klaro_defaults
+---
+Kraftausdruck\Models\CookieEntry:
+  default_records:
+    Klaro:
+      Title: 'klaro! consent manager'
+      Purpose: 'Stores consent and rejection of cookies.'
+      CookieName: 'klaro'
+      CookieKey: 'klaro'
+      Default: 'false'
+      OptOut: 'false'
+      CookieCategoryID: 1
+    PHPSESSID:
+      Title: 'PHP Session'
+      Purpose: 'Stores PHP session ID for unique user identification.'
+      CookieName: 'PHPSESSID'
+      CookieKey: 'PHPSESSID'
+      Default: 'true'
+      OptOut: 'false'
+      CookieCategoryID: 1
 ```
 ## Basic Usage
 
@@ -79,8 +114,8 @@ OnAccept: if(typeof gtag === "function") { gtag("consent", "update", { analytics
 OnDecline: if(typeof gtag === "function") { gtag("consent", "update", { analytics_storage: "denied" }); }
 
 // Microsoft Clarity example  
-OnAccept: if(typeof clarity === "function") { clarity("consent"); }
-OnDecline: if(typeof clarity === "function") { clarity("consent", false); }
+OnAccept: if(typeof clarity === "function") { clarity("consentv2", { ad_Storage: "granted", analytics_Storage: "granted" }); }
+OnDecline: if(typeof clarity === "function") { clarity("consentv2", { ad_Storage: "denied", analytics_Storage: "denied" }); }
 ```
 
 ### Google Tag Manager Integration
@@ -124,11 +159,14 @@ html .klaro {
 			font-size: 14px;
 			border-radius: 0.1em;
 			margin-right: 1.2em;
+			padding-top: .6em;
 		}
 	}
 
 	.cookie-notice {
 		.cn-body {
+			border: 1px solid $gray;
+			border-radius: 0.1em;
 			// klaro sets font-size on block elements - we're calculating back to maintain horizontal spacing :-/
 			@media (max-width: 1023px) {
 				padding-right: #{$lh * math.div($font-size, 14px)}em !important;
@@ -176,6 +214,9 @@ html .klaro {
 	}
 
 	.cookie-modal {
+		.cm-modal {
+			border: 1px solid $gray;
+		}
 		.cm-header a {
 			@include bold;
 		}
@@ -213,6 +254,14 @@ html .klaro {
 		.cm-btn.cm-btn-accept,
 		.cm-btn.cm-btn-decline {
 			background-color: $gray;
+		}
+		.cm-btn.cm-btn-accept {
+			order: 99;
+			margin-right: 0;
+		}
+		// klaro link
+		.cm-modal .cm-footer .cm-powered-by {
+			display: none;
 		}
 	}
 }
