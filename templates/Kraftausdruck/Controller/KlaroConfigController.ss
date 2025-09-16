@@ -11,7 +11,6 @@
 	<% if ConsentNoticeTitle %>showNoticeTitle: true,<% end_if %>
 	translations: {<% loop $Up.LocalisedSiteConfigs %>
 		{$KLang()}: {
-			privacyPolicy: '{$CookieLinkPrivacy.Link()}',
 			acceptAll: '{$AcceptAll.JS}',
 			acceptSelected: '{$AcceptSelected.JS}',
 			decline: '{$Decline.JS}',
@@ -33,6 +32,7 @@
 				acceptOnce: '{$ContextualConsentAcceptOnce.JS}',
 				description: '{$ContextualConsentDescription.JS}'
 			},
+			privacyPolicyUrl: '{$CookieLinkPrivacy.Link()}',
 			privacyPolicy: {
 				name: '{$ConsentModalPrivacyPolicyName.JS}',
 				text: '{$ConsentModalPrivacyPolicyText.JS}'
