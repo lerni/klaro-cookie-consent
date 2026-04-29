@@ -17,7 +17,7 @@ class LangFilesFromNPM extends BuildTask
     protected static string $description = 'generates language files based on klaro yml files (requires npm packages to be installed)';
     protected static string $commandName = 'gen-lang-files';
 
-	protected function execute(InputInterface $input, PolyOutput $output): int
+    protected function execute(InputInterface $input, PolyOutput $output): int
     {
         $modulePath = dirname(dirname(dirname(__FILE__)));
 
@@ -25,6 +25,7 @@ class LangFilesFromNPM extends BuildTask
         $sourceDir = $modulePath .'/client/node_modules/klaro/src/translations';
         if (!is_dir($sourceDir)) {
             $output->writeln("<error>{$sourceDir} DOESN'T EXIST --- please run npm install first</error>");
+
             return Command::FAILURE;
         }
 
@@ -33,6 +34,7 @@ class LangFilesFromNPM extends BuildTask
 
         if (empty($filesFromKlaro)) {
             $output->writeln("<warning>No translation files found in {$sourceDir}</warning>");
+
             return Command::SUCCESS;
         }
 
@@ -51,6 +53,7 @@ class LangFilesFromNPM extends BuildTask
 
             } catch (\Exception $e) {
                 $output->writeln("<error>Failed to parse {$file}: " . $e->getMessage() . "</error>");
+
                 continue;
             }
         }
@@ -58,12 +61,14 @@ class LangFilesFromNPM extends BuildTask
         if ($processedCount > 0) {
             // Write all translations to a single file
             $outputFile = $modulePath .'/all-translations-from-klaro.yml';
+
             try {
                 $allTranslationsYML = Yaml::dump($allTranslations);
                 file_put_contents($outputFile, $allTranslationsYML);
                 $output->writeln("<info>Successfully wrote: {$outputFile} with {$processedCount} languages</info>");
             } catch (\Exception $e) {
                 $output->writeln("<error>Failed to write output file: " . $e->getMessage() . "</error>");
+
                 return Command::FAILURE;
             }
         } else {

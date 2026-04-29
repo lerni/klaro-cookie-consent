@@ -15,7 +15,6 @@ use TractorCow\Fluent\State\FluentState;
 
 class KlaroConfigController extends Controller
 {
-
     public function index(HTTPRequest $request)
     {
         $siteConfig = SiteConfig::current_site_config();
@@ -26,7 +25,7 @@ class KlaroConfigController extends Controller
         $header->addHeader('X-Robots-Tag', 'noindex');
 
         if ($siteConfig->CookieIsActive) {
-            return $this->owner->customise($this->getLocalisedSiteConfigs())
+            return $this->customise($this->getLocalisedSiteConfigs())
                 ->renderWith('Kraftausdruck/Controller/KlaroConfigController');
         } else {
             return $this->httpError(404);
@@ -67,14 +66,14 @@ class KlaroConfigController extends Controller
                     if (!isset($serviceTranslations[$serviceKey])) {
                         $serviceTranslations[$serviceKey] = [
                             'service' => $cookieEntry, // Store the base service object
-                            'translations' => []
+                            'translations' => [],
                         ];
                     }
 
                     // Add translation for this locale
                     $serviceTranslations[$serviceKey]['translations'][$lang] = [
                         'title' => $cookieEntry->Title,
-                        'description' => $cookieEntry->Purpose
+                        'description' => $cookieEntry->Purpose,
                     ];
                 }
             }
@@ -89,7 +88,7 @@ class KlaroConfigController extends Controller
                     $translationObj = ArrayData::create([
                         'KLang' => $lang,
                         'Title' => $translation['title'],
-                        'Description' => $translation['description']
+                        'Description' => $translation['description'],
                     ]);
                     $service->ServiceTranslations->push($translationObj);
                 }
@@ -118,8 +117,8 @@ class KlaroConfigController extends Controller
                     ArrayData::create([
                         'KLang' => $lang,
                         'Title' => $cookieEntry->Title,
-                        'Description' => $cookieEntry->Purpose
-                    ])
+                        'Description' => $cookieEntry->Purpose,
+                    ]),
                 ]);
                 $globalServices->push($cookieEntry);
             }
@@ -129,7 +128,7 @@ class KlaroConfigController extends Controller
         return [
             'LocalisedSiteConfigs' => $localeData,
             'GlobalServices' => $globalServices,
-            'SiteConfig' => $localeData->first() // For backwards compatibility if needed
+            'SiteConfig' => $localeData->first(), // For backwards compatibility if needed
         ];
     }
 }

@@ -25,21 +25,21 @@ class CookieEntry extends DataObject
         'SortOrder' => 'Int',
         'OnInitCallback' => 'Text',
         'OnAcceptCallback' => 'Text',
-        'OnDeclineCallback' => 'Text'
+        'OnDeclineCallback' => 'Text',
     ];
 
     // do not translate with fluent
     private static $field_exclude = [
-        'CookieKey'
+        'CookieKey',
     ];
 
     private static $has_one = [
-        'CookieCategory' => CookieCategory::class
+        'CookieCategory' => CookieCategory::class,
     ];
 
     private static $summary_fields = [
         'Title' => 'Name',
-        'CookieCategory.Title' => 'Category'
+        'CookieCategory.Title' => 'Category',
     ];
 
     private static $default_sort = 'SortOrder ASC';
@@ -49,17 +49,17 @@ class CookieEntry extends DataObject
     public function fieldLabels($includerelations = true)
     {
         $labels = parent::fieldLabels($includerelations);
-        $labels['Title'] = _t(__CLASS__ . '.TITLE', 'Title');
-        $labels['CookieKey'] = _t(__CLASS__ . '.COOKIEKEY', 'Cookie Key');
-        $labels['Purpose'] = _t(__CLASS__ . '.PURPOSE', 'Purpose');
-        $labels['CookieName'] = _t(__CLASS__ . '.COOKIENAME', 'Cookie Name');
-        $labels['Default'] = _t(__CLASS__ . '.DEFAULT', 'Default');
-        $labels['OptOut'] = _t(__CLASS__ . '.OPTOUT', 'Opt Out');
-        $labels['Required'] = _t(__CLASS__ . '.REQUIRED', 'Service Required');
-        $labels['OnInitCallback'] = _t(__CLASS__ . '.ONINITCALLBACK', 'On Init Callback');
-        $labels['OnAcceptCallback'] = _t(__CLASS__ . '.ONACCEPTCALLBACK', 'On Accept Callback');
-        $labels['OnDeclineCallback'] = _t(__CLASS__ . '.ONDECLINECALLBACK', 'On Decline Callback');
-        $labels['CookieCategory'] = _t(__CLASS__ . '.COOKIECATEGORY', 'Cookie Category');
+        $labels['Title'] = _t(self::class . '.TITLE', 'Title');
+        $labels['CookieKey'] = _t(self::class . '.COOKIEKEY', 'Cookie Key');
+        $labels['Purpose'] = _t(self::class . '.PURPOSE', 'Purpose');
+        $labels['CookieName'] = _t(self::class . '.COOKIENAME', 'Cookie Name');
+        $labels['Default'] = _t(self::class . '.DEFAULT', 'Default');
+        $labels['OptOut'] = _t(self::class . '.OPTOUT', 'Opt Out');
+        $labels['Required'] = _t(self::class . '.REQUIRED', 'Service Required');
+        $labels['OnInitCallback'] = _t(self::class . '.ONINITCALLBACK', 'On Init Callback');
+        $labels['OnAcceptCallback'] = _t(self::class . '.ONACCEPTCALLBACK', 'On Accept Callback');
+        $labels['OnDeclineCallback'] = _t(self::class . '.ONDECLINECALLBACK', 'On Decline Callback');
+        $labels['CookieCategory'] = _t(self::class . '.COOKIECATEGORY', 'Cookie Category');
 
         return $labels;
     }
@@ -71,6 +71,7 @@ class CookieEntry extends DataObject
             'Title',
             'Purpose',
         ]));
+
         return $validator;
     }
 
@@ -83,7 +84,7 @@ class CookieEntry extends DataObject
             return '[]';
         }
 
-        return '[' . implode(', ', array_map(function($name) {
+        return '[' . implode(', ', array_map(function ($name) {
             // Check if the name is a regex pattern (starts and ends with /)
             if (preg_match('/^\/(.+)\/([gimsuxy]*)$/', $name, $matches)) {
                 // It's a regex pattern - return as JavaScript regex
@@ -107,42 +108,43 @@ class CookieEntry extends DataObject
 
         $fields->removeByName('SortOrder');
 
-        $CategoryRequired = _t(__CLASS__ . '.NOTSET', 'not set');
+        $CategoryRequired = _t(self::class . '.NOTSET', 'not set');
         if ($this->CookieCategory() && $this->CookieCategory()->exists()) {
             $CategoryRequired = $this->CookieCategory()->Required ? 'true' : 'false';
         }
 
         if ($CookieKeyField = $fields->dataFieldByName('CookieKey')) {
-            $CookieKeyField->setDescription(_t(__CLASS__ . '.CookieKeyDescription', 'match HTML "data-name"-parameter'));
+            $CookieKeyField->setDescription(_t(self::class . '.CookieKeyDescription', 'match HTML "data-name"-parameter'));
         }
 
         if ($requiredField = $fields->dataFieldByName('Required')) {
             $requiredField->setEmptyString('--');
-            $requiredField->setDescription(_t(__CLASS__ . '.REQUIREDDESCRIPTION', 'Overrides category setting: <strong>{CategoryRequired}</strong> - i.g. Tag Manager', ['CategoryRequired' => $CategoryRequired]));
+            $requiredField->setDescription(_t(self::class . '.REQUIREDDESCRIPTION', 'Overrides category setting: <strong>{CategoryRequired}</strong> - i.g. Tag Manager', ['CategoryRequired' => $CategoryRequired]));
         }
 
         if ($CookieNameField = $fields->dataFieldByName('CookieName')) {
-            $CookieNameField->setDescription(_t(__CLASS__ . '.NameFieldDescription', '"cookieName" for exact match, "_ga,_gat,_gid" for multiple cookies (comma-separated), "/^_ga.*$/" for regex patterns.'));
+            $CookieNameField->setDescription(_t(self::class . '.NameFieldDescription', '"cookieName" for exact match, "_ga,_gat,_gid" for multiple cookies (comma-separated), "/^_ga.*$/" for regex patterns.'));
         }
 
         $fields->addFieldsToTab('Root.Main', [
-            TextareaField::create('OnInitCallback', _t(__CLASS__ . '.ONINITCALLBACK', 'On Init Callback'))
-                ->setDescription(_t(__CLASS__ . '.ONINITCALLBACKDESCRIPTION', 'JavaScript code to run when the service is initialized. This is called before the user makes any consent decision.'))
+            TextareaField::create('OnInitCallback', _t(self::class . '.ONINITCALLBACK', 'On Init Callback'))
+                ->setDescription(_t(self::class . '.ONINITCALLBACKDESCRIPTION', 'JavaScript code to run when the service is initialized. This is called before the user makes any consent decision.'))
                 ->setRows(3),
 
-            TextareaField::create('OnAcceptCallback', _t(__CLASS__ . '.ONACCEPTCALLBACK', 'On Accept Callback'))
-                ->setDescription(_t(__CLASS__ . '.ONACCEPTCALLBACKDESCRIPTION', 'JavaScript code to run when user accepts this service. Include Consent Mode calls here if needed for this service.'))
+            TextareaField::create('OnAcceptCallback', _t(self::class . '.ONACCEPTCALLBACK', 'On Accept Callback'))
+                ->setDescription(_t(self::class . '.ONACCEPTCALLBACKDESCRIPTION', 'JavaScript code to run when user accepts this service. Include Consent Mode calls here if needed for this service.'))
                 ->setRows(3),
 
-            TextareaField::create('OnDeclineCallback', _t(__CLASS__ . '.ONDECLINECALLBACK', 'On Decline Callback'))
-                ->setDescription(_t(__CLASS__ . '.ONDECLINECALLBACKDESCRIPTION', 'JavaScript code to run when user declines this service. Include Consent Mode calls here if needed for this service.'))
-                ->setRows(3)
+            TextareaField::create('OnDeclineCallback', _t(self::class . '.ONDECLINECALLBACK', 'On Decline Callback'))
+                ->setDescription(_t(self::class . '.ONDECLINECALLBACKDESCRIPTION', 'JavaScript code to run when user declines this service. Include Consent Mode calls here if needed for this service.'))
+                ->setRows(3),
         ]);
 
         return $fields;
     }
 
-    public function RequiredWithInherence() {
+    public function RequiredWithInherence()
+    {
         // Service-level Required takes precedence
         if ($this->Required !== null) {
             return $this->Required;
@@ -153,6 +155,7 @@ class CookieEntry extends DataObject
         if ($category && $category->Required) {
             return 'true';
         }
+
         // Default to false
         return 'false';
     }

@@ -16,16 +16,16 @@ class CookieCategory extends DataObject
         'Key' => 'Varchar',
         'Content' => 'Text',
         'Required' => 'Boolean',
-        'SortOrder' => 'Int'
+        'SortOrder' => 'Int',
     ];
 
     // do not translate with fluent
     private static $field_exclude = [
-        'Key'
+        'Key',
     ];
 
     private static $has_many = [
-        'CookieEntries' => CookieEntry::class
+        'CookieEntries' => CookieEntry::class,
     ];
 
     private static $default_sort = 'SortOrder ASC';
@@ -33,21 +33,21 @@ class CookieCategory extends DataObject
     public function fieldLabels($includerelations = true)
     {
         $labels = parent::fieldLabels($includerelations);
-        $labels['Title'] = _t(__CLASS__ . '.TITLE', 'Title');
-        $labels['Key'] = _t(__CLASS__ . '.KEY', 'Javascript Key');
-        $labels['Content'] = _t(__CLASS__ . '.CONTENT', 'Text');
+        $labels['Title'] = _t(self::class . '.TITLE', 'Title');
+        $labels['Key'] = _t(self::class . '.KEY', 'Javascript Key');
+        $labels['Content'] = _t(self::class . '.CONTENT', 'Text');
 
         return $labels;
     }
 
     private static $summary_fields = [
-        'Title' => 'Titel',
-        'Key' => 'Javascript Key'
+        'Title' => 'Title',
+        'Key' => 'Javascript Key',
     ];
 
     private static $searchable_fields = [
         'Title',
-        'Key'
+        'Key',
     ];
 
     public function getCMSFields()
@@ -56,11 +56,11 @@ class CookieCategory extends DataObject
 
         $fields->removeByName([
             'CookieEntries',
-            'SortOrder'
+            'SortOrder',
         ]);
 
         if ($RequiredCheckbox = $fields->dataFieldByName('Required')) {
-            $RequiredCheckbox->setDescription(_t( __CLASS__ . '.RequiredCheckboxDescription', 'If set, inherited to CookieEntries if not explicitly set otherwise there.'));
+            $RequiredCheckbox->setDescription(_t(self::class . '.RequiredCheckboxDescription', 'If set, inherited to CookieEntries if not explicitly set otherwise there.'));
         }
 
         return $fields;

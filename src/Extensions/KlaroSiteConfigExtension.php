@@ -41,11 +41,11 @@ class KlaroSiteConfigExtension extends Extension
         'HideDeclineAll' => 'Boolean',
         'ContextualConsentAcceptAlways' => 'Varchar(100)',
         'ContextualConsentAcceptOnce' => 'Varchar(100)',
-        'ContextualConsentDescription' => 'Text'
+        'ContextualConsentDescription' => 'Text',
     ];
 
     private static $has_one = [
-        'CookieLinkPrivacy' => SiteTree::class
+        'CookieLinkPrivacy' => SiteTree::class,
     ];
 
     private static $translate = [
@@ -62,66 +62,70 @@ class KlaroSiteConfigExtension extends Extension
         'Decline',
         'ContextualConsentAcceptAlways',
         'ContextualConsentAcceptOnce',
-        'ContextualConsentDescription'
+        'ContextualConsentDescription',
     ];
 
     public function updateCMSFields(FieldList $fields)
     {
-        $tab = 'Root.' . _t(__CLASS__ . '.COOKIETAB', 'CookieConsent');
-        $fields->addFieldToTab($tab, CheckboxField::create('CookieIsActive', _t(__CLASS__ . '.CookieIsActive', 'Klaro! active')));
-        $fields->addFieldToTab($tab, CheckboxField::create('MustConsent', _t(__CLASS__ . '.MUSTCONSENT', 'Enforce consent - modal directly shown')));
-        $fields->addFieldToTab($tab, TextField::create('ConsentNoticeTitle', _t(__CLASS__ . '.CONSENTNOTICETITLE', 'Notice: Titel')));
-        $fields->addFieldToTab($tab, TextareaField::create('ConsentNoticeDescription', _t(__CLASS__ . '.CONSENTNOTICEDESCRIPTION', 'Notice: Description'))
-            ->setDescription(_t(__CLASS__ . '.ConsentNoticeDescriptionDescription', '{purposes} can be used as placeholder'))
+        $tab = 'Root.' . _t(self::class . '.COOKIETAB', 'CookieConsent');
+        $fields->addFieldToTab($tab, CheckboxField::create('CookieIsActive', _t(self::class . '.CookieIsActive', 'Klaro! active')));
+        $fields->addFieldToTab($tab, CheckboxField::create('MustConsent', _t(self::class . '.MUSTCONSENT', 'Enforce consent - modal directly shown')));
+        $fields->addFieldToTab($tab, TextField::create('ConsentNoticeTitle', _t(self::class . '.CONSENTNOTICETITLE', 'Notice: Titel')));
+        $fields->addFieldToTab(
+            $tab,
+            TextareaField::create('ConsentNoticeDescription', _t(self::class . '.CONSENTNOTICEDESCRIPTION', 'Notice: Description'))
+            ->setDescription(_t(self::class . '.ConsentNoticeDescriptionDescription', '{purposes} can be used as placeholder')),
         );
-        $fields->addFieldToTab($tab, TextField::create('ConsentNoticeLearnMore', _t(__CLASS__ . '.CONSENTNOTICELEARNMORE', 'Notice: Cookie settings')));
-        $fields->addFieldToTab($tab, TextField::create('ConsentNoticeOK', _t(__CLASS__ . '.CONSENTNOTICEOK', 'Notice: OK/accept')));
-        $fields->addFieldToTab($tab, TextField::create('ConsentModalTitle', _t(__CLASS__ . '.CONSENTMODALTITLE', 'Modal: Title')));
-        $fields->addFieldToTab($tab, TextareaField::create('ConsentModalDescription', _t(__CLASS__ . '.CONSENTMODALDESCRIPTION', 'Modal: Description')));
-        $fields->addFieldToTab($tab, TextField::create('ConsentModalPrivacyPolicyName', _t(__CLASS__ . '.CONSENTMODALPRIVACYPOLICYNAME', 'Modal: Privacy Policy link name')));
-        $fields->addFieldToTab($tab, TextareaField::create('ConsentModalPrivacyPolicyText', _t(__CLASS__ . '.CONSENTMODALPRIVACYPOLICYTEXT', 'Modal: Privacy Policy link text'))
-            ->setDescription(_t(__CLASS__ . '.ConsentModalPrivacyPolicyTextDescription', '{privacyPolicy} can be used as placeholder'))
+        $fields->addFieldToTab($tab, TextField::create('ConsentNoticeLearnMore', _t(self::class . '.CONSENTNOTICELEARNMORE', 'Notice: Cookie settings')));
+        $fields->addFieldToTab($tab, TextField::create('ConsentNoticeOK', _t(self::class . '.CONSENTNOTICEOK', 'Notice: OK/accept')));
+        $fields->addFieldToTab($tab, TextField::create('ConsentModalTitle', _t(self::class . '.CONSENTMODALTITLE', 'Modal: Title')));
+        $fields->addFieldToTab($tab, TextareaField::create('ConsentModalDescription', _t(self::class . '.CONSENTMODALDESCRIPTION', 'Modal: Description')));
+        $fields->addFieldToTab($tab, TextField::create('ConsentModalPrivacyPolicyName', _t(self::class . '.CONSENTMODALPRIVACYPOLICYNAME', 'Modal: Privacy Policy link name')));
+        $fields->addFieldToTab(
+            $tab,
+            TextareaField::create('ConsentModalPrivacyPolicyText', _t(self::class . '.CONSENTMODALPRIVACYPOLICYTEXT', 'Modal: Privacy Policy link text'))
+            ->setDescription(_t(self::class . '.ConsentModalPrivacyPolicyTextDescription', '{privacyPolicy} can be used as placeholder')),
         );
-        $fields->addFieldToTab($tab, TextField::create('AcceptAll', _t(__CLASS__ . '.ACCEPTALL', 'Modal: "Accept all"')));
-        $fields->addFieldToTab($tab, TextField::create('AcceptSelected', _t(__CLASS__ . '.ACCEPTSELECTED', 'Modal: "Accept selected"')));
-        $fields->addFieldToTab($tab, TextField::create('Decline', _t(__CLASS__ . '.DECLINE', 'Modal: "Decline"')));
-        $fields->addFieldToTab($tab, CheckboxField::create('HideDeclineAll', _t(__CLASS__ . '.HIDEDECLINEALL', 'Hide "Decline"')));
-        $fields->addFieldToTab($tab, TextField::create('ContextualConsentAcceptAlways', _t(__CLASS__ . '.CONTEXTUALCONSENTACCEPTALWAYS', 'Contextual: "Accept always"')));
-        $fields->addFieldToTab($tab, TextField::create('ContextualConsentAcceptOnce', _t(__CLASS__ . '.CONTEXTUALCONSENTACCEPTONCE', 'Contextual: "Accept once"')));
-        $fields->addFieldToTab($tab, TextareaField::create('ContextualConsentDescription', _t(__CLASS__ . '.CONTEXTUALCONSENTDESCRIPTION', 'Contextual: Description')));
+        $fields->addFieldToTab($tab, TextField::create('AcceptAll', _t(self::class . '.ACCEPTALL', 'Modal: "Accept all"')));
+        $fields->addFieldToTab($tab, TextField::create('AcceptSelected', _t(self::class . '.ACCEPTSELECTED', 'Modal: "Accept selected"')));
+        $fields->addFieldToTab($tab, TextField::create('Decline', _t(self::class . '.DECLINE', 'Modal: "Decline"')));
+        $fields->addFieldToTab($tab, CheckboxField::create('HideDeclineAll', _t(self::class . '.HIDEDECLINEALL', 'Hide "Decline"')));
+        $fields->addFieldToTab($tab, TextField::create('ContextualConsentAcceptAlways', _t(self::class . '.CONTEXTUALCONSENTACCEPTALWAYS', 'Contextual: "Accept always"')));
+        $fields->addFieldToTab($tab, TextField::create('ContextualConsentAcceptOnce', _t(self::class . '.CONTEXTUALCONSENTACCEPTONCE', 'Contextual: "Accept once"')));
+        $fields->addFieldToTab($tab, TextareaField::create('ContextualConsentDescription', _t(self::class . '.CONTEXTUALCONSENTDESCRIPTION', 'Contextual: Description')));
 
-        $fields->addFieldToTab($tab, TreeDropdownField::create('CookieLinkPrivacyID', _t(__CLASS__ . '.COOKIELINKPRIVACY', 'Link Privacy Policy'), SiteTree::class), 'AcceptAll');
+        $fields->addFieldToTab($tab, TreeDropdownField::create('CookieLinkPrivacyID', _t(self::class . '.COOKIELINKPRIVACY', 'Link Privacy Policy'), SiteTree::class), 'AcceptAll');
 
         $CategoryGridFieldConfig = GridFieldConfig_Base::create(20);
         $CategoryGridFieldConfig->removeComponentsByType([
-            GridFieldFilterHeader::class
+            GridFieldFilterHeader::class,
         ]);
         $CategoryGridFieldConfig->addComponents(
             new GridFieldEditButton(),
             new GridFieldDeleteAction(false),
             new GridFieldDetailForm(),
             new GridFieldAddNewButton('toolbar-header-left'),
-            new GridFieldOrderableRows('SortOrder')
+            new GridFieldOrderableRows('SortOrder'),
         );
         $fields->addFieldToTab(
             $tab,
-            GridField::create('CookieCategory', 'Cookie Kategorien', CookieCategory::get(), $CategoryGridFieldConfig)
+            GridField::create('CookieCategory', _t(self::class . '.COOKIECATEGORIES', 'Cookie Categories'), CookieCategory::get(), $CategoryGridFieldConfig),
         );
 
         $CookieGridFieldConfig = GridFieldConfig_Base::create(20);
         $CookieGridFieldConfig->removeComponentsByType([
-            GridFieldFilterHeader::class
+            GridFieldFilterHeader::class,
         ]);
         $CookieGridFieldConfig->addComponents(
             new GridFieldEditButton(),
             new GridFieldDeleteAction(false),
             new GridFieldDetailForm(),
             new GridFieldAddNewButton('toolbar-header-left'),
-            new GridFieldOrderableRows('SortOrder')
+            new GridFieldOrderableRows('SortOrder'),
         );
         $fields->addFieldToTab(
             $tab,
-            GridField::create('CookieEntry', 'Cookies', CookieEntry::get(), $CookieGridFieldConfig)
+            GridField::create('CookieEntry', _t(self::class . '.COOKIES', 'Cookies'), CookieEntry::get(), $CookieGridFieldConfig),
         );
     }
 

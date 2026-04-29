@@ -34,6 +34,7 @@ class KlaroDefaults extends BuildTask
 
         if (!file_exists($translationsFile)) {
             $output->writeln("<error>Translation file not found: {$translationsFile}</error>");
+
             return Command::FAILURE;
         }
 
@@ -41,11 +42,13 @@ class KlaroDefaults extends BuildTask
             $allTranslations = Yaml::parseFile($translationsFile);
         } catch (\Exception $e) {
             $output->writeln("<error>Failed to parse translation file: " . $e->getMessage() . "</error>");
+
             return Command::FAILURE;
         }
 
         if (!isset($allTranslations[$language])) {
             $output->writeln("<warning>No translation entries found for language: {$language}</warning>");
+
             return Command::SUCCESS; // Not an error, just no translations available
         }
 
@@ -64,11 +67,11 @@ class KlaroDefaults extends BuildTask
             'consentModal.title' => 'ConsentModalTitle',
             'consentModal.description' => 'ConsentModalDescription',
             'privacyPolicy.name' => 'ConsentModalPrivacyPolicyName',
-            'privacyPolicy.text' => 'ConsentModalPrivacyPolicyText'
+            'privacyPolicy.text' => 'ConsentModalPrivacyPolicyText',
         ];
 
         // Helper function to get nested array value by dot notation
-        $getNestedValue = function($array, $key) {
+        $getNestedValue = function ($array, $key) {
             $keys = explode('.', $key);
             $value = $array;
             foreach ($keys as $k) {
@@ -78,6 +81,7 @@ class KlaroDefaults extends BuildTask
                     return null;
                 }
             }
+
             return $value;
         };
 
@@ -107,7 +111,7 @@ class KlaroDefaults extends BuildTask
             'ConsentModalPrivacyPolicyText' => _t('Kraftausdruck\KlaroCookie.ConsentModalPrivacyPolicyText', 'To learn more, please read our {privacyPolicy}.'),
             'AcceptAll' => _t('Kraftausdruck\KlaroCookie.AcceptAll', 'Accept all'),
             'AcceptSelected' => _t('Kraftausdruck\KlaroCookie.AcceptSelected', 'Accept selected'),
-            'Decline' => _t('Kraftausdruck\KlaroCookie.Decline', 'I decline')
+            'Decline' => _t('Kraftausdruck\KlaroCookie.Decline', 'I decline'),
         ];
 
         // Override Klaro values with custom translations if they exist
