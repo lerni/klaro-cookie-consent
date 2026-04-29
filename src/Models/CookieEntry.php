@@ -5,6 +5,7 @@ namespace Kraftausdruck\Models;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Forms\TextareaField;
 use Kraftausdruck\Models\CookieCategory;
+use SilverStripe\Forms\Validation\CompositeValidator;
 use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 
 class CookieEntry extends DataObject
@@ -63,12 +64,14 @@ class CookieEntry extends DataObject
         return $labels;
     }
 
-    public function getCMSValidator()
+    public function getCMSCompositeValidator(): CompositeValidator
     {
-        return new RequiredFieldsValidator([
+        $validator = parent::getCMSCompositeValidator();
+        $validator->addValidator(RequiredFieldsValidator::create([
             'Title',
-            'Purpose'
-        ]);
+            'Purpose',
+        ]));
+        return $validator;
     }
 
     public function CookieNamesJS()
